@@ -86,6 +86,10 @@ export build_pdb_missing_residues_table
 export UNIPROT_DEFAULT_BATCH_SIZE
 export fetch_uniprot_entries
 export build_uniprot_binding_sites_table
+export PDB_CONTACT_CUTOFF_ANGSTROM
+export PDB_CONTACT_STATUSES
+export read_pdb_quality_table
+export build_pdb_contacts_table
 
 include("raw_data_download.jl")
 include("shared_helpers.jl")
@@ -110,5 +114,6 @@ include("checkpointed_batches.jl")
 include("sifts_residue_mapping.jl")
 include("pdb_missing_residues.jl")
 include("uniprot_binding_sites.jl")
+include("pdb_contacts.jl")
 
 end
