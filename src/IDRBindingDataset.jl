@@ -90,6 +90,9 @@ export PDB_CONTACT_CUTOFF_ANGSTROM
 export PDB_CONTACT_STATUSES
 export read_pdb_quality_table
 export build_pdb_contacts_table
+export PDB_LABEL_MAX_RESOLUTION
+export PDB_LABEL_VOTES
+export build_aggregated_labels_table
 
 include("raw_data_download.jl")
 include("shared_helpers.jl")
@@ -115,5 +118,6 @@ include("sifts_residue_mapping.jl")
 include("pdb_missing_residues.jl")
 include("uniprot_binding_sites.jl")
 include("pdb_contacts.jl")
+include("aggregated_labels.jl")
 
 end
