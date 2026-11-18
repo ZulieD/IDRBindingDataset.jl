@@ -20,5 +20,8 @@ include("dataset_stats_tests.jl")
 include("dataset_finalization_tests.jl")
 include("dataset_json_export_tests.jl")
 include("caid3_binding_labels_tests.jl")
+include("checkpointed_batches_tests.jl")
+include("sifts_residue_mapping_tests.jl")
+include("pdb_missing_residues_tests.jl")
 
 @run_package_tests

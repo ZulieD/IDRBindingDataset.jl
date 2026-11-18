@@ -78,6 +78,11 @@ export build_dataset_csv_table
 export write_dataset_json_gz
 export check_caid3_binding_idr_labels
 export write_caid3_binding_labels_report
+export DEFAULT_CHECKPOINT_BATCH_SIZE
+export run_checkpointed_batches
+export read_final_dataset_csv
+export build_dataset_pdb_segments
+export build_pdb_missing_residues_table
 
 include("raw_data_download.jl")
 include("shared_helpers.jl")
@@ -98,5 +103,8 @@ include("dataset_stats.jl")
 include("dataset_finalization.jl")
 include("dataset_json_export.jl")
 include("caid3_binding_labels.jl")
+include("checkpointed_batches.jl")
+include("sifts_residue_mapping.jl")
+include("pdb_missing_residues.jl")
 
 end

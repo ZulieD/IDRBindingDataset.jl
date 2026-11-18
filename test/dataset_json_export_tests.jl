@@ -384,3 +384,22 @@ end
 
     @test_throws ArgumentError build_dataset_csv_table(invalid_records)
 end
+
+@testitem "Residue label strings decode and the dataset CSV keeps them as text" begin
+    using Test
+    using IDRBindingDataset: _decode_residue_labels, _encode_residue_labels,
+                             read_final_dataset_csv
+
+    @test _decode_residue_labels("0120") == [0, 1, 2, 0]
+    @test _encode_residue_labels(_decode_residue_labels("2100")) == "2100"
+    @test _decode_residue_labels("") == Int[]
+    @test_throws ArgumentError _decode_residue_labels("01x")
+
+    path = joinpath(mktempdir(), "dataset.csv.gz")
+    IDRBindingDataset._write_csv_gz(
+        IDRBindingDataset.DataFrames.DataFrame(protein_id = ["P1"], sequence = ["MKTA"],
+            residue_labels = ["0000"]), path)
+    dataset = read_final_dataset_csv(path)
+    @test dataset.residue_labels == ["0000"]
+    @test dataset.sequence == ["MKTA"]
+end

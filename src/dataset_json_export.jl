@@ -308,6 +308,41 @@ function _encode_residue_labels(labels)::String
     String(encoded)
 end
 
+
+"""
+    read_final_dataset_csv(path)::DataFrame
+
+Read the final dataset CSV (`cluster_dataset_labels.csv.gz`) keeping
+`protein_id`, `sequence` and `residue_labels` as strings. Without explicit
+types, CSV parsing would read a label string such as `"0000"` as the integer
+`0` and silently lose residues.
+"""
+function read_final_dataset_csv(path::AbstractString)::DataFrame
+    DataFrame(CSV.File(path;
+        types = Dict(:protein_id => String, :sequence => String,
+            :residue_labels => String),
+        stringtype = String))
+end
+
+"""
+    _decode_residue_labels(encoded)::Vector{Int}
+
+Decode one compact `residue_labels` string (one `0`/`1`/`2` character per
+residue, as written by `_encode_residue_labels`) into an integer vector.
+"""
+function _decode_residue_labels(encoded::AbstractString)::Vector{Int}
+    labels = Vector{Int}(undef, length(encoded))
+    for (index, character) in enumerate(encoded)
+        character in ('0', '1', '2') || throw(
+            ArgumentError(
+            "Residue label characters must be `0`, `1`, or `2`; found $(repr(character)) at position $(index)."
+        ),
+        )
+        labels[index] = Int(character) - Int('0')
+    end
+    labels
+end
+
 """
     build_dataset_csv_table(json_records)::DataFrame
 
