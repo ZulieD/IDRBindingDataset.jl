@@ -23,5 +23,6 @@ include("caid3_binding_labels_tests.jl")
 include("checkpointed_batches_tests.jl")
 include("sifts_residue_mapping_tests.jl")
 include("pdb_missing_residues_tests.jl")
+include("uniprot_binding_sites_tests.jl")
 
 @run_package_tests

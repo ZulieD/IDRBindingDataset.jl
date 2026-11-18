@@ -83,6 +83,9 @@ export run_checkpointed_batches
 export read_final_dataset_csv
 export build_dataset_pdb_segments
 export build_pdb_missing_residues_table
+export UNIPROT_DEFAULT_BATCH_SIZE
+export fetch_uniprot_entries
+export build_uniprot_binding_sites_table
 
 include("raw_data_download.jl")
 include("shared_helpers.jl")
@@ -106,5 +109,6 @@ include("caid3_binding_labels.jl")
 include("checkpointed_batches.jl")
 include("sifts_residue_mapping.jl")
 include("pdb_missing_residues.jl")
+include("uniprot_binding_sites.jl")
 
 end

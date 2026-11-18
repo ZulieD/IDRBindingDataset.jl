@@ -1,0 +1,43 @@
+julia version 1.12.7
+  Activating project at `/stockage/EQUIPES/AMIG/MEMBERS/julie.daniel/IDRBindingDataset.jl/scripts`
+Precompiling packages...
+   5922.7 ms  ✓ IDRBindingDataset
+  1 dependency successfully precompiled in 30 seconds. 239 already precompiled.
+  24 dependencies precompiled but different versions are currently loaded (ArgTools, Base64, Dates, Downloads, JuliaSyntaxHighlighting, LibCURL, LibCURL_jll, LibGit2, LibGit2_jll, LibSSH2_jll, Logging, Markdown, MozillaCACerts_jll, NetworkOptions, OpenSSL_jll, Pkg, Printf, StyledStrings, TOML, Tar, UUIDs, Zlib_jll, nghttp2_jll and p7zip_jll). Restart julia to access the new versions. Otherwise, 153 dependents of these packages may trigger further precompilation to work with the unexpected versions.
+UniProt batch 1/36: 90 accession(s)
+UniProt batch 2/36: 90 accession(s)
+UniProt batch 3/36: 90 accession(s)
+UniProt batch 4/36: 90 accession(s)
+UniProt batch 5/36: 90 accession(s)
+UniProt batch 6/36: 90 accession(s)
+UniProt batch 7/36: 90 accession(s)
+UniProt batch 8/36: 90 accession(s)
+UniProt batch 9/36: 90 accession(s)
+UniProt batch 10/36: 90 accession(s)
+UniProt batch 11/36: 90 accession(s)
+UniProt batch 12/36: 90 accession(s)
+UniProt batch 13/36: 90 accession(s)
+UniProt batch 14/36: 90 accession(s)
+UniProt batch 15/36: 90 accession(s)
+UniProt batch 16/36: 90 accession(s)
+UniProt batch 17/36: 90 accession(s)
+UniProt batch 18/36: 90 accession(s)
+UniProt batch 19/36: 90 accession(s)
+UniProt batch 20/36: 90 accession(s)
+UniProt batch 21/36: 90 accession(s)
+UniProt batch 22/36: 90 accession(s)
+UniProt batch 23/36: 90 accession(s)
+UniProt batch 24/36: 90 accession(s)
+UniProt batch 25/36: 90 accession(s)
+UniProt batch 26/36: 90 accession(s)
+UniProt batch 27/36: 90 accession(s)
+UniProt batch 28/36: 90 accession(s)
+UniProt batch 29/36: 90 accession(s)
+UniProt batch 30/36: 90 accession(s)
+UniProt batch 31/36: 90 accession(s)
+UniProt batch 32/36: 90 accession(s)
+UniProt batch 33/36: 90 accession(s)
+UniProt batch 34/36: 90 accession(s)
+UniProt batch 35/36: 90 accession(s)
+UniProt batch 36/36: 49 accession(s)
+UniProt binding sites written to /stockage/EQUIPES/AMIG/MEMBERS/julie.daniel/IDRBindingDataset.jl/data/derived/uniprot_binding_sites/uniprot_binding_sites.csv.gz (proteins=3199, found=3132, with_binding=161, release=2026_04).
