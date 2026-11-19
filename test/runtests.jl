@@ -26,5 +26,6 @@ include("pdb_missing_residues_tests.jl")
 include("uniprot_binding_sites_tests.jl")
 include("pdb_contacts_tests.jl")
 include("aggregated_labels_tests.jl")
+include("bmrb_mapping_tests.jl")
 
 @run_package_tests

@@ -24,7 +24,7 @@ using DataFrames
 const N_ROWS = isempty(ARGS) ? 5 : parse(Int, ARGS[1])
 const MAX_CELL_WIDTH = 40   # long cells (label vectors) are cut at this width
 # Columns whose values are categories: the number of rows per value is printed.
-const CATEGORY_COLUMNS = ["quality_category", "status", "reason"]
+const CATEGORY_COLUMNS = ["quality_category", "status", "reason", "state"]
 
 const CSV_FILES = [
     "DisProt (final dataset)" => "data/dataset/cluster_dataset_labels.csv.gz",
@@ -32,7 +32,8 @@ const CSV_FILES = [
     "UniProt binding sites" => "data/derived/uniprot_binding_sites/uniprot_binding_sites.csv.gz",
     "PDB contacts" => "data/derived/pdb_contacts/pdb_contacts.csv.gz",
     "Aggregated labels" => "data/derived/aggregated_labels/aggregated_labels.csv.gz",
-    "Aggregated labels PDB log" => "data/derived/aggregated_labels/aggregated_labels_pdb_log.csv.gz"
+    "Aggregated labels PDB log" => "data/derived/aggregated_labels/aggregated_labels_pdb_log.csv.gz",
+    "DisProt -> BMRB mapping" => "data/derived/disprot_bmrb_mapping/disprot_bmrb_mapping.csv.gz"
 ]
 
 "Print the number of rows per value of the category columns present in `table`."

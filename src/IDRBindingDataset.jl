@@ -93,6 +93,11 @@ export read_pdb_quality_table
 export build_pdb_contacts_table
 export PDB_LABEL_MAX_RESOLUTION
 export build_aggregated_labels_table
+export BMRB_API_URL
+export fetch_bmrb_uniprot_mapping
+export parse_bmrb_uniprot_mapping
+export parse_bmrb_entry
+export build_disprot_bmrb_mapping_table
 
 include("raw_data_download.jl")
 include("shared_helpers.jl")
@@ -119,5 +124,6 @@ include("pdb_missing_residues.jl")
 include("uniprot_binding_sites.jl")
 include("pdb_contacts.jl")
 include("aggregated_labels.jl")
+include("bmrb_mapping.jl")
 
 end
