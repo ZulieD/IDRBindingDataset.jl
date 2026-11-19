@@ -62,7 +62,6 @@ end
     result = _chain_contact_positions(query, mapping, hits, "MKT")
     @test result.resolved == Set([1, 2, 3])
     @test result.contacts == Set([1, 3])
-    @test result.n_unmapped_contacts == 1
     @test result.n_mapped == 3
     @test result.n_identical == 2
 end
@@ -137,7 +136,9 @@ end
     @test nrow(table) == 1
     @test only(table.status) in ("ok", "no_heteromeric_partner")
     @test only(table.chains) == "A"
-    @test only(table.n_resolved) > 0
-    @test only(table.n_mapped) == only(table.n_resolved)
+    @test !("n_mapped" in names(table))
+    @test !("n_resolved" in names(table))
+    @test !("n_contacts_unmapped" in names(table))
+    @test only(table.n_contacts) == 0 || only(table.status) == "ok"
     @test !ismissing(only(table.resolved_positions))
 end

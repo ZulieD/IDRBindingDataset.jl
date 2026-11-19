@@ -8,17 +8,15 @@ using DataFrames
 # - UniProt binding sites (`uniprot_binding_sites.csv.gz`, script 18),
 # - heteromeric PDB contacts (`pdb_contacts.csv.gz`, script 19).
 #
-# PDB evidence: N = number of used PDB entries where a residue is observed,
-# x = number of those where it contacts a partner chain (contacts are only
-# kept on DisProt disordered residues, labels 1 or 2), p_pdb = x / N.
-# Final rate per residue = (DisProt 2 + UniProt 2 + PDB vote) / number of
-# methods covering the residue.
+# PDB evidence: N = number of used PDB entries where a residue is observed
+# (`pdb_N`), x = number of those where it contacts a partner chain (contacts
+# are only kept on DisProt disordered residues, labels 1 or 2), p_pdb = x / N.
+# Per-source labels are written here; combined final labels are computed later.
 #
 # Thresholds are project choices (not taken from a reference), kept as named
 # constants and exposed as keyword arguments.
 # ---------------------------------------------------------------------------
 const PDB_LABEL_MAX_RESOLUTION = 5.0      # PDB used if resolution < this (Å)
-const PDB_LABEL_VOTES = (:fraction, :any, :majority)
 
 """
     _passes_pdb_quality(category, resolution; max_resolution, keep_no_resolution, keep_no_info)
@@ -35,66 +33,6 @@ function _passes_pdb_quality(
 )::Bool
     category == "resolved" && return !ismissing(resolution) && resolution < max_resolution
     category == "no_resolution" ? keep_no_resolution : keep_no_info
-end
-
-"""
-    _pdb_vote(p_pdb, vote)::Float64
-
-Contribution of the aggregated PDB evidence to the numerator of the final rate:
-`:fraction` -> `p_pdb`; `:any` -> `1` if `p_pdb > 0`; `:majority` -> `1` if
-`p_pdb >= 0.5`.
-"""
-function _pdb_vote(p_pdb::Real, vote::Symbol)::Float64
-    vote === :fraction && return Float64(p_pdb)
-    vote === :any && return Float64(p_pdb > 0)
-    vote === :majority && return Float64(p_pdb >= 0.5)
-    throw(ArgumentError("Unknown PDB vote $(repr(vote)); use one of $(PDB_LABEL_VOTES)."))
-end
-
-"""
-    _final_binding_rates(disprot, uniprot, has_uniprot, pdb_n, pdb_p; vote = :fraction)
-
-Combine methods per residue. For each position, `N` counts the methods covering
-it (DisProt if labelled, UniProt if the protein has UniProt annotations, PDB if
-observed in at least one PDB) and `x` the binding evidence (DisProt `2`, UniProt
-`2`, PDB vote). Returns `(n_methods, x_methods, rate, final_label)` where
-`final_label` is `1 + rate` when `rate > 0`, else the DisProt label clamped to
-`[0, 1]` (`NaN` when uncovered).
-"""
-function _final_binding_rates(
-        disprot::AbstractVector{Float64},
-        uniprot::AbstractVector{Float64},
-        has_uniprot::Bool,
-        pdb_n::AbstractVector{<:Integer},
-        pdb_p::AbstractVector{Float64};
-        vote::Symbol = :fraction
-)
-    n_positions = length(disprot)
-    n_methods = zeros(Int, n_positions)
-    x_methods = zeros(n_positions)
-    rate = fill(NaN, n_positions)
-    final_label = fill(NaN, n_positions)
-    for position in 1:n_positions
-        n, x = 0, 0.0
-        if !isnan(disprot[position])
-            n += 1
-            x += disprot[position] == 2.0
-        end
-        if has_uniprot
-            n += 1
-            x += uniprot[position] == 2.0
-        end
-        if pdb_n[position] > 0
-            n += 1
-            x += _pdb_vote(pdb_p[position], vote)
-        end
-        n_methods[position], x_methods[position] = n, x
-        n == 0 && continue
-        rate[position] = x / n
-        final_label[position] = rate[position] > 0 ? 1.0 + rate[position] :
-                                isnan(disprot[position]) ? 0.0 : min(disprot[position], 1.0)
-    end
-    (n_methods = n_methods, x_methods = x_methods, rate = rate, final_label = final_label)
 end
 
 """
@@ -161,8 +99,7 @@ Return the empty output table (schema) of `build_aggregated_labels_table`.
 function _empty_aggregated_labels_table()::DataFrame
     DataFrame(protein_disprot_id = String[], protein_id = String[], n_pdb = Int[],
         pdb_ids = String[], has_uniprot = Bool[], disprot = String[], uniprot = String[],
-        pdb_N = String[], pdb_proba = String[], rate = String[], final_label = String[],
-        order_disorder = String[], disorder_binding = String[], Label_PDB = String[],
+        pdb_N = String[], Label_PDB = String[],
         Label_PDB_disorder = String[], Label_PDB_binding = String[],
         Label_Uniprot = String[], Label_Uniprot_disorder = String[],
         Label_Uniprot_binding = String[])
@@ -170,7 +107,7 @@ end
 
 """
     _protein_aggregated_labels_row(protein_disprot_id, protein_id, residue_labels,
-        uniprot_positions, pdb_rows; vote)
+        uniprot_positions, pdb_rows)
 
 Aggregate one protein. `pdb_rows` are the contacts-table rows of the PDB
 entries kept for this protein. Returns `nothing` when no PDB entry has an
@@ -181,8 +118,7 @@ function _protein_aggregated_labels_row(
         protein_id::AbstractString,
         residue_labels::AbstractVector{<:Integer},
         uniprot_positions::AbstractVector{<:Integer},
-        pdb_rows;
-        vote::Symbol
+        pdb_rows
 )
     n_positions = length(residue_labels)
     disprot = Float64.(residue_labels)
@@ -212,9 +148,6 @@ function _protein_aggregated_labels_row(
     end
 
     pdb_p = [n > 0 ? x / n : NaN for (n, x) in zip(pdb_n, pdb_x)]
-    rates = _final_binding_rates(disprot, uniprot, has_uniprot, pdb_n, pdb_p; vote = vote)
-    order_disorder = Float64.(in_idr)
-    disorder_binding = [in_idr[p] ? rates.rate[p] : NaN for p in 1:n_positions]
     pdb_labels = _source_labels(disprot, in_idr, pdb_n .> 0,
         [isnan(p) ? 0.0 : p for p in pdb_p])
     uniprot_labels = _source_labels(disprot, in_idr, fill(has_uniprot, n_positions),
@@ -224,11 +157,7 @@ function _protein_aggregated_labels_row(
         n_pdb = length(used_pdbs), pdb_ids = join(sort!(used_pdbs), ";"),
         has_uniprot = has_uniprot, disprot = _format_label_vector(disprot),
         uniprot = _format_label_vector(uniprot),
-        pdb_N = _format_label_vector(Float64.(pdb_n)), pdb_proba = _format_label_vector(pdb_p),
-        rate = _format_label_vector(rates.rate),
-        final_label = _format_label_vector(rates.final_label),
-        order_disorder = _format_label_vector(order_disorder),
-        disorder_binding = _format_label_vector(disorder_binding),
+        pdb_N = _format_label_vector(Float64.(pdb_n)),
         Label_PDB = _format_label_vector(pdb_labels.label),
         Label_PDB_disorder = _format_label_vector(pdb_labels.disorder),
         Label_PDB_binding = _format_label_vector(pdb_labels.binding),
@@ -240,7 +169,8 @@ end
 """
     build_aggregated_labels_table(dataset, uniprot_binding_sites, pdb_contacts;
         max_resolution = PDB_LABEL_MAX_RESOLUTION, keep_no_resolution = true,
-        keep_no_info = true, keep_pdb_without_partner = false, vote = :fraction)
+        keep_no_info = true, keep_pdb_without_partner = false,
+        min_identity = PDB_CONTACT_MIN_MAPPING_IDENTITY)
 
 Aggregate DisProt labels, UniProt binding sites (`build_uniprot_binding_sites_table`)
 and PDB contacts (`build_pdb_contacts_table`) into one row per DisProt protein.
@@ -249,12 +179,14 @@ PDB entries are used when their `status` is `ok` (or `no_heteromeric_partner`
 with `keep_pdb_without_partner = true`, counting observed residues without
 contact) and they pass the quality filter (`resolution < max_resolution`;
 entries without resolution or absent from the quality table are kept unless
-`keep_no_resolution` / `keep_no_info` are `false`). PDB contacts are only
-counted on DisProt disordered residues (labels `1`/`2`).
+`keep_no_resolution` / `keep_no_info` are `false`). Entries whose PDB/UniProt
+sequence `identity` is below `min_identity` are not used (doubtful mapping).
+PDB contacts are only counted on DisProt disordered residues (labels `1`/`2`).
 
 Only proteins with at least one used PDB entry are returned. Returns
 `(table, pdb_log)` where `pdb_log` gives, for every contacts row, whether the
-entry was used and why (`used`, `status`, `low_quality`, `no_resolved_position`).
+entry was used and why (`used`, `status:<status>`, `low_quality`,
+`low_identity`, `no_resolved_position`).
 """
 function build_aggregated_labels_table(
         dataset::AbstractDataFrame,
@@ -264,16 +196,14 @@ function build_aggregated_labels_table(
         keep_no_resolution::Bool = true,
         keep_no_info::Bool = true,
         keep_pdb_without_partner::Bool = false,
-        vote::Symbol = :fraction
+        min_identity::Real = PDB_CONTACT_MIN_MAPPING_IDENTITY
 )
-    vote in PDB_LABEL_VOTES ||
-        throw(ArgumentError("Unknown PDB vote $(repr(vote)); use one of $(PDB_LABEL_VOTES)."))
     _require_columns(dataset, [:protein_id, :protein_disprot_id, :residue_labels], "dataset")
     _require_columns(uniprot_binding_sites, [:protein_id, :residues_binding_in_uniprot],
         "uniprot_binding_sites")
     _require_columns(pdb_contacts,
         [:protein_disprot_id, :protein_id, :PDB, :status, :quality_category, :resolution,
-            :resolved_positions, :contact_positions], "pdb_contacts")
+            :identity, :resolved_positions, :contact_positions], "pdb_contacts")
 
     labels_by_protein = _dataset_residue_labels_by_protein(dataset)
     uniprot_by_protein = Dict(String(row.protein_id) =>
@@ -299,6 +229,9 @@ function build_aggregated_labels_table(
                 max_resolution = max_resolution, keep_no_resolution = keep_no_resolution,
                 keep_no_info = keep_no_info)
                 "low_quality"
+            elseif ismissing(row.identity) || isnan(row.identity) ||
+                   row.identity < min_identity
+                "low_identity"
             elseif ismissing(row.resolved_positions)
                 "no_resolved_position"
             else
@@ -310,7 +243,7 @@ function build_aggregated_labels_table(
         end
 
         aggregated = _protein_aggregated_labels_row(protein_disprot_id, protein_id, labels,
-            get(uniprot_by_protein, protein_id, Int[]), kept; vote = vote)
+            get(uniprot_by_protein, protein_id, Int[]), kept)
         aggregated === nothing || push!(table, aggregated)
     end
 
@@ -335,14 +268,9 @@ const _AGGREGATED_LABELS_COLUMN_DEFINITIONS = [
     "disprot" => "DisProt residue labels (`0`/`1`/`2`)",
     "uniprot" => "UniProt track: `2` in a binding site, `0` elsewhere, `NaN` if no UniProt annotation",
     "pdb_N" => "number of used PDB entries where the residue is observed",
-    "pdb_proba" => "fraction of those PDB entries where the residue contacts a heteromeric partner (`p_pdb`); contacts only counted on DisProt disordered residues",
-    "rate" => "binding evidence across methods: (DisProt `2` + UniProt `2` + PDB vote) / number of covering methods",
-    "final_label" => "`1 + rate` when `rate > 0`, otherwise the DisProt label clamped to `[0, 1]`",
-    "order_disorder" => "`1` for DisProt disordered residues (labels `1`/`2`), `0` otherwise",
-    "disorder_binding" => "`rate` on disordered residues, `NaN` otherwise",
     "Label_PDB" => "`0` ordered, `1 + p_pdb` disordered; residues observed in at least one used PDB",
     "Label_PDB_disorder" => "`0`/`1` DisProt disorder on residues observed in at least one used PDB",
-    "Label_PDB_binding" => "`p_pdb` on disordered residues observed in at least one used PDB",
+    "Label_PDB_binding" => "`p_pdb` on disordered residues observed in at least one used PDB: fraction of the `pdb_N` used PDB entries where the residue contacts a heteromeric partner chain",
     "Label_Uniprot" => "`0` ordered, `1` disordered, `2` disordered in a UniProt binding site; `NaN` if no UniProt annotation",
     "Label_Uniprot_disorder" => "`0`/`1` DisProt disorder; `NaN` if no UniProt annotation",
     "Label_Uniprot_binding" => "`0`/`1` UniProt binding site on disordered residues; `NaN` if no UniProt annotation"

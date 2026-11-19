@@ -9,8 +9,8 @@ using CSV
 using DataFrames
 using Plots
 using IDRBindingDataset:
+                         PDB_CONTACT_MIN_MAPPING_IDENTITY,
                          PDB_LABEL_MAX_RESOLUTION,
-                         PDB_LABEL_VOTES,
                          _AGGREGATED_LABELS_COLUMN_DEFINITIONS,
                          _parse_label_vector,
                          _relpath_from_repo,
@@ -49,14 +49,15 @@ labels. One row per DisProt protein with at least one used PDB entry, keyed by
 
 PDB entries are filtered here: status (`ok`, plus homo-oligomers with
 `--keep_pdb_without_partner`) and quality (`--max_resolution`,
-`--drop_no_resolution`, `--drop_no_info`). PDB contacts are only counted on
-DisProt disordered residues (labels `1`/`2`).
+`--drop_no_resolution`, `--drop_no_info`) and PDB/UniProt sequence identity
+(`--min_identity`). PDB contacts are only counted on DisProt disordered
+residues (labels `1`/`2`).
 
 Run from repository root:
   julia scripts/20_aggregated_labels.jl
 
 Complete example:
-  julia scripts/20_aggregated_labels.jl --dataset_path data/dataset/cluster_dataset_labels.csv.gz --uniprot_binding_sites_path data/derived/uniprot_binding_sites/uniprot_binding_sites.csv.gz --pdb_contacts_path data/derived/pdb_contacts/pdb_contacts.csv.gz --max_resolution 5.0 --pdb_vote fraction --plot_dir data/scratch/plots/aggregated_labels --output_dir data/derived/aggregated_labels
+  julia scripts/20_aggregated_labels.jl --dataset_path data/dataset/cluster_dataset_labels.csv.gz --uniprot_binding_sites_path data/derived/uniprot_binding_sites/uniprot_binding_sites.csv.gz --pdb_contacts_path data/derived/pdb_contacts/pdb_contacts.csv.gz --max_resolution 5.0 --min_identity 0.9 --plot_dir data/scratch/plots/aggregated_labels --output_dir data/derived/aggregated_labels
 
 The script activates and instantiates `scripts/Project.toml` internally.
 """,
@@ -85,13 +86,13 @@ The script activates and instantiates `scripts/Project.toml` internally.
         "--drop_no_info"
         help = "Do not use PDB entries absent from the PDB quality table."
         action = :store_true
+        "--min_identity"
+        help = "Do not use PDB entries whose PDB/UniProt sequence identity is below this value."
+        arg_type = Float64
+        default = PDB_CONTACT_MIN_MAPPING_IDENTITY
         "--keep_pdb_without_partner"
         help = "Also use PDB entries without heteromeric partner (observed residues, no contact)."
         action = :store_true
-        "--pdb_vote"
-        help = "PDB contribution to the final rate: fraction, any or majority."
-        arg_type = String
-        default = "fraction"
         "--plot_dir"
         help = "Directory for one PNG per protein (empty: no plots)."
         arg_type = String
@@ -103,9 +104,6 @@ The script activates and instantiates `scripts/Project.toml` internally.
     end
 
     parsed = parse_args(args, settings)
-    vote = Symbol(parsed["pdb_vote"])
-    vote in PDB_LABEL_VOTES ||
-        throw(ArgumentError("--pdb_vote must be one of $(join(PDB_LABEL_VOTES, ", "))."))
     (
         dataset_path = normpath(parsed["dataset_path"]),
         uniprot_binding_sites_path = normpath(parsed["uniprot_binding_sites_path"]),
@@ -114,7 +112,7 @@ The script activates and instantiates `scripts/Project.toml` internally.
         keep_no_resolution = !parsed["drop_no_resolution"],
         keep_no_info = !parsed["drop_no_info"],
         keep_pdb_without_partner = parsed["keep_pdb_without_partner"],
-        vote = vote,
+        min_identity = Float64(parsed["min_identity"]),
         plot_dir = isempty(parsed["plot_dir"]) ? nothing : normpath(parsed["plot_dir"]),
         output_dir = normpath(parsed["output_dir"])
     )
@@ -123,19 +121,15 @@ end
 """
     plot_protein_labels(row, output_path)
 
-Draw the DisProt, UniProt, aggregated PDB and final label tracks of one
+Draw the DisProt, UniProt (`Label_Uniprot`) and PDB (`Label_PDB`) tracks of one
 aggregated-labels row on a common `[0, 2]` scale (white = not covered).
 """
 function plot_protein_labels(row, output_path::AbstractString)
-    pdb_n = _parse_label_vector(row.pdb_N)
-    pdb_p = _parse_label_vector(row.pdb_proba)
-    pdb_track = [n == 0 ? NaN : p > 0 ? 1.0 + p : 0.0 for (n, p) in zip(pdb_n, pdb_p)]
     tracks = [
         "DisProt" => _parse_label_vector(row.disprot),
-        (row.has_uniprot ? "UniProt binding" : "UniProt (no annotation)") =>
-            _parse_label_vector(row.uniprot),
-        "PDB aggregated ($(row.n_pdb) PDB)" => pdb_track,
-        "Final label (1 + rate)" => _parse_label_vector(row.final_label)
+        (row.has_uniprot ? "Label_Uniprot" : "Label_Uniprot (no annotation)") =>
+            _parse_label_vector(row.Label_Uniprot),
+        "Label_PDB ($(row.n_pdb) PDB)" => _parse_label_vector(row.Label_PDB)
     ]
     matrix = permutedims(reduce(hcat, last.(tracks)))
     n_tracks, n_positions = size(matrix)
@@ -167,14 +161,15 @@ function main()
     contacts = DataFrame(CSV.File(options.pdb_contacts_path;
         types = Dict(:protein_disprot_id => String, :protein_id => String,
             :PDB => String, :status => String, :quality_category => String,
-            :resolution => Float64, :resolved_positions => String,
+            :resolution => Float64, :identity => Float64, :resolved_positions => String,
             :contact_positions => String)))
 
     result = build_aggregated_labels_table(dataset, uniprot, contacts;
         max_resolution = options.max_resolution,
         keep_no_resolution = options.keep_no_resolution,
         keep_no_info = options.keep_no_info,
-        keep_pdb_without_partner = options.keep_pdb_without_partner, vote = options.vote)
+        keep_pdb_without_partner = options.keep_pdb_without_partner,
+        min_identity = options.min_identity)
     table, pdb_log = result.table, result.pdb_log
 
     _write_csv_gz(table, output_path)
@@ -200,7 +195,8 @@ One row per DisProt protein with at least one used PDB entry. Each vector column
 has one value per residue of the UniProt sequence (`NaN` = not covered).
 PDB evidence counts, for each residue, the used PDB entries where it is
 observed (`pdb_N`) and the fraction where it contacts a heteromeric partner
-(`pdb_proba`); contacts are only counted on DisProt disordered residues.
+(`Label_PDB_binding`); contacts are only counted on DisProt disordered
+residues. Combined final labels are computed in a later step.
 `$(DEFAULT_PDB_LOG_FILENAME)` records, for every protein/PDB pair of the
 contacts table, whether it was used and why.
 """,
@@ -217,7 +213,7 @@ contacts table, whether it was used and why.
             "Use PDB without resolution" => options.keep_no_resolution,
             "Use PDB absent from quality table" => options.keep_no_info,
             "Use PDB without heteromeric partner" => options.keep_pdb_without_partner,
-            "PDB vote" => options.vote],
+            "Minimum PDB/UniProt identity" => options.min_identity],
         columns = _AGGREGATED_LABELS_COLUMN_DEFINITIONS)
 
     println("Aggregated labels written to $(output_path) (proteins=$(nrow(table)), PDB pairs used=$(count(pdb_log.used))/$(nrow(pdb_log))).")

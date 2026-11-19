@@ -14,28 +14,13 @@ using TestItems
     @test !_passes_pdb_quality("absent", missing; keep_no_info = false)
 end
 
-@testitem "Final rates and per-source labels" begin
+@testitem "Per-source labels and label vectors" begin
     using Test
-    using IDRBindingDataset: _pdb_vote, _final_binding_rates, _source_labels,
-                             _format_label_vector, _parse_label_vector
-
-    @test _pdb_vote(0.25, :fraction) == 0.25
-    @test _pdb_vote(0.25, :any) == 1.0
-    @test _pdb_vote(0.25, :majority) == 0.0
-    @test_throws ArgumentError _pdb_vote(0.5, :unknown)
+    using IDRBindingDataset: _source_labels, _format_label_vector, _parse_label_vector
 
     disprot = [0.0, 1.0, 2.0, 1.0]
-    uniprot = [0.0, 2.0, 0.0, 0.0]
-    pdb_n = [1, 2, 0, 1]
-    pdb_p = [0.0, 0.5, NaN, 0.0]
-    rates = _final_binding_rates(disprot, uniprot, true, pdb_n, pdb_p)
-    @test rates.n_methods == [3, 3, 2, 3]
-    @test rates.x_methods == [0.0, 1.5, 1.0, 0.0]
-    @test rates.rate ≈ [0.0, 0.5, 0.5, 0.0]
-    @test rates.final_label ≈ [0.0, 1.5, 1.5, 1.0]
-
     in_idr = [false, true, true, true]
-    pdb = _source_labels(disprot, in_idr, pdb_n .> 0, [0.0, 0.5, 0.0, 0.0])
+    pdb = _source_labels(disprot, in_idr, [true, true, false, true], [0.0, 0.5, 0.0, 0.0])
     @test isequal(pdb.label, [0.0, 1.5, NaN, 1.0])
     @test isequal(pdb.disorder, [0.0, 1.0, NaN, 1.0])
     @test isequal(pdb.binding, [NaN, 0.5, NaN, 0.0])
@@ -63,6 +48,7 @@ end
         status = ["ok", "ok", "no_heteromeric_partner", "ok", "no_mmcif"],
         quality_category = ["resolved", "no_resolution", "resolved", "resolved", "absent"],
         resolution = [2.0, missing, 2.0, 8.0, missing],
+        identity = [1.0, 0.95, 1.0, 1.0, NaN],
         # 1aaa: contacts on 1 (ordered, ignored) and 4; 2bbb: no contact.
         resolved_positions = ["1-4", "3-6", "1-6", "1-6", missing],
         contact_positions = ["1;4", missing, missing, "5", missing])
@@ -75,24 +61,34 @@ end
     @test only(table.pdb_ids) == "1AAA;2BBB"
     @test only(table.has_uniprot)
     @test _parse_label_vector(only(table.pdb_N)) == [1, 1, 2, 2, 1, 1]
-    @test isequal(_parse_label_vector(only(table.pdb_proba)),
-        [0.0, 0.0, 0.0, 0.5, 0.0, 0.0])
+    for removed in ("pdb_proba", "rate", "final_label", "order_disorder",
+        "disorder_binding")
+        @test !(removed in names(table))
+    end
+    @test isequal(_parse_label_vector(only(table.Label_PDB_binding)),
+        [NaN, NaN, 0.0, 0.5, 0.0, 0.0])
     @test isequal(_parse_label_vector(only(table.Label_PDB)),
         [0.0, 0.0, 1.0, 1.5, 1.0, 1.0])
     @test isequal(_parse_label_vector(only(table.Label_Uniprot)),
         [0.0, 0.0, 2.0, 1.0, 1.0, 1.0])
     @test isequal(_parse_label_vector(only(table.Label_Uniprot_binding)),
         [NaN, NaN, 1.0, 0.0, 0.0, 0.0])
-    # Residue 5: DisProt 2, UniProt 0, PDB 0 -> rate 1/3.
-    @test _parse_label_vector(only(table.rate))[5] ≈ 0.333
 
     @test result.pdb_log.reason ==
           [
         "used", "used", "status:no_heteromeric_partner", "low_quality", "status:no_mmcif"]
 
+    # A doubtful PDB/UniProt mapping (identity < 0.9) is not used.
+    low_identity = copy(contacts)
+    low_identity.identity[2] = 0.85
+    filtered = build_aggregated_labels_table(dataset, uniprot, low_identity)
+    @test only(filtered.table.pdb_ids) == "1AAA"
+    @test filtered.pdb_log.reason[2] == "low_identity"
+    relaxed = build_aggregated_labels_table(dataset, uniprot, low_identity;
+        min_identity = 0.8)
+    @test only(relaxed.table.n_pdb) == 2
+
     with_homomers = build_aggregated_labels_table(dataset, uniprot, contacts;
         keep_pdb_without_partner = true, max_resolution = 10.0).table
     @test only(with_homomers.n_pdb) == 4
-    @test_throws ArgumentError build_aggregated_labels_table(dataset, uniprot, contacts;
-        vote = :unknown)
 end

@@ -88,10 +88,10 @@ export fetch_uniprot_entries
 export build_uniprot_binding_sites_table
 export PDB_CONTACT_CUTOFF_ANGSTROM
 export PDB_CONTACT_STATUSES
+export PDB_CONTACT_MIN_MAPPING_IDENTITY
 export read_pdb_quality_table
 export build_pdb_contacts_table
 export PDB_LABEL_MAX_RESOLUTION
-export PDB_LABEL_VOTES
 export build_aggregated_labels_table
 
 include("raw_data_download.jl")

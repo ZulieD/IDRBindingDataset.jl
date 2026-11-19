@@ -42,7 +42,9 @@ end
 
 Return the first existing `<pdb><extension>` file found in `dirs`, looking both
 directly inside each directory and inside the PDB-style middle-letters
-subdirectory (e.g. `ab/1abc.xml.gz`). Returns `nothing` when absent.
+subdirectory (e.g. `ab/1abc.xml.gz`). File and subdirectory names are tried in
+lowercase and in uppercase (`1abc.cif`, `1ABC.cif`, `AB/1ABC.cif`), since
+local mirrors use either. Returns `nothing` when absent.
 """
 function _find_pdb_entry_file(
         dirs,
@@ -50,10 +52,13 @@ function _find_pdb_entry_file(
         extensions
 )::Union{Nothing, String}
     entry = _pdb_entry_id(pdb)
-    for dir in dirs, extension in extensions
-
-        for path in (joinpath(dir, entry * extension),
-            joinpath(dir, entry[2:3], entry * extension))
+    names = unique([entry, uppercase(entry)])
+    for dir in dirs, extension in extensions, name in names
+        path = joinpath(dir, name * extension)
+        isfile(path) && return path
+        length(name) >= 3 || continue
+        for middle in unique([lowercase(name[2:3]), uppercase(name[2:3])])
+            path = joinpath(dir, middle, name * extension)
             isfile(path) && return path
         end
     end

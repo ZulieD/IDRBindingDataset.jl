@@ -1,0 +1,142 @@
+  Activating project at `/stockage/EQUIPES/AMIG/MEMBERS/julie.daniel/IDP/scripts/env/env1_020226`
+
+================================================================================
+DisProt (final dataset)  (data/dataset/cluster_dataset_labels.csv.gz)
+================================================================================
+3199 rows × 20 columns
+Rows with at least one missing value: 2791 / 3199 (complete rows: 408)
+Missing values per column:
+  protein_oldest_pdb_release_date 418
+  cluster_fixed_dataset_label     440
+  protein_elm_clusters            2757
+
+Example rows (5 without missing value):
+5×20 DataFrame
+ Row │ protein_id  global_representative_id  local_representative_id  final_cluster_id  protein_disprot_id  protein_has_idr_binding_annotation  protein_oldest_pdb_release_date  protein_has_pdb_structure  protein_has_missing_pdb_release_date  protein_in_caid2  protein_in_caid3  protein_in_af2_training_set  cluster_in_af2_training_set  cluster_in_caid2  cluster_in_caid3  cluster_fixed_dataset_label  protein_elm_clusters    cluster_dataset_label  sequence                                   residue_labels
+     │ String      String                    String                   String            String              String                              Union{Missing, String}           String                     String                                String            String            String                       String                       String            String            Union{Missing, String}       Union{Missing, String}  String                 String                                     String
+─────┼───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+   1 │ B7UM99      B7UM99                    B7UM99                   cluster_000107    DP04161             true                                2006-04-24                       true                       false                                 false             true              true                         true                         false             true              caid                         1                       testing                MPIGNLGNNVNGNHLIPPAPPLPSQTDGAARGGTGHLISS…  1111111111111111111111111111111111222222…
+   2 │ D0NBE6      D0NBE6                    D0NBE6                   cluster_000127    DP03676             true                                2016-08-03                       true                       false                                 false             false             true                         true                         false             false             training                     1                       training               MRFQSIMMLTITCAGTCLAEGLAPSDQAYRPTMTGLKSRL…  0000000000000000000000000000000000000000…
+   3 │ O00268      O00268                    A0A0B4JDC9               cluster_000006    DP01170             true                                2002-09-26                       true                       false                                 false             false             true                         true                         true              false             caid                         1                       testing                MAAGSDLLDEVFFNSEVDEKVVSDLVGSLESQLAASAAHH…  0000000000000000000000000000000000000000…
+   4 │ O00418      O00418                    O00418                   cluster_000204    DP04157             false                               2016-09-07                       true                       false                                 false             false             true                         true                         false             false             training                     1                       training               MADEDLIFRLEGVDGGQSPRAGHDGDSDGDSDDEEGYFIC…  0000000000000000000000000000000000000000…
+   5 │ O00499      O00499                    O00499                   cluster_000207    DP04169             true                                2003-09-30                       true                       false                                 false             true              true                         true                         false             true              caid                         1                       testing                MAEMGSKGVTAGKIASNVQKKLTRAQEKVLQKLGKADETK…  2222222222222222222222222222222221111111…
+
+================================================================================
+DisProt -> PDB mapping  (data/derived/disprot_pdb_mapping/disprot_pdb_mapping.csv.gz)
+================================================================================
+56147 rows × 11 columns
+Rows with at least one missing value: 2361 / 56147 (complete rows: 53786)
+Missing values per column:
+  CHAIN_KEPT                      3
+  N_MISSING                       2361
+  N_MISSING_DISORDER              2361
+  N_MISSING_DISORDER_BINDING      2361
+
+Example rows (5 without missing value):
+5×11 DataFrame
+ Row │ protein_disprot_id  protein_id  PDB     CHAIN   SP_BEG  SP_END  COMPLETE  CHAIN_KEPT  N_MISSING  N_MISSING_DISORDER  N_MISSING_DISORDER_BINDING
+     │ String              String      String  String  String  String  String    String?     String?    String?             String?
+─────┼─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+   1 │ DP03773             A0A024B7W1  5goz    A;B;C   2524    2785    false     A           0          0                   0
+   2 │ DP03773             A0A024B7W1  5gp1    A;B;C   2524    2785    false     A           0          0                   0
+   3 │ DP03773             A0A024B7W1  5h30    D;E;F   216     290     false     D;E;F       0          0                   0
+   4 │ DP03773             A0A024B7W1  5h30    A;B;C   291     794     false     A;B;C       0          0                   0
+   5 │ DP03773             A0A024B7W1  5h32    A;B;C   291     693     false     A;B;C       0          0                   0
+
+================================================================================
+UniProt binding sites  (data/derived/uniprot_binding_sites/uniprot_binding_sites.csv.gz)
+================================================================================
+3199 rows × 6 columns
+Rows with at least one missing value: 3038 / 3199 (complete rows: 161)
+Missing values per column:
+  residues_binding_in_uniprot     3038
+  publication_mention_binding     3038
+
+Example rows (5 without missing value):
+5×6 DataFrame
+ Row │ protein_disprot_id  protein_id  uniprot_entry_found  binding_in_uniprot  residues_binding_in_uniprot  publication_mention_binding
+     │ String              String      String               String              Union{Missing, String}       Union{Missing, String}
+─────┼───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+   1 │ DP04369             A0A0H3JPC6  true                 true                207;211-213                  1;1
+   2 │ DP03615             A0A1Y0DDB3  true                 true                59                           0
+   3 │ DP03362             B0Y813      true                 true                127                          0
+   4 │ DP01001             B8YB65      true                 true                32                           1
+   5 │ DP01199             B9KDD4      true                 true                293;319                      1;1
+
+================================================================================
+PDB contacts  (data/derived/pdb_contacts/pdb_contacts.csv.gz)
+================================================================================
+20789 rows × 14 columns
+Rows per `quality_category`:
+  resolved                           19718  (94.8 %)
+  no_resolution                       1070  (5.1 %)
+  absent                                 1  (0.0 %)
+Rows per `status`:
+  no_heteromeric_partner              9981  (48.0 %)
+  ok                                  7215  (34.7 %)
+  no_target_chain                     2182  (10.5 %)
+  no_sifts                             952  (4.6 %)
+  no_mapped_residue                    459  (2.2 %)
+Rows with at least one missing value: 19428 / 20789 (complete rows: 1361)
+Missing values per column:
+  resolution                      1071
+  chains                          3134
+  partner_chains                  13224
+  homo_chains_excluded            18444
+  resolved_positions              3593
+  contact_positions               13779
+
+Example rows (5 without missing value):
+5×14 DataFrame
+ Row │ protein_disprot_id  protein_id  PDB     method  resolution  quality_category  status  chains       partner_chains           homo_chains_excluded  identity             resolved_positions  n_contacts  contact_positions
+     │ String              String      String  String  String?     String            String  String?      String?                  String?               String               String?             String      String?
+─────┼──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+   1 │ DP00005             P03045      5lm7    X-RAY   3.35        resolved          ok      F            A;B;C;E;G;H;J            D;I                   0.04938271604938271  1-81                8           37;65-67;69;77-78;81
+   2 │ DP00005             P03045      5ms0    EM      9.8         resolved          ok      N            B;C;D;E;F;G;H;I;J;K;L;M  A                     0.07142857142857142  3-86                40          3;6-7;14-18;20-27;29;31;37;46-49;58-63;6…
+   3 │ DP00012             P13569      6gkd    X-RAY   2.99        resolved          ok      A;F;I;L;O;R  B;C;E;H;K;N;Q            D;G;J;M;P             0.9953703703703703   389-404;437-636     47          457-459;503;512-515;517-519;521-522;526-…
+   4 │ DP00025             P14738      2rky    X-RAY   1.8         resolved          ok      B;D          A                        C                     1.0                  510-528             18          511-528
+   5 │ DP00025             P14738      2rl0    X-RAY   2.0         resolved          ok      C;E;G;H;J;L  A;I;K                    B;D;F                 1.0                  639-655             17          639-655
+
+================================================================================
+Aggregated labels  (data/derived/aggregated_labels/aggregated_labels.csv.gz)
+================================================================================
+539 rows × 14 columns
+Rows with at least one missing value: 0 / 539 (complete rows: 539)
+No missing value in any column.
+
+Example rows (5 without missing value):
+5×14 DataFrame
+ Row │ protein_disprot_id  protein_id  n_pdb   pdb_ids                                    has_uniprot  disprot                                    uniprot                                    pdb_N                                      Label_PDB                                  Label_PDB_disorder                         Label_PDB_binding                          Label_Uniprot                              Label_Uniprot_disorder                     Label_Uniprot_binding
+     │ String              String      String  String                                     String       String                                     String                                     String                                     String                                     String                                     String                                     String                                     String                                     String
+─────┼───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+   1 │ DP00005             P03045      1       1QFQ                                       false        [2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0…  [NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN…  [0.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0…  [NaN,2.0,2.0,2.0,2.0,2.0,2.0,2.0,1.0,2.0…  [NaN,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0…  [NaN,1.0,1.0,1.0,1.0,1.0,1.0,1.0,0.0,1.0…  [NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN…  [NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN…  [NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN…
+   2 │ DP00006             P00004      6       1U75;2PCB;3JBT;4NFG;5WVE;8ZXR              true         [2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0…  [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0…  [0.0,5.0,5.0,5.0,5.0,5.0,5.0,5.0,5.0,5.0…  [NaN,1.0,1.0,1.0,1.0,1.6,1.2,1.0,1.6,1.6…  [NaN,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0…  [NaN,0.0,0.0,0.0,0.0,0.6,0.2,0.0,0.6,0.6…  [1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0…  [1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0…  [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0…
+   3 │ DP00012             P13569      21      2LOB;3ISW;5UAK;6GJQ;6GJS;6GJU;6GK4;6GKD;…  false        [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0…  [NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN…  [10.0,10.0,12.0,12.0,14.0,14.0,14.0,14.0…  [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0…  [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0…  [NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN…  [NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN…  [NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN…  [NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN…
+   4 │ DP00015             P61926      7       1Q8W;1SMH;1SVE;1SVG;4XW4;4XW5;4XW6         false        [2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0…  [NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN…  [0.0,0.0,0.0,0.0,0.0,7.0,7.0,7.0,7.0,7.0…  [NaN,NaN,NaN,NaN,NaN,1.0,2.0,2.0,1.0,2.0…  [NaN,NaN,NaN,NaN,NaN,1.0,1.0,1.0,1.0,1.0…  [NaN,NaN,NaN,NaN,NaN,0.0,1.0,1.0,0.0,1.0…  [NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN…  [NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN…  [NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN…
+   5 │ DP00016             P38936      8       1AXC;2ZVW;4RJF;5E0U;6P8H;7KQ0;7KQ1;8GJF    false        [2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0…  [NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN…  [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0…  [NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN…  [NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN…  [NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN…  [NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN…  [NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN…  [NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN…
+
+================================================================================
+Aggregated labels PDB log  (data/derived/aggregated_labels/aggregated_labels_pdb_log.csv.gz)
+================================================================================
+20789 rows × 5 columns
+Rows per `reason`:
+  status:no_heteromeric_partner       9981  (48.0 %)
+  used                                5636  (27.1 %)
+  status:no_target_chain              2182  (10.5 %)
+  low_identity                        1280  (6.2 %)
+  status:no_sifts                      952  (4.6 %)
+  status:no_mapped_residue             459  (2.2 %)
+  low_quality                          299  (1.4 %)
+Rows with at least one missing value: 0 / 20789 (complete rows: 20789)
+No missing value in any column.
+
+Example rows (5 without missing value):
+5×5 DataFrame
+ Row │ protein_disprot_id  protein_id  PDB     used    reason
+     │ String              String      String  String  String
+─────┼────────────────────────────────────────────────────────────────────────
+   1 │ DP00005             P03045      1qfq    true    used
+   2 │ DP00005             P03045      5lm7    false   low_identity
+   3 │ DP00005             P03045      5ms0    false   low_quality
+   4 │ DP00005             P03045      6gov    false   status:no_target_chain
+   5 │ DP00005             P03045      7a4f    false   low_identity

@@ -292,10 +292,10 @@ end
     _chain_contact_positions(query, pdb_to_uniprot, hits, protein_sequence)
 
 Map one chain's residues to UniProt positions and split interface `hits`.
-Returns `(resolved, contacts, n_unmapped_contacts, n_mapped, n_identical)`:
-`resolved`/`contacts` are UniProt positions of observed / in-contact residues,
-`n_unmapped_contacts` counts contacts without UniProt mapping and `n_identical`
-the mapped residues whose amino acid matches `protein_sequence`.
+Returns `(resolved, contacts, n_mapped, n_identical)`: `resolved`/`contacts`
+are UniProt positions of observed / in-contact residues, `n_mapped` the
+residues mapped to UniProt and `n_identical` those whose amino acid matches
+`protein_sequence` (used for `identity`).
 """
 function _chain_contact_positions(
         query,
@@ -305,20 +305,17 @@ function _chain_contact_positions(
 )
     sequence = collect(protein_sequence)
     resolved, contacts = Set{Int}(), Set{Int}()
-    n_unmapped = n_mapped = n_identical = 0
+    n_mapped = n_identical = 0
     for (index, residue) in enumerate(query)
         position = get(pdb_to_uniprot, residue.id.number, 0)
-        if !(1 <= position <= length(sequence))
-            index in hits && (n_unmapped += 1)
-            continue
-        end
+        1 <= position <= length(sequence) || continue
         n_mapped += 1
         _one_letter_code(residue.id.name) == sequence[position] && (n_identical += 1)
         push!(resolved, position)
         index in hits && push!(contacts, position)
     end
-    (resolved = resolved, contacts = contacts, n_unmapped_contacts = n_unmapped,
-        n_mapped = n_mapped, n_identical = n_identical)
+    (resolved = resolved, contacts = contacts, n_mapped = n_mapped,
+        n_identical = n_identical)
 end
 
 # ---------------------------------------------------------------------------
@@ -382,10 +379,9 @@ function _empty_pdb_contacts_table()::DataFrame
         method = String[], resolution = Union{Missing, Float64}[],
         quality_category = String[], status = String[],
         chains = Union{Missing, String}[], partner_chains = Union{Missing, String}[],
-        homo_chains_excluded = Union{Missing, String}[], n_mapped = Int[],
-        identity = Float64[], n_resolved = Int[],
+        homo_chains_excluded = Union{Missing, String}[], identity = Float64[],
         resolved_positions = Union{Missing, String}[], n_contacts = Int[],
-        contact_positions = Union{Missing, String}[], n_contacts_unmapped = Int[])
+        contact_positions = Union{Missing, String}[])
 end
 
 """
@@ -412,19 +408,16 @@ function _protein_pdb_contacts_row(
 )
     entry = _pdb_entry_id(pdb)
     row(status; chains = String[], partners = String[], homo = String[],
-        n_mapped = 0, identity = NaN, resolved = Int[], contacts = Int[],
-        n_unmapped = 0) = (
+        identity = NaN, resolved = Int[], contacts = Int[]) = (
         protein_disprot_id = String(protein_disprot_id), protein_id = String(protein_id),
         PDB = entry, method = quality === nothing ? "missing" : quality.method,
         resolution = quality === nothing ? missing : quality.resolution,
         quality_category = string(_pdb_quality_category(quality)), status = status,
         chains = _optional_chain_list(chains),
         partner_chains = _optional_chain_list(partners),
-        homo_chains_excluded = _optional_chain_list(homo), n_mapped = n_mapped,
-        identity = identity, n_resolved = length(resolved),
+        homo_chains_excluded = _optional_chain_list(homo), identity = identity,
         resolved_positions = _format_position_ranges(resolved),
-        n_contacts = length(contacts), contact_positions = _format_position_ranges(contacts),
-        n_contacts_unmapped = n_unmapped)
+        n_contacts = length(contacts), contact_positions = _format_position_ranges(contacts))
 
     mmcif = _mmcif_path(entry; mmcif_dirs = mmcif_dirs,
         download_dir = mmcif_download_dir, logger = logger)
@@ -448,7 +441,7 @@ function _protein_pdb_contacts_row(
     sifts_records = _read_sifts_residue_records(sifts)
 
     resolved, contacts = Set{Int}(), Set{Int}()
-    n_mapped = n_identical = n_unmapped = 0
+    n_mapped = n_identical = 0
     for chain in chains
         query = [residue
                  for residue in residues
@@ -462,7 +455,6 @@ function _protein_pdb_contacts_row(
         union!(contacts, chain_result.contacts)
         n_mapped += chain_result.n_mapped
         n_identical += chain_result.n_identical
-        n_unmapped += chain_result.n_unmapped_contacts
     end
 
     identity = n_mapped == 0 ? NaN : n_identical / n_mapped
@@ -472,8 +464,7 @@ function _protein_pdb_contacts_row(
     status = n_mapped == 0 ? "no_mapped_residue" :
              isempty(partners) ? "no_heteromeric_partner" : "ok"
     row(status; chains = chains, partners = partners, homo = homo_excluded,
-        n_mapped = n_mapped, identity = identity, resolved = resolved,
-        contacts = contacts, n_unmapped = n_unmapped)
+        identity = identity, resolved = resolved, contacts = contacts)
 end
 
 """
@@ -578,11 +569,8 @@ const _PDB_CONTACTS_COLUMN_DEFINITIONS = [
     "chains" => "protein chains of the PDB entry used (SIFTS chains present in the mmCIF, `;`-separated)",
     "partner_chains" => "heteromeric partner chains (polymer chains that are not copies of the protein)",
     "homo_chains_excluded" => "other copies of the protein excluded from partners (k-mer identity)",
-    "n_mapped" => "observed protein residues mapped to the UniProt sequence (all protein chains)",
-    "identity" => "fraction of mapped residues whose amino acid matches the UniProt sequence (`NaN` if none)",
-    "n_resolved" => "number of distinct UniProt positions observed in the structure",
+    "identity" => "fraction of observed protein residues mapped to UniProt (all protein chains) whose amino acid matches the UniProt sequence (`NaN` if none); entries below `PDB_CONTACT_MIN_MAPPING_IDENTITY` are not used for the aggregated labels",
     "resolved_positions" => "UniProt positions observed in the structure, as ranges (`12-40;55`)",
     "n_contacts" => "number of distinct UniProt positions in contact with a partner chain",
-    "contact_positions" => "UniProt positions in contact with a partner chain (heavy atoms within the cutoff), as ranges; all residues, not only disordered ones",
-    "n_contacts_unmapped" => "residues in contact without UniProt mapping (e.g. tags)"
+    "contact_positions" => "UniProt positions in contact with a partner chain (heavy atoms within the cutoff), as ranges; all residues, not only disordered ones"
 ]

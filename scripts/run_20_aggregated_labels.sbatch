@@ -16,5 +16,5 @@ cd /stockage/EQUIPES/AMIG/MEMBERS/julie.daniel/IDRBindingDataset.jl || exit 1
 # Remove `--plot_dir ...` to skip the PNG plots.
 "$JULIA" scripts/20_aggregated_labels.jl \
     --max_resolution 5.0 \
-    --pdb_vote fraction \
+    --min_identity 0.9 \
     --plot_dir data/scratch/plots/aggregated_labels

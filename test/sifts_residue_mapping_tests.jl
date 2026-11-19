@@ -20,6 +20,17 @@ using TestItems
     @test _find_pdb_entry_file([flat_dir, nested_dir], "2xyz", extensions) == flat_path
     @test _find_pdb_entry_file([flat_dir], "9zzz", extensions) === nothing
     @test _sifts_xml_path("9zzz"; sifts_xml_dirs = [flat_dir]) === nothing
+
+    # Local mirrors may use uppercase file names (e.g. `101M.cif`).
+    upper_dir = mktempdir()
+    upper_path = joinpath(upper_dir, "101M.cif")
+    write(upper_path, "x")
+    mkpath(joinpath(upper_dir, "BC"))
+    upper_nested = joinpath(upper_dir, "BC", "1BCD.cif")
+    write(upper_nested, "x")
+    @test _find_pdb_entry_file([upper_dir], "101m", (".cif",)) == upper_path
+    @test _find_pdb_entry_file([upper_dir], "101M", (".cif", ".cif.gz")) == upper_path
+    @test _find_pdb_entry_file([upper_dir], "1bcd", (".cif",)) == upper_nested
 end
 
 @testitem "SIFTS residue records map PDB numbers to UniProt positions" begin
