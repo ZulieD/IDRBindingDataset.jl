@@ -98,6 +98,9 @@ export fetch_bmrb_uniprot_mapping
 export parse_bmrb_uniprot_mapping
 export parse_bmrb_entry
 export build_disprot_bmrb_mapping_table
+export CHEMICAL_SHIFT_DEFAULT_SETTINGS
+export CHEMICAL_SHIFT_CRITERIA
+export build_chemical_shift_labels
 
 include("raw_data_download.jl")
 include("shared_helpers.jl")
@@ -125,5 +128,6 @@ include("uniprot_binding_sites.jl")
 include("pdb_contacts.jl")
 include("aggregated_labels.jl")
 include("bmrb_mapping.jl")
+include("chemical_shift_labels.jl")
 
 end

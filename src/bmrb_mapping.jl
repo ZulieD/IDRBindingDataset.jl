@@ -446,6 +446,20 @@ function _bmrb_temperature_kelvin(value::Union{Missing, Float64}, units::Abstrac
 end
 
 """
+    _bmrb_concentration_mM(value, units)
+
+Concentration in mM: `M` values are multiplied by 1000 and `uM` values divided
+by 1000; other units (`mM`, `%`, ...) are kept as deposited.
+"""
+function _bmrb_concentration_mM(value::Union{Missing, Float64}, units::AbstractString)
+    ismissing(value) && return missing
+    unit = lowercase(strip(units))
+    unit == "m" && return 1000 * value
+    unit in ("um", "µm", "μm") && return value / 1000
+    value
+end
+
+"""
     _bmrb_sample_conditions(saveframes)
 
 `Dict(sample_condition_list_id => (pH, temperature_K, ionic_strength_mM))`.
@@ -506,6 +520,7 @@ function _bmrb_entry_metadata(saveframes, entities::AbstractDataFrame)
     samples = Dict{String, NamedTuple}()
     for saveframe in _bmrb_saveframes(saveframes, "sample")
         buffer = String[]
+        buffer_mM = Dict{String, Union{Missing, Float64}}()
         for loop in saveframe.loops
             loop.category == "Sample_component" || continue
             for row in eachrow(loop.table)
@@ -520,11 +535,13 @@ function _bmrb_entry_metadata(saveframes, entities::AbstractDataFrame)
                 concentration = something(_bmrb_cell(row, "Concentration_val"), "?")
                 units = something(_bmrb_cell(row, "Concentration_val_units"), "")
                 push!(buffer, strip("$(name) $(concentration) $(units)"))
+                buffer_mM[lower] = _bmrb_concentration_mM(
+                    _bmrb_float(_bmrb_cell(row, "Concentration_val")), units)
             end
         end
         samples[something(_bmrb_tag(saveframe, "ID"), "?")] = (
             solvent = something(_bmrb_tag(saveframe, "Solvent_system"), ""),
-            buffer = sort!(buffer))
+            buffer = sort!(buffer), buffer_mM = buffer_mM)
     end
 
     n15_widths = Dict{String, Float64}()   # Experiment_ID => 15N sweep width (ppm)
@@ -547,6 +564,64 @@ function _bmrb_entry_metadata(saveframes, entities::AbstractDataFrame)
     end
     (spectrometers = spectrometers, experiments = experiments, samples = samples,
         n15_widths = n15_widths)
+end
+
+"""
+    _bmrb_shift_list_metadata(shift_list, metadata)
+
+Experimental metadata of one assigned chemical-shift list, through the
+experiments and samples it links to (the whole entry when it links none):
+`(experiments, spectrometers, fields_MHz, solvents, buffer, buffer_mM,
+n15_sweep_width_ppm)`. `buffer_mM` maps lowercase buffer components to their
+concentration in mM (see `_bmrb_concentration_mM`).
+"""
+function _bmrb_shift_list_metadata(shift_list::BMRBSaveframe, metadata)
+    experiment_ids, sample_ids = String[], String[]
+    for loop in shift_list.loops
+        loop.category == "Chem_shift_experiment" || continue
+        for row in eachrow(loop.table)
+            experiment = _bmrb_cell(row, "Experiment_ID")
+            experiment === nothing || push!(experiment_ids, experiment)
+            sample = _bmrb_cell(row, "Sample_ID")
+            sample === nothing || push!(sample_ids, sample)
+        end
+    end
+    # Without explicit links, the whole entry describes the list.
+    isempty(experiment_ids) && (experiment_ids = sort!(collect(keys(metadata.experiments))))
+    for experiment in experiment_ids
+        sample = get(metadata.experiments, experiment, (sample = nothing,)).sample
+        sample === nothing || push!(sample_ids, sample)
+    end
+    isempty(sample_ids) && (sample_ids = sort!(collect(keys(metadata.samples))))
+    unique!(sample_ids)
+    spectrometer_ids = unique([metadata.experiments[e].spectrometer
+                               for e in experiment_ids
+                               if haskey(metadata.experiments, e) &&
+        metadata.experiments[e].spectrometer !== nothing])
+    isempty(spectrometer_ids) &&
+        (spectrometer_ids = sort!(collect(keys(metadata.spectrometers))))
+    spectrometers = [metadata.spectrometers[i]
+                     for i in spectrometer_ids
+                     if haskey(metadata.spectrometers, i)]
+    samples = [metadata.samples[i] for i in sample_ids if haskey(metadata.samples, i)]
+    widths = [metadata.n15_widths[e]
+              for e in experiment_ids
+              if haskey(metadata.n15_widths, e)]
+    buffer_mM = Dict{String, Union{Missing, Float64}}()
+    for sample in samples
+        merge!(buffer_mM, sample.buffer_mM)
+    end
+    (
+        experiments = unique(filter(!isempty,
+            [get(metadata.experiments, e, (name = "",)).name for e in experiment_ids])),
+        spectrometers = unique(filter(!isempty, [s.model for s in spectrometers])),
+        fields_MHz = unique(Float64[s.field_MHz
+                                    for s in spectrometers
+                                    if !ismissing(s.field_MHz)]),
+        solvents = unique(filter(!isempty, [s.solvent for s in samples])),
+        buffer = unique(reduce(vcat, [s.buffer for s in samples]; init = String[])),
+        buffer_mM = buffer_mM,
+        n15_sweep_width_ppm = isempty(widths) ? missing : minimum(widths))
 end
 
 """
@@ -683,38 +758,7 @@ function _bmrb_entry_rows(
         condition = get(conditions, something(condition_id, "?"),
             (pH = missing, temperature_K = missing, ionic_strength_mM = missing))
 
-        experiment_ids, sample_ids = String[], String[]
-        for loop in shift_list.loops
-            loop.category == "Chem_shift_experiment" || continue
-            for row in eachrow(loop.table)
-                experiment = _bmrb_cell(row, "Experiment_ID")
-                experiment === nothing || push!(experiment_ids, experiment)
-                sample = _bmrb_cell(row, "Sample_ID")
-                sample === nothing || push!(sample_ids, sample)
-            end
-        end
-        # Without explicit links, the whole entry describes the list.
-        isempty(experiment_ids) &&
-            (experiment_ids = sort!(collect(keys(metadata.experiments))))
-        for experiment in experiment_ids
-            sample = get(metadata.experiments, experiment, (sample = nothing,)).sample
-            sample === nothing || push!(sample_ids, sample)
-        end
-        isempty(sample_ids) && (sample_ids = sort!(collect(keys(metadata.samples))))
-        unique!(sample_ids)
-        spectrometer_ids = unique([metadata.experiments[e].spectrometer
-                                   for e in experiment_ids
-                                   if haskey(metadata.experiments, e) &&
-            metadata.experiments[e].spectrometer !== nothing])
-        isempty(spectrometer_ids) &&
-            (spectrometer_ids = sort!(collect(keys(metadata.spectrometers))))
-        spectrometers = [metadata.spectrometers[i]
-                         for i in spectrometer_ids
-                         if haskey(metadata.spectrometers, i)]
-        samples = [metadata.samples[i] for i in sample_ids if haskey(metadata.samples, i)]
-        widths = [metadata.n15_widths[e]
-                  for e in experiment_ids
-                  if haskey(metadata.n15_widths, e)]
+        list_metadata = _bmrb_shift_list_metadata(shift_list, metadata)
 
         counts = (n_shifts = 0, n_residues = 0,
             atoms = Dict(atom => 0 for atom in BMRB_BACKBONE_ATOMS))
@@ -734,19 +778,13 @@ function _bmrb_entry_rows(
                     :sample_condition_list_id => something(condition_id, missing),
                     :pH => condition.pH, :temperature_K => condition.temperature_K,
                     :ionic_strength_mM => condition.ionic_strength_mM,
-                    :solvent => _optional_join(unique(filter(!isempty,
-                        [s.solvent for s in samples]))),
-                    :buffer =>
-                        _optional_join(unique(reduce(vcat, [s.buffer for s in samples];
-                            init = String[]))),
-                    :experiments => _optional_join(unique(filter(!isempty,
-                        [get(metadata.experiments, e, (name = "",)).name
-                         for e in experiment_ids]))),
-                    :spectrometers => _optional_join(unique(filter(!isempty,
-                        [s.model for s in spectrometers]))),
-                    :field_strengths_MHz => _optional_join(unique(string.(
-                        [s.field_MHz for s in spectrometers if !ismissing(s.field_MHz)]))),
-                    :n15_sweep_width_ppm => isempty(widths) ? missing : minimum(widths),
+                    :solvent => _optional_join(list_metadata.solvents),
+                    :buffer => _optional_join(list_metadata.buffer),
+                    :experiments => _optional_join(list_metadata.experiments),
+                    :spectrometers => _optional_join(list_metadata.spectrometers),
+                    :field_strengths_MHz =>
+                        _optional_join(string.(list_metadata.fields_MHz)),
+                    :n15_sweep_width_ppm => list_metadata.n15_sweep_width_ppm,
                     :n_shifts => counts.n_shifts, :n_residues_with_shifts =>
                         counts.n_residues,
                     :n_H => counts.atoms["H"], :n_N => counts.atoms["N"],
