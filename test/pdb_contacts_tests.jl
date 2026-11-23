@@ -142,3 +142,20 @@ end
     @test only(table.n_contacts) == 0 || only(table.status) == "ok"
     @test !ismissing(only(table.resolved_positions))
 end
+
+@testitem "mmCIF structures are read with author chain identifiers" begin
+    using Test
+    using IDRBindingDataset: _load_first_model_heavy_atoms
+    import IDRBindingDataset.MIToS
+
+    # In 2VQC, waters and ligands have their own label chain (B) but the author
+    # chain is A, as in SIFTS.
+    path = normpath(joinpath(dirname(pathof(MIToS)), "..", "test", "data", "2vqc.cif"))
+    label_chains = unique(r.id.chain
+    for r in MIToS.PDB.read_file(path, MIToS.PDB.MMCIFFile))
+    @test "B" in label_chains
+    residues = _load_first_model_heavy_atoms(path)
+    @test unique(r.id.chain for r in residues) == ["A"]
+    @test all(atom -> !(uppercase(strip(atom.element)) in ("H", "D")),
+        atom for residue in residues for atom in residue.atoms)
+end

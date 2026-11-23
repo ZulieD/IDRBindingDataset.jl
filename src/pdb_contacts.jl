@@ -161,9 +161,15 @@ _is_hydrogen(atom)::Bool = uppercase(strip(atom.element)) in ("H", "D")
 
 Read one mmCIF file and return the residues of its first model with hydrogens
 removed (`Vector{MIToS.PDB.PDBResidue}`).
+
+Chains and residue names are the author ones (`auth_asym_id`, `auth_comp_id`),
+as in SIFTS (`pdb_chain_uniprot.csv.gz` and SIFTS XML `dbChainId`). MIToS reads
+`label_asym_id` by default, which differs from the author chain in many
+entries (e.g. large cryo-EM assemblies, ligands and waters in their own label
+chain): the SIFTS chain would then be missing or point to another molecule.
 """
 function _load_first_model_heavy_atoms(path::AbstractString)::Vector{MIToS.PDB.PDBResidue}
-    residues = MIToS.PDB.read_file(path, MIToS.PDB.MMCIFFile)
+    residues = MIToS.PDB.read_file(path, MIToS.PDB.MMCIFFile; label = false)
     isempty(residues) && return MIToS.PDB.PDBResidue[]
     model = first(residues).id.model
     output = MIToS.PDB.PDBResidue[]

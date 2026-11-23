@@ -101,6 +101,8 @@ export build_disprot_bmrb_mapping_table
 export CHEMICAL_SHIFT_DEFAULT_SETTINGS
 export CHEMICAL_SHIFT_CRITERIA
 export build_chemical_shift_labels
+export FINAL_LABEL_SOURCES
+export build_final_labels_table
 
 include("raw_data_download.jl")
 include("shared_helpers.jl")
@@ -129,5 +131,6 @@ include("pdb_contacts.jl")
 include("aggregated_labels.jl")
 include("bmrb_mapping.jl")
 include("chemical_shift_labels.jl")
+include("final_labels.jl")
 
 end

@@ -1,0 +1,347 @@
+
+================================================================================
+DisProt (final dataset)  (data/dataset/cluster_dataset_labels.csv.gz)
+================================================================================
+3199 rows × 20 columns
+Rows with at least one missing value: 2791 / 3199 (complete rows: 408)
+Missing values per column:
+  protein_oldest_pdb_release_date 418
+  cluster_fixed_dataset_label     440
+  protein_elm_clusters            2757
+
+Example rows (5 without missing value):
+5×20 DataFrame
+ Row │ protein_id  global_representative_id  local_representative_id  final_cluster_id  protein_disprot_id  protein_has_idr_binding_annotation  protein_oldest_pdb_release_date  protein_has_pdb_structure  protein_has_missing_pdb_release_date  protein_in_caid2  protein_in_caid3  protein_in_af2_training_set  cluster_in_af2_training_set  cluster_in_caid2  cluster_in_caid3  cluster_fixed_dataset_label  protein_elm_clusters    cluster_dataset_label  sequence                                   residue_labels
+     │ String      String                    String                   String            String              String                              Union{Missing, String}           String                     String                                String            String            String                       String                       String            String            Union{Missing, String}       Union{Missing, String}  String                 String                                     String
+─────┼───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+   1 │ B7UM99      B7UM99                    B7UM99                   cluster_000107    DP04161             true                                2006-04-24                       true                       false                                 false             true              true                         true                         false             true              caid                         1                       testing                MPIGNLGNNVNGNHLIPPAPPLPSQTDGAARGGTGHLISS…  1111111111111111111111111111111111222222…
+   2 │ D0NBE6      D0NBE6                    D0NBE6                   cluster_000127    DP03676             true                                2016-08-03                       true                       false                                 false             false             true                         true                         false             false             training                     1                       training               MRFQSIMMLTITCAGTCLAEGLAPSDQAYRPTMTGLKSRL…  0000000000000000000000000000000000000000…
+   3 │ O00268      O00268                    A0A0B4JDC9               cluster_000006    DP01170             true                                2002-09-26                       true                       false                                 false             false             true                         true                         true              false             caid                         1                       testing                MAAGSDLLDEVFFNSEVDEKVVSDLVGSLESQLAASAAHH…  0000000000000000000000000000000000000000…
+   4 │ O00418      O00418                    O00418                   cluster_000204    DP04157             false                               2016-09-07                       true                       false                                 false             false             true                         true                         false             false             training                     1                       training               MADEDLIFRLEGVDGGQSPRAGHDGDSDGDSDDEEGYFIC…  0000000000000000000000000000000000000000…
+   5 │ O00499      O00499                    O00499                   cluster_000207    DP04169             true                                2003-09-30                       true                       false                                 false             true              true                         true                         false             true              caid                         1                       testing                MAEMGSKGVTAGKIASNVQKKLTRAQEKVLQKLGKADETK…  2222222222222222222222222222222221111111…
+
+================================================================================
+DisProt -> PDB mapping  (data/derived/disprot_pdb_mapping/disprot_pdb_mapping.csv.gz)
+================================================================================
+56147 rows × 11 columns
+Rows with at least one missing value: 2361 / 56147 (complete rows: 53786)
+Missing values per column:
+  CHAIN_KEPT                      3
+  N_MISSING                       2361
+  N_MISSING_DISORDER              2361
+  N_MISSING_DISORDER_BINDING      2361
+
+Example rows (5 without missing value):
+5×11 DataFrame
+ Row │ protein_disprot_id  protein_id  PDB     CHAIN   SP_BEG  SP_END  COMPLETE  CHAIN_KEPT  N_MISSING  N_MISSING_DISORDER  N_MISSING_DISORDER_BINDING
+     │ String              String      String  String  String  String  String    String?     String?    String?             String?
+─────┼─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+   1 │ DP03773             A0A024B7W1  5goz    A;B;C   2524    2785    false     A           0          0                   0
+   2 │ DP03773             A0A024B7W1  5gp1    A;B;C   2524    2785    false     A           0          0                   0
+   3 │ DP03773             A0A024B7W1  5h30    D;E;F   216     290     false     D;E;F       0          0                   0
+   4 │ DP03773             A0A024B7W1  5h30    A;B;C   291     794     false     A;B;C       0          0                   0
+   5 │ DP03773             A0A024B7W1  5h32    A;B;C   291     693     false     A;B;C       0          0                   0
+
+================================================================================
+UniProt binding sites  (data/derived/uniprot_binding_sites/uniprot_binding_sites.csv.gz)
+================================================================================
+3199 rows × 6 columns
+Rows with at least one missing value: 3038 / 3199 (complete rows: 161)
+Missing values per column:
+  residues_binding_in_uniprot     3038
+  publication_mention_binding     3038
+
+Example rows (5 without missing value):
+5×6 DataFrame
+ Row │ protein_disprot_id  protein_id  uniprot_entry_found  binding_in_uniprot  residues_binding_in_uniprot  publication_mention_binding
+     │ String              String      String               String              Union{Missing, String}       Union{Missing, String}
+─────┼───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+   1 │ DP04369             A0A0H3JPC6  true                 true                207;211-213                  1;1
+   2 │ DP03615             A0A1Y0DDB3  true                 true                59                           0
+   3 │ DP03362             B0Y813      true                 true                127                          0
+   4 │ DP01001             B8YB65      true                 true                32                           1
+   5 │ DP01199             B9KDD4      true                 true                293;319                      1;1
+
+================================================================================
+PDB contacts  (data/derived/pdb_contacts/pdb_contacts.csv.gz)
+================================================================================
+20789 rows × 14 columns
+Rows per `quality_category`:
+  resolved                           19718  (94.8 %)
+  no_resolution                       1070  (5.1 %)
+  absent                                 1  (0.0 %)
+Rows per `status`:
+  no_heteromeric_partner             10118  (48.7 %)
+  ok                                  9696  (46.6 %)
+  no_sifts                             952  (4.6 %)
+  no_mapped_residue                     22  (0.1 %)
+  no_target_chain                        1  (0.0 %)
+Rows with at least one missing value: 20716 / 20789 (complete rows: 73)
+Missing values per column:
+  resolution                      1071
+  chains                          953
+  partner_chains                  11078
+  homo_chains_excluded            20594
+  resolved_positions              975
+  contact_positions               11130
+
+Example rows (5 without missing value):
+5×14 DataFrame
+ Row │ protein_disprot_id  protein_id  PDB     method  resolution  quality_category  status  chains   partner_chains  homo_chains_excluded  identity            resolved_positions                         n_contacts  contact_positions
+     │ String              String      String  String  String?     String            String  String?  String?         String?               String              String?                                    String      String?
+─────┼───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+   1 │ DP00074             P03372      6pit    X-RAY   2.25        resolved          ok      A;B      D               C                     0.9908883826879271  307-330;340-460;465-547                    16          358-359;361-362;367;372-373;375-377;379-…
+   2 │ DP00092             Q08209      1m63    X-RAY   2.8         resolved          ok      A;E      B;C;F;G         D;H                   1.0                 1-372                                      68          8-10;14-19;21-26;53;55;121-125;159-161;1…
+   3 │ DP00092             Q08209      1mf8    X-RAY   3.1         resolved          ok      A        B;C             D                     1.0                 20-371                                     44          21-24;53;55;122;125;159-160;168;314-315;…
+   4 │ DP00137             P01050      1tmt    X-RAY   2.2         resolved          ok      I        L;H             J                     0.5                 46-47                                      2           46-47
+   5 │ DP00390             P17870      8jaf    EM      3.1         resolved          ok      A        H;L             V                     1.0                 5-63;73-85;87-108;111-189;195-243;247-30…  25          7;210-213;275-280;282;290;297-300;353-35…
+
+================================================================================
+Aggregated labels  (data/derived/aggregated_labels/aggregated_labels.csv.gz)
+================================================================================
+594 rows × 14 columns
+Rows with at least one missing value: 0 / 594 (complete rows: 594)
+No missing value in any column.
+
+Example rows (5 without missing value):
+5×14 DataFrame
+ Row │ protein_disprot_id  protein_id  n_pdb   pdb_ids                                    has_uniprot  disprot                                    uniprot                                    pdb_N                                      Label_PDB                                  Label_PDB_disorder                         Label_PDB_binding                          Label_Uniprot                              Label_Uniprot_disorder                     Label_Uniprot_binding
+     │ String              String      String  String                                     String       String                                     String                                     String                                     String                                     String                                     String                                     String                                     String                                     String
+─────┼───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+   1 │ DP00005             P03045      3       1QFQ;5LM7;6GOV                             false        [2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0…  [NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN…  [2.0,3.0,3.0,3.0,3.0,3.0,3.0,3.0,3.0,3.0…  [2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,1.333,2…  [1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0…  [1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,0.333,1…  [NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN…  [NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN…  [NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN…
+   2 │ DP00006             P00004      8       1U75;1WEJ;2PCB;3JBT;4NFG;5IY5;5WVE;8ZXR    true         [2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0…  [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0…  [0.0,7.0,7.0,7.0,7.0,7.0,7.0,7.0,7.0,7.0…  [NaN,1.0,1.0,1.143,1.0,1.429,1.143,1.0,1…  [NaN,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0…  [NaN,0.0,0.0,0.143,0.0,0.429,0.143,0.0,0…  [1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0…  [1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0…  [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0…
+   3 │ DP00012             P13569      21      2LOB;3ISW;5UAK;6GJQ;6GJS;6GJU;6GK4;6GKD;…  false        [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0…  [NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN…  [10.0,10.0,12.0,12.0,14.0,14.0,14.0,14.0…  [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0…  [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0…  [NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN…  [NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN…  [NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN…  [NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN…
+   4 │ DP00015             P61926      21      1CDK;1CTP;1FMO;1JBP;1Q8W;1SMH;1STC;1SVE;…  false        [2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0…  [NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN…  [0.0,0.0,0.0,0.0,0.0,21.0,21.0,21.0,21.0…  [NaN,NaN,NaN,NaN,NaN,1.048,2.0,2.0,1.0,2…  [NaN,NaN,NaN,NaN,NaN,1.0,1.0,1.0,1.0,1.0…  [NaN,NaN,NaN,NaN,NaN,0.048,1.0,1.0,0.0,1…  [NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN…  [NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN…  [NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN…
+   5 │ DP00016             P38936      9       1AXC;2ZVV;2ZVW;4RJF;5E0U;6P8H;7KQ0;7KQ1;…  false        [2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0…  [NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN…  [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0…  [NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN…  [NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN…  [NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN…  [NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN…  [NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN…  [NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN…
+
+================================================================================
+Aggregated labels PDB log  (data/derived/aggregated_labels/aggregated_labels_pdb_log.csv.gz)
+================================================================================
+20789 rows × 5 columns
+Rows per `reason`:
+  status:no_heteromeric_partner      10118  (48.7 %)
+  used                                8713  (41.9 %)
+  status:no_sifts                      952  (4.6 %)
+  low_identity                         505  (2.4 %)
+  low_quality                          478  (2.3 %)
+  status:no_mapped_residue              22  (0.1 %)
+  status:no_target_chain                 1  (0.0 %)
+Rows per `used`:
+  false                              12076  (58.1 %)
+  true                                8713  (41.9 %)
+Rows with at least one missing value: 0 / 20789 (complete rows: 20789)
+No missing value in any column.
+
+Example rows (5 without missing value):
+5×5 DataFrame
+ Row │ protein_disprot_id  protein_id  PDB     used    reason
+     │ String              String      String  String  String
+─────┼───────────────────────────────────────────────────────────────────────────────
+   1 │ DP00005             P03045      1qfq    true    used
+   2 │ DP00005             P03045      5lm7    true    used
+   3 │ DP00005             P03045      5ms0    false   low_quality
+   4 │ DP00005             P03045      6gov    true    used
+   5 │ DP00005             P03045      7a4f    false   status:no_heteromeric_partner
+
+================================================================================
+DisProt -> BMRB mapping  (data/derived/disprot_bmrb_mapping/disprot_bmrb_mapping.csv.gz)
+================================================================================
+2765 rows × 39 columns
+Rows per `status`:
+  ok                                  2713  (98.1 %)
+  no_shift_list                         50  (1.8 %)
+  no_polypeptide                         2  (0.1 %)
+Rows per `state`:
+  free                                1636  (59.2 %)
+  bound                                832  (30.1 %)
+  homo_oligomer                        295  (10.7 %)
+  missing                                2  (0.1 %)
+Rows with at least one missing value: 2756 / 2765 (complete rows: 9)
+Missing values per column:
+  target_entity_id                2
+  target_entity_name              2
+  entity_identity                 2
+  entity_n_aligned                2
+  entity_indels                   2
+  cover_start                     2
+  cover_end                       2
+  state                           2
+  n_target_copies                 2
+  n_partners                      2
+  partner_names                   1802
+  partner_types                   1802
+  partner_polymer_types           2077
+  partner_lengths                 1802
+  partner_uniprot_ids             2340
+  partner_sequences               2077
+  shift_list_id                   52
+  sample_condition_list_id        52
+  pH                              84
+  temperature_K                   58
+  ionic_strength_mM               1009
+  solvent                         752
+  buffer                          754
+  experiments                     278
+  spectrometers                   71
+  field_strengths_MHz             75
+  n15_sweep_width_ppm             2698
+  n_shifts                        52
+  n_residues_with_shifts          52
+  n_H                             52
+  n_N                             52
+  n_CA                            52
+  n_CB                            52
+  n_C                             52
+
+Example rows (5 without missing value):
+5×39 DataFrame
+ Row │ protein_disprot_id  protein_id  bmrb_id  status  entry_title                                target_entity_id  target_entity_name  entity_identity  entity_n_aligned  entity_indels  cover_start  cover_end  state    n_target_copies  n_partners  partner_names         partner_types          partner_polymer_types  partner_lengths  partner_uniprot_ids   partner_sequences                          shift_list_id  sample_condition_list_id  pH       temperature_K  ionic_strength_mM  solvent                     buffer                                     experiments                                spectrometers                     field_strengths_MHz    n15_sweep_width_ppm  n_shifts  n_residues_with_shifts  n_H      n_N      n_CA     n_CB     n_C
+     │ String              String      String   String  String                                     String?           String?             String?          String?           String?        String?      String?    String?  String?          String?     String?               String?                String?                String?          String?               String?                                    String?        String?                   String?  String?        String?            String?                     String?                                    String?                                    String?                           String?                String?              String?   String?                 String?  String?  String?  String?  String?
+─────┼───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+   1 │ DP00633             Q09472      31038    ok      NMR-derived ensemble of the TAZ2 domain …  2                 entity_2            0.956            90                0              1723         1812       bound    1                2           entity_1 | entity_ZN  polymer | non-polymer  polypeptide(L) |       34 | 0            |                    GSRASCMQMDDVIDDIISLESSYNEEILGLMDPA |       1              1                         6.0      308.0          20.0               95% H2O/5% D2O              2-(N-morpholino)ethanesulfonic acid (MES…  2D 1H-15N HSQC | 2D 1H-13C HSQC | 3D HBH…  Varian INOVA                      600.0                  20.0                 1070      92                      85       85       92       87       81
+   2 │ DP01102             P35637      34258    ok      Solution structure of FUS-ZnF bound to U…  1                 entity_1            0.974            38                0              417          454        bound    1                2           entity_2 | entity_ZN  polymer | non-polymer  polyribonucleotide |   5 | 0             |                    UGGUG |                                    1              1                         6.5      303.0          20.0               90% H2O/10% D2O | 100% D2O  beta-mercaptoethanol 1 mM | sodium phosp…  3D 1H-13C NOESY aliphatic | 3D 1H-15N NO…  Bruker Avance | Bruker AvanceIII  900.0 | 600.0 | 700.0  28.0                 430       41                      36       36       41       36       0
+   3 │ DP01102             P35637      34258    ok      Solution structure of FUS-ZnF bound to U…  1                 entity_1            0.974            38                0              417          454        bound    1                2           entity_2 | entity_ZN  polymer | non-polymer  polyribonucleotide |   5 | 0             |                    UGGUG |                                    2              1                         6.5      303.0          20.0               90% H2O/10% D2O | 100% D2O  beta-mercaptoethanol 1 mM | sodium phosp…  3D 1H-13C NOESY aliphatic | 3D 1H-15N NO…  Bruker Avance | Bruker AvanceIII  900.0 | 600.0 | 700.0  28.0                 0         0                       0        0        0        0        0
+   4 │ DP01389             P84233      17071    ok      Solution NMR structure of the Cbx3 in co…  2                 H3K9me3             0.933            15                0              2            16         bound    1                1           Cbx3                  polymer                polypeptide(L)         54               P23198;Q13185;Q5R6X7  GEFVVEKVLDRRVVNGKVEYFLKWKGFTDADNTWEPEENL…  1              1                         7.4      298.0          200.0              90% H2O/10% D2O             Benzamidine 1 mM | DTT 2 mM | PMSF 0.5 m…  3D CBCA(CO)NH | 3D HNCO | 3D HNCA | 3D H…  Bruker Avance | Varian INOVA      800.0 | 500.0          2594.707             29        6                       0        0        0        0        0
+   5 │ DP01389             P84233      17072    ok      Solution NMR structure of the chromobox …  2                 H3K9me3             0.933            15                0              2            16         bound    1                1           Cbx7                  polymer                polypeptide(L)         56               O95931;P60889;Q8VDS3  GEQVFAVESIRKKRVRKGKVEYLVKWKGWPPKYSTWEPEE…  1              1                         7.4      298.0          300.0              90% H2O/10% D2O             Benzamidine 1 mM | PMSF 0.5 mM | TCEP 1 …  3D HNCO | 3D HNCA | 3D CBCA(CO)NH | 3D H…  Bruker Avance | Varian INOVA      800.0 | 500.0          2594.707             34        7                       0        0        0        0        0
+
+================================================================================
+Chemical shift labels  (data/derived/chemical_shift_labels/chemical_shift_labels.csv.gz)
+================================================================================
+577 rows × 12 columns
+Rows with at least one missing value: 546 / 577 (complete rows: 31)
+Missing values per column:
+  pairs                           546
+
+Example rows (5 without missing value):
+  Activating project at `/stockage/EQUIPES/AMIG/MEMBERS/julie.daniel/IDP/scripts/env/env1_020226`
+5×12 DataFrame
+ Row │ protein_disprot_id  protein_id  n_free_lists  n_pairs  free_lists                                 pairs                                      disprot                                    cs_n_free                                  cs_n_pairs                                 Label_chemical_shift                       Label_chemical_shift_disorder              Label_chemical_shift_binding
+     │ String              String      String        String   String                                     String?                                    String                                     String                                     String                                     String                                     String                                     String
+─────┼───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+   1 │ DP04287             O14907      2             1        16285:1;17254:1                            17254:1>17255:1                            [1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0…  [0.0,0.0,0.0,0.0,0.0,1.0,1.0,2.0,2.0,2.0…  [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,1.0…  [NaN,NaN,NaN,NaN,NaN,1.0,1.0,1.0,1.0,1.0…  [NaN,NaN,NaN,NaN,NaN,1.0,1.0,0.5,0.5,0.5…  [NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,0.0,0.0…
+   2 │ DP03480             P00392      1             1        16207:1                                    16207:1>16208:1                            [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0…  [0.0,0.0,0.0,0.0,0.0,1.0,0.0,1.0,1.0,0.0…  [0.0,0.0,0.0,0.0,0.0,1.0,1.0,1.0,1.0,1.0…  [NaN,NaN,NaN,NaN,NaN,0.0,NaN,0.0,0.0,NaN…  [NaN,NaN,NaN,NaN,NaN,0.0,NaN,0.0,0.0,NaN…  [NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN…
+   3 │ DP03166             P00519      6             4        30770:1;52273:1;52296:1;52298:1;52301:1;…  52273:1>52293:1;52273:1>52300:1;52273:1>…  [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0…  [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0…  [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0…  [NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN…  [NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN…  [NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN…
+   4 │ DP01280             P05067      24            1        11435:1;15775:1;17159:1;17764:1;17793:1;…  17159:1>34577:1                            [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0…  [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0…  [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0…  [NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN…  [NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN…  [NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN…
+   5 │ DP01842             P05106      2             1        15552:1;15552:2                            15552:2>25176:1                            [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0…  [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0…  [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0…  [NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN…  [NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN…  [NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN…
+
+================================================================================
+Chemical shift lists  (data/derived/chemical_shift_labels/chemical_shift_lists.csv.gz)
+================================================================================
+2765 rows × 11 columns
+Rows per `reason`:
+  used                                1149  (41.6 %)
+  low_entity_identity                  666  (24.1 %)
+  homo_oligomer                        292  (10.6 %)
+  no_comparable_free                   192  (6.9 %)
+  no_free_state                        169  (6.1 %)
+  numbering_mismatch                    98  (3.5 %)
+  status:no_shift_list                  50  (1.8 %)
+  no_backbone_shift                     44  (1.6 %)
+  few_aligned_residues                  34  (1.2 %)
+  few_common_residues                   33  (1.2 %)
+  indels                                21  (0.8 %)
+  no_evaluable_residue                  15  (0.5 %)
+  status:no_polypeptide                  2  (0.1 %)
+Rows per `state`:
+  free                                1636  (59.2 %)
+  bound                                832  (30.1 %)
+  homo_oligomer                        295  (10.7 %)
+  missing                                2  (0.1 %)
+Rows per `used`:
+  false                               1616  (58.4 %)
+  true                                1149  (41.6 %)
+Rows with at least one missing value: 2765 / 2765 (complete rows: 0)
+Missing values per column:
+  shift_list_id                   52
+  n_residues                      1207
+  disorder_method                 1665
+  n_disordered                    1680
+  n_binding                       2701
+
+Example rows (0 without missing value, then rows with the fewest missing values):
+5×11 DataFrame
+ Row │ protein_disprot_id  protein_id  bmrb_id  shift_list_id  state   used    reason  n_residues  disorder_method   n_disordered  n_binding
+     │ String              String      String   String?        String  String  String  String?     String?           String?       String?
+─────┼───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+   1 │ DP00004             P49913      15876    1              free    true    used    27          secondary_shifts  0             missing
+   2 │ DP00004             P49913      18114    1              free    true    used    13          secondary_shifts  0             missing
+   3 │ DP00004             P49913      36087    1              free    true    used    7           hn_window         7             missing
+   4 │ DP00004             P49913      36098    1              free    true    used    7           hn_window         0             missing
+   5 │ DP00006             P00004      1170     1              free    true    used    87          hn_window         0             missing
+
+================================================================================
+Chemical shift free/bound comparisons  (data/derived/chemical_shift_labels/chemical_shift_comparisons.csv.gz)
+================================================================================
+1431 rows × 20 columns
+Rows with at least one missing value: 1367 / 1431 (complete rows: 64)
+Missing values per column:
+  n_common                        1367
+  n_binding                       1367
+  csp_threshold_disorder          1367
+  csp_threshold_order             1367
+
+Example rows (5 without missing value):
+5×20 DataFrame
+ Row │ protein_disprot_id  protein_id  bound_bmrb_id  bound_shift_list_id  free_bmrb_id  free_shift_list_id  pH      temperature  ionic    field      spectrometer  buffer   solvent  window   accepted  selected  n_common  n_binding  csp_threshold_disorder  csp_threshold_order
+     │ String              String      String         String               String        String              String  String       String   String     String        String   String   String   String    String    String?   String?    String?                 String?
+─────┼──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+   1 │ DP00070             P37840      36696          1                    25227         1                   same    same         unknown  different  different     unknown  unknown  unknown  true      true      106       13         0.05                    0.16217732165693
+   2 │ DP00101             P12493      18715          1                    7250          1                   same    same         unknown  different  different     unknown  unknown  unknown  true      true      118       0          0.05                    0.05
+   3 │ DP00101             P12493      18716          1                    7250          1                   same    same         unknown  different  different     unknown  unknown  unknown  true      true      118       0          0.05                    0.05
+   4 │ DP00177             Q9Y5B0      5685           2                    16296         1                   same    same         unknown  same       different     unknown  unknown  unknown  true      true      47        6          0.05                    0.25811404267105326
+   5 │ DP00229             P05455      15727          1                    6044          1                   same    same         unknown  same       different     unknown  unknown  unknown  true      true      85        0          0.0974633661812764      0.0979584049894705
+
+================================================================================
+NMR free / bound summary
+================================================================================
+Shift lists at the start (BMRB mapping, status = ok): 2713
+  free                                              1621  (59.7 %)
+  bound                                              800  (29.5 %)
+  homo_oligomer                                      292  (10.8 %)
+
+FREE shift lists: 1636 at the start, 1085 used for disorder
+  set aside:
+  low_entity_identity                                462  (28.2 %)
+  no_backbone_shift                                   27  (1.7 %)
+  few_aligned_residues                                18  (1.1 %)
+  status:no_shift_list                                15  (0.9 %)
+  no_evaluable_residue                                15  (0.9 %)
+  indels                                              13  (0.8 %)
+  numbering_mismatch                                   1  (0.1 %)
+
+BOUND shift lists: 832 at the start, 64 compared with a free state (pair used)
+  set aside:
+  low_entity_identity                                204  (24.5 %)
+  no_comparable_free                                 192  (23.1 %)
+  no_free_state                                      169  (20.3 %)
+  numbering_mismatch                                  97  (11.7 %)
+  few_common_residues                                 33  (4.0 %)
+  status:no_shift_list                                32  (3.8 %)
+  no_backbone_shift                                   17  (2.0 %)
+  few_aligned_residues                                16  (1.9 %)
+  indels                                               8  (1.0 %)
+
+Other shift lists (never used):
+  status:no_shift_list                                 3  (1.0 %)
+  homo_oligomer                                      292  (98.3 %)
+  status:no_polypeptide                                2  (0.7 %)
+
+Bound x free comparisons: 1431 (accepted: 182, rejected: 1249)
+Rejected comparisons per criterion (one comparison can differ on several):
+  different pH                                       693  (55.5 %)
+  different temperature                              548  (43.9 %)
+  different ionic                                    244  (19.5 %)
+  different buffer                                   761  (60.9 %)
+  different solvent                                  194  (15.5 %)
+  different window                                     0  (0.0 %)
+  different field                                    585  (46.8 %)
+  different spectrometer                             805  (64.5 %)
+Criteria not deposited (unknown) in all comparisons:
+  unknown pH                                          44  (3.1 %)
+  unknown temperature                                 26  (1.8 %)
+  unknown ionic                                     1025  (71.6 %)
+  unknown buffer                                     627  (43.8 %)
+  unknown solvent                                    569  (39.8 %)
+  unknown window                                    1431  (100.0 %)
+  unknown field                                        8  (0.6 %)
+  unknown spectrometer                                 0  (0.0 %)

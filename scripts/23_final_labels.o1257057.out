@@ -1,0 +1,29 @@
+julia version 1.12.7
+  Activating project at `/stockage/EQUIPES/AMIG/MEMBERS/julie.daniel/IDRBindingDataset.jl/scripts`
+Precompiling packages...
+   6824.3 ms  ✓ IDRBindingDataset
+  1 dependency successfully precompiled in 31 seconds. 239 already precompiled.
+  24 dependencies precompiled but different versions are currently loaded (ArgTools, Base64, Dates, Downloads, JuliaSyntaxHighlighting, LibCURL, LibCURL_jll, LibGit2, LibGit2_jll, LibSSH2_jll, Logging, Markdown, MozillaCACerts_jll, NetworkOptions, OpenSSL_jll, Pkg, Printf, StyledStrings, TOML, Tar, UUIDs, Zlib_jll, nghttp2_jll and p7zip_jll). Restart julia to access the new versions. Otherwise, 153 dependents of these packages may trigger further precompilation to work with the unexpected versions.
+Final labels written to /stockage/EQUIPES/AMIG/MEMBERS/julie.daniel/IDRBindingDataset.jl/data/derived/final_labels/final_labels.csv.gz (proteins=3199).
+Proteins per source:
+  disprot         3199
+  uniprot         161
+  pdb             522
+  chemical_shift  577
+Proteins per source combination:
+  disprot                                 2142
+  disprot;chemical_shift                  407
+  disprot;pdb                             353
+  disprot;pdb;chemical_shift              136
+  disprot;uniprot                         104
+  disprot;uniprot;chemical_shift          24
+  disprot;uniprot;pdb                     23
+  disprot;uniprot;pdb;chemical_shift      10
+Disordered residues per number of covering sources:
+  Disordered residues (d > 0)                       333642
+  DisProt / NMR disorder disagreement (0 < d < 1)   10910
+  Disordered for NMR only                           4730
+  Disordered residues, DisProt only binding source  293966
+  Disordered residues, 2 sources                    35388
+  Disordered residues, 3 sources                    4179
+  Disordered residues, 4 sources                    109

@@ -28,5 +28,6 @@ include("pdb_contacts_tests.jl")
 include("aggregated_labels_tests.jl")
 include("bmrb_mapping_tests.jl")
 include("chemical_shift_labels_tests.jl")
+include("final_labels_tests.jl")
 
 @run_package_tests

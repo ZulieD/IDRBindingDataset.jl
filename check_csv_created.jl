@@ -28,7 +28,7 @@ using DataFrames
 const N_ROWS = isempty(ARGS) ? 5 : parse(Int, ARGS[1])
 const MAX_CELL_WIDTH = 40   # long cells (label vectors) are cut at this width
 # Columns whose values are categories: the number of rows per value is printed.
-const CATEGORY_COLUMNS = ["quality_category", "status", "reason", "state", "used"]
+const CATEGORY_COLUMNS = ["quality_category", "status", "reason", "state", "used", "sources"]
 
 const CSV_FILES = [
     "DisProt (final dataset)" => "data/dataset/cluster_dataset_labels.csv.gz",
@@ -40,7 +40,9 @@ const CSV_FILES = [
     "DisProt -> BMRB mapping" => "data/derived/disprot_bmrb_mapping/disprot_bmrb_mapping.csv.gz",
     "Chemical shift labels" => "data/derived/chemical_shift_labels/chemical_shift_labels.csv.gz",
     "Chemical shift lists" => "data/derived/chemical_shift_labels/chemical_shift_lists.csv.gz",
-    "Chemical shift free/bound comparisons" => "data/derived/chemical_shift_labels/chemical_shift_comparisons.csv.gz"
+    "Chemical shift free/bound comparisons" => "data/derived/chemical_shift_labels/chemical_shift_comparisons.csv.gz",
+    "Final labels" => "data/derived/final_labels/final_labels.csv.gz",
+    "Final label sources" => "data/derived/final_labels/final_labels_sources.csv.gz"
 ]
 
 const BMRB_MAPPING_PATH = "data/derived/disprot_bmrb_mapping/disprot_bmrb_mapping.csv.gz"
