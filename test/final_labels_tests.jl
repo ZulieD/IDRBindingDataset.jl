@@ -59,7 +59,10 @@ end
         Label_chemical_shift_disorder = ["[NaN,0.0,1.0,1.0]", "[NaN,NaN,NaN]"],
         Label_chemical_shift_binding = ["[NaN,NaN,1.0,1.0]", "[NaN,NaN,NaN]"])
 
-    result = build_final_labels_table(dataset, uniprot, aggregated, nmr)
+    # SLiM on P1 residue 3 only (no vote elsewhere).
+    slim = DataFrame(protein_id = ["P1"], Label_SLiM = ["[NaN,NaN,1.0,NaN]"])
+
+    result = build_final_labels_table(dataset, uniprot, aggregated, nmr, slim)
     table = result.table
 
     @test names(table) == ["protein_disprot_id", "protein_id", "Label_aggregate_all",
@@ -68,23 +71,24 @@ end
 
     # P1 residue 2: disordered in DisProt, ordered for NMR (d = 0.5); binding
     # DisProt 0, UniProt 1, PDB 0.5 -> 0.5. Residue 3: d = 1; DisProt 0,
-    # UniProt 0, PDB 0, NMR 1 -> 0.25. Residue 4: d = 1; DisProt 1, UniProt 0,
-    # NMR 1 -> 2/3.
+    # UniProt 0, PDB 0, NMR 1, SLiM 1 -> 2/5. Residue 4: d = 1; DisProt 1,
+    # UniProt 0, NMR 1 -> 2/3.
     @test _parse_label_vector(table.Label_aggregate_all_disorder[1]) ==
           [0.0, 0.5, 1.0, 1.0]
     @test isequal(_parse_label_vector(table.Label_aggregate_all_binding[1]),
-        [NaN, 0.5, 0.25, 0.667])
-    @test _parse_label_vector(table.Label_aggregate_all[1]) == [0.0, 1.0, 1.25, 1.667]
+        [NaN, 0.5, 0.4, 0.667])
+    @test _parse_label_vector(table.Label_aggregate_all[1]) == [0.0, 1.0, 1.4, 1.667]
 
     # P2: DisProt only (no UniProt site, no PDB, NMR without covered residue).
     @test _parse_label_vector(table.Label_aggregate_all[2]) == [0.0, 1.0, 2.0]
 
     sources = result.sources
-    @test sources.sources == ["disprot;uniprot;pdb;chemical_shift", "disprot"]
+    @test sources.sources == ["disprot;uniprot;pdb;chemical_shift;slim", "disprot"]
     @test sources.n_disordered == [3, 2]
     @test sources.n_partial_disorder == [1, 0]
     @test sources.n_nmr_only_disorder == [0, 0]
     @test sources.n_3_sources == [2, 0]
-    @test sources.n_4_sources == [1, 0]
+    @test sources.n_4_sources == [0, 0]
+    @test sources.n_5_sources == [1, 0]
     @test sources.n_1_source == [0, 2]
 end

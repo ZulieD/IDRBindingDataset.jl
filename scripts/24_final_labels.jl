@@ -27,6 +27,8 @@ const DEFAULT_AGGREGATED_PATH = normpath(joinpath(
     REPO_ROOT, "data", "derived", "aggregated_labels", "aggregated_labels.csv.gz"))
 const DEFAULT_CHEMICAL_SHIFT_PATH = normpath(joinpath(
     REPO_ROOT, "data", "derived", "chemical_shift_labels", "chemical_shift_labels.csv.gz"))
+const DEFAULT_SLIM_PATH = normpath(joinpath(
+    REPO_ROOT, "data", "scratch", "elm", "slim_labels", "slim_labels.csv.gz"))
 const DEFAULT_OUTPUT_DIR = normpath(joinpath(REPO_ROOT, "data", "derived", "final_labels"))
 const DEFAULT_OUTPUT_FILENAME = "final_labels.csv.gz"
 const DEFAULT_SOURCES_FILENAME = "final_labels_sources.csv.gz"
@@ -39,26 +41,27 @@ Parse command-line options for the final-label script.
 function parse_command_line(args)
     settings = ArgParseSettings(
         description = """
-Combine the four binding evidence sources into final residue labels, one row
+Combine the five binding evidence sources into final residue labels, one row
 per dataset protein keyed by `protein_disprot_id` and `protein_id`:
 DisProt labels, UniProt binding sites (18_uniprot_binding_sites.jl), PDB
 contacts (`Label_PDB_binding`, 20_aggregated_labels.jl) and chemical shifts
 (`Label_chemical_shift_disorder` and `Label_chemical_shift_binding`,
-22_chemical_shift_labels.jl).
+22_chemical_shift_labels.jl) and ELM short linear motifs (`Label_SLiM`,
+23_slim_motifs.jl).
 
 Per residue:
   Label_aggregate_all_disorder d = mean disorder vote of DisProt (0/1) and NMR
                                (0.5 when DisProt says disordered and NMR ordered)
   Label_aggregate_all_binding  b = x / n over the n binding sources covering the
-                               residue (1/4 each when all four cover it), on d > 0
+                               residue (1/5 each when all five cover it), on d > 0
   Label_aggregate_all          d + b in [0, 2]: 0 ordered, 1 disordered,
                                2 disordered binding
 
 Run from repository root:
-  julia scripts/23_final_labels.jl
+  julia scripts/24_final_labels.jl
 
 Complete example:
-  julia scripts/23_final_labels.jl --dataset_path data/dataset/cluster_dataset_labels.csv.gz --uniprot_binding_sites_path data/derived/uniprot_binding_sites/uniprot_binding_sites.csv.gz --aggregated_labels_path data/derived/aggregated_labels/aggregated_labels.csv.gz --chemical_shift_labels_path data/derived/chemical_shift_labels/chemical_shift_labels.csv.gz --output_dir data/derived/final_labels
+  julia scripts/24_final_labels.jl --dataset_path data/dataset/cluster_dataset_labels.csv.gz --uniprot_binding_sites_path data/derived/uniprot_binding_sites/uniprot_binding_sites.csv.gz --aggregated_labels_path data/derived/aggregated_labels/aggregated_labels.csv.gz --chemical_shift_labels_path data/derived/chemical_shift_labels/chemical_shift_labels.csv.gz --slim_labels_path data/scratch/elm/slim_labels/slim_labels.csv.gz --output_dir data/derived/final_labels
 
 The script activates and instantiates `scripts/Project.toml` internally.
 """,
@@ -81,6 +84,10 @@ The script activates and instantiates `scripts/Project.toml` internally.
         help = "Input chemical shift labels CSV (gzip) from 22_chemical_shift_labels.jl."
         arg_type = String
         default = DEFAULT_CHEMICAL_SHIFT_PATH
+        "--slim_labels_path"
+        help = "Input SLiM labels CSV (gzip) from 23_slim_motifs.jl."
+        arg_type = String
+        default = DEFAULT_SLIM_PATH
         "--output_dir"
         help = "Output directory for the CSV files and their README."
         arg_type = String
@@ -93,6 +100,7 @@ The script activates and instantiates `scripts/Project.toml` internally.
         uniprot_binding_sites_path = normpath(parsed["uniprot_binding_sites_path"]),
         aggregated_labels_path = normpath(parsed["aggregated_labels_path"]),
         chemical_shift_labels_path = normpath(parsed["chemical_shift_labels_path"]),
+        slim_labels_path = normpath(parsed["slim_labels_path"]),
         output_dir = normpath(parsed["output_dir"])
     )
 end
@@ -121,7 +129,10 @@ function main()
     chemical_shift = read_string_csv(options.chemical_shift_labels_path,
         [:protein_disprot_id, :protein_id, :Label_chemical_shift_binding])
 
-    result = build_final_labels_table(dataset, uniprot, aggregated, chemical_shift)
+    slim = read_string_csv(options.slim_labels_path,
+        [:protein_disprot_id, :protein_id, :Label_SLiM])
+
+    result = build_final_labels_table(dataset, uniprot, aggregated, chemical_shift, slim)
     table, sources = result.table, result.sources
     _write_csv_gz(table, output_path)
     _write_csv_gz(sources, sources_path)
@@ -138,10 +149,11 @@ function main()
         "Disordered residues, DisProt only binding source" => sum(sources.n_1_source),
         "Disordered residues, 2 sources" => sum(sources.n_2_sources),
         "Disordered residues, 3 sources" => sum(sources.n_3_sources),
-        "Disordered residues, 4 sources" => sum(sources.n_4_sources)]
+        "Disordered residues, 4 sources" => sum(sources.n_4_sources),
+        "Disordered residues, 5 sources" => sum(sources.n_5_sources)]
 
     _write_artifact_readme(readme_path;
-        title = "Final Residue Binding Labels (DisProt, UniProt, PDB, Chemical Shift)",
+        title = "Final Residue Binding Labels (DisProt, UniProt, PDB, Chemical Shift, SLiM)",
         description = """
 One row per dataset protein. Each vector column has one value per residue of
 the UniProt sequence. Disorder `d` is the mean disorder vote of DisProt (`0`/`1`)
@@ -149,21 +161,23 @@ and NMR (`Label_chemical_shift_disorder`, when evaluable). On residues with
 `d > 0`, binding `b = x / n` where `n` is the number of sources covering the
 residue and `x` the sum of their binding votes: DisProt (`1` if labelled binding), UniProt (`1` inside a binding
 site, when the protein has UniProt binding sites), PDB (`Label_PDB_binding`,
-fraction of used PDB entries in contact with a heteromeric partner) and chemical
+fraction of used PDB entries in contact with a heteromeric partner), chemical
 shift (`Label_chemical_shift_binding`, fraction of free/bound pairs calling the
-residue binding). Each covering source weighs the same (`1/4` when all four
-cover the residue). `Label_aggregate_all = d + b` in `[0, 2]`; residues with
+residue binding) and SLiM (`Label_SLiM`, `1` on ELM motif residues; no vote
+elsewhere). Each covering source weighs the same (`1/5` when all five cover the
+residue). `Label_aggregate_all = d + b` in `[0, 2]`; residues with
 `d = 0` get `0`. `$(DEFAULT_SOURCES_FILENAME)` lists, per protein, the sources
 available, DisProt/NMR disorder disagreements and how many disordered residues
-are covered by 1 to 4 binding sources.
+are covered by 1 to 5 binding sources.
 """,
-        script_relpath = _relpath_from_repo(joinpath(@__DIR__, "23_final_labels.jl")),
+        script_relpath = _relpath_from_repo(joinpath(@__DIR__, "24_final_labels.jl")),
         inputs = ["Dataset" => _relpath_from_repo(options.dataset_path),
             "UniProt binding sites" =>
                 _relpath_from_repo(options.uniprot_binding_sites_path),
             "Aggregated labels (PDB)" => _relpath_from_repo(options.aggregated_labels_path),
             "Chemical shift labels" =>
-                _relpath_from_repo(options.chemical_shift_labels_path)],
+                _relpath_from_repo(options.chemical_shift_labels_path),
+            "SLiM labels" => _relpath_from_repo(options.slim_labels_path)],
         outputs = vcat(
             [DEFAULT_OUTPUT_FILENAME => "$(nrow(table)) proteins",
                 DEFAULT_SOURCES_FILENAME => "$(nrow(sources)) proteins"],

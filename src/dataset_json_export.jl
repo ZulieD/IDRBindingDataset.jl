@@ -6,6 +6,31 @@ const _RESIDUE_LABEL_ORDERED = 0
 const _RESIDUE_LABEL_DISORDERED = 1
 const _RESIDUE_LABEL_BINDING = 2
 
+# Identity rule shared by the PDB (scripts 19/20) and chemical-shift (script 22)
+# analyses: a structure or NMR construct must be identical to the UniProt
+# sequence on the DisProt binding region extended by `BINDING_REGION_FLANK`
+# residues on each side, and at least `MIN_IDENTITY_OUTSIDE_BINDING` identical
+# overall; other mismatched residues are not used.
+const BINDING_REGION_FLANK = 3
+const MIN_IDENTITY_OUTSIDE_BINDING = 0.95
+
+"""
+    _binding_region_mask(residue_labels; flank = BINDING_REGION_FLANK)::BitVector
+
+`true` on DisProt binding residues (label `2`) and on the `flank` residues
+before and after each of them: positions where a mutation is not accepted.
+"""
+function _binding_region_mask(residue_labels::AbstractVector{<:Integer};
+        flank::Integer = BINDING_REGION_FLANK)::BitVector
+    n = length(residue_labels)
+    mask = falses(n)
+    for position in 1:n
+        residue_labels[position] == _RESIDUE_LABEL_BINDING || continue
+        mask[max(1, position - flank):min(n, position + flank)] .= true
+    end
+    mask
+end
+
 """
     _build_disprot_entry_index(disprot_entries)
 
@@ -307,7 +332,6 @@ function _encode_residue_labels(labels)::String
 
     String(encoded)
 end
-
 
 """
     read_final_dataset_csv(path)::DataFrame

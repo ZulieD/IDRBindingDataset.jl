@@ -64,6 +64,7 @@ end
     @test result.contacts == Set([1, 3])
     @test result.n_mapped == 3
     @test result.n_identical == 2
+    @test result.mismatches == Set([3])
 end
 
 @testitem "Positions are encoded as compact ranges" begin

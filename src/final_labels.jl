@@ -1,7 +1,7 @@
 using DataFrames
 
 # ---------------------------------------------------------------------------
-# Final residue-level labels combining the four evidence sources.
+# Final residue-level labels combining the five evidence sources.
 #
 # Disorder, per residue: d = mean of the disorder votes of
 #   - DisProt: 1 if labelled disordered or binding (1/2), else 0,
@@ -9,14 +9,16 @@ using DataFrames
 #     free lists calling the residue disordered), when evaluable.
 #   e.g. disordered in DisProt but ordered by NMR: d = 0.5.
 # Binding, on residues with d > 0: b = x / n over the sources covering the
-# residue (each source weighs 1/n, i.e. 1/4 when all four cover it):
+# residue (each source weighs 1/n, i.e. 1/5 when all five cover it):
 #   - DisProt: always covers the residue; 1 if labelled binding (2), else 0,
 #   - UniProt: covers the protein when it has binding sites (script 18);
 #     1 inside a binding site, else 0,
 #   - PDB: `Label_PDB_binding` of script 20 (fraction of used PDB entries where
 #     the residue contacts a heteromeric partner; DisProt disordered residues),
 #   - chemical shift: `Label_chemical_shift_binding` of script 22 (fraction of
-#     free/bound pairs calling the residue binding; NMR disordered residues).
+#     free/bound pairs calling the residue binding; NMR disordered residues),
+#   - SLiM: `Label_SLiM` of script 23 (1 on ELM motif residues; no vote
+#     elsewhere, so it never lowers the binding rate).
 # Final label = d + b in [0, 2]: 0 ordered, 1 disordered, 2 disordered binding.
 # Residues ordered for every disorder source (d = 0) get 0 and no binding value.
 # ---------------------------------------------------------------------------
@@ -27,7 +29,7 @@ using DataFrames
 Names of the evidence sources combined by `build_final_labels_table`, in the
 order used by `_final_residue_labels`.
 """
-const FINAL_LABEL_SOURCES = ("disprot", "uniprot", "pdb", "chemical_shift")
+const FINAL_LABEL_SOURCES = ("disprot", "uniprot", "pdb", "chemical_shift", "slim")
 
 """
     _final_residue_labels(residue_labels, source_bindings; nmr_disorder = nothing)
@@ -119,18 +121,20 @@ end
 
 """
     build_final_labels_table(dataset, uniprot_binding_sites, aggregated_labels,
-        chemical_shift_labels)
+        chemical_shift_labels, slim_labels)
 
 Combine DisProt labels, UniProt binding sites (script 18), PDB contacts
-(`Label_PDB_binding` of script 20) and chemical shifts
+(`Label_PDB_binding` of script 20), chemical shifts
 (`Label_chemical_shift_disorder` and `Label_chemical_shift_binding` of script
-22) into final residue labels, one row per dataset protein.
+22) and SLiMs (`Label_SLiM` of script 23) into final residue labels, one row
+per dataset protein.
 
 Disorder `d` is the mean of the DisProt (`0`/`1`) and NMR disorder votes.
 On residues with `d > 0`, binding `b = x / n` where `n` is the number of
 sources covering the residue and `x` the sum of their binding votes (DisProt
-and UniProt vote `0`/`1`, PDB and chemical shift give a fraction); each source
-covering the residue weighs the same (`1/4` when all four do).
+and UniProt vote `0`/`1`, PDB and chemical shift give a fraction, SLiM votes
+`1` on motif residues only); each source covering the residue weighs the same
+(`1/5` when all five do).
 
 Returns `(table, sources)`:
 - `table`: `protein_disprot_id`, `protein_id`, `Label_aggregate_all` (`d + b`
@@ -138,13 +142,14 @@ Returns `(table, sources)`:
   `Label_aggregate_all_binding` (`b` in `[0, 1]`, `NaN` where `d = 0`),
 - `sources`: one row per protein with the sources available (`;`-separated),
   the number of residues with `d > 0`, with `0 < d < 1`, disordered for NMR
-  only, and covered by 1, 2, 3 or 4 binding sources.
+  only, and covered by 1 to 5 binding sources.
 """
 function build_final_labels_table(
         dataset::AbstractDataFrame,
         uniprot_binding_sites::AbstractDataFrame,
         aggregated_labels::AbstractDataFrame,
-        chemical_shift_labels::AbstractDataFrame
+        chemical_shift_labels::AbstractDataFrame,
+        slim_labels::AbstractDataFrame
 )
     _require_columns(dataset, [:protein_id, :protein_disprot_id, :residue_labels], "dataset")
     _require_columns(uniprot_binding_sites, [:protein_id, :residues_binding_in_uniprot],
@@ -159,6 +164,7 @@ function build_final_labels_table(
         :Label_chemical_shift_binding, "chemical_shift_labels")
     nmr_disorder_by_protein = _binding_vectors_by_protein(chemical_shift_labels,
         :Label_chemical_shift_disorder, "chemical_shift_labels")
+    slim_by_protein = _binding_vectors_by_protein(slim_labels, :Label_SLiM, "slim_labels")
 
     table = DataFrame(protein_disprot_id = String[], protein_id = String[],
         Label_aggregate_all = String[], Label_aggregate_all_disorder = String[],
@@ -166,7 +172,8 @@ function build_final_labels_table(
     sources = DataFrame(protein_disprot_id = String[], protein_id = String[],
         sources = String[], n_disordered = Int[], n_partial_disorder = Int[],
         n_nmr_only_disorder = Int[], n_1_source = Int[],
-        n_2_sources = Int[], n_3_sources = Int[], n_4_sources = Int[])
+        n_2_sources = Int[], n_3_sources = Int[], n_4_sources = Int[],
+        n_5_sources = Int[])
 
     for row in eachrow(dataset)
         ismissing(row.residue_labels) && continue
@@ -177,13 +184,15 @@ function build_final_labels_table(
         bindings = Union{Nothing, Vector{Float64}}[
             _uniprot_binding_vector(get(uniprot_by_protein, protein_id, Int[]), n_positions),
             get(pdb_by_protein, protein_id, nothing),
-            get(nmr_by_protein, protein_id, nothing)]
+            get(nmr_by_protein, protein_id, nothing),
+            get(slim_by_protein, protein_id, nothing)]
         nmr_disorder = get(nmr_disorder_by_protein, protein_id, nothing)
         labels = _final_residue_labels(residue_labels, bindings;
             nmr_disorder = nmr_disorder)
 
         covered = [binding !== nothing && any(!isnan, binding) for binding in bindings]
-        covered[end] |= nmr_disorder !== nothing && any(!isnan, nmr_disorder)
+        # Chemical shifts (third binding source) also cover NMR disorder.
+        covered[3] |= nmr_disorder !== nothing && any(!isnan, nmr_disorder)
         available = vcat(["disprot"],
             [name
              for (name, is_covered) in zip(FINAL_LABEL_SOURCES[2:end], covered)
@@ -201,7 +210,7 @@ function build_final_labels_table(
                 count(p -> labels.disorder[p] > 0 && !in_disprot_idr[p], 1:n_positions),
                 count(==(1), labels.n_sources),
                 count(==(2), labels.n_sources), count(==(3), labels.n_sources),
-                count(==(4), labels.n_sources)))
+                count(==(4), labels.n_sources), count(==(5), labels.n_sources)))
     end
 
     sort!(table, [:protein_disprot_id, :protein_id])
@@ -221,7 +230,7 @@ const _FINAL_LABELS_COLUMN_DEFINITIONS = [
     "protein_id" => "UniProt accession of the dataset protein",
     "Label_aggregate_all" => "`Label_aggregate_all_disorder + Label_aggregate_all_binding` in `[0, 2]`: `0` ordered, `1` disordered, `2` disordered binding (all sources agree); `0` where no source calls the residue disordered",
     "Label_aggregate_all_disorder" => "`d` in `[0, 1]`: mean disorder vote of DisProt (`0`/`1`) and NMR (`Label_chemical_shift_disorder`, when evaluable); e.g. `0.5` when DisProt calls the residue disordered and NMR ordered",
-    "Label_aggregate_all_binding" => "`b` in `[0, 1]` on residues with `d > 0`: mean binding vote of the covering sources (DisProt `0`/`1`, UniProt `0`/`1`, `Label_PDB_binding`, `Label_chemical_shift_binding`); `NaN` where `d = 0`"
+    "Label_aggregate_all_binding" => "`b` in `[0, 1]` on residues with `d > 0`: mean binding vote of the covering sources (DisProt `0`/`1`, UniProt `0`/`1`, `Label_PDB_binding`, `Label_chemical_shift_binding`, `Label_SLiM` `1` on motif residues only); `NaN` where `d = 0`"
 ]
 
 """
@@ -232,12 +241,13 @@ Data dictionary of the per-protein source table returned by `build_final_labels_
 const _FINAL_LABEL_SOURCES_COLUMN_DEFINITIONS = [
     "protein_disprot_id" => "DisProt identifier of the dataset protein",
     "protein_id" => "UniProt accession of the dataset protein",
-    "sources" => "sources with at least one covered residue (`disprot`, `uniprot`, `pdb`, `chemical_shift`; `;`-separated)",
+    "sources" => "sources with at least one covered residue (`disprot`, `uniprot`, `pdb`, `chemical_shift`, `slim`; `;`-separated)",
     "n_disordered" => "residues called disordered by at least one source (`d > 0`)",
     "n_partial_disorder" => "residues where DisProt and NMR disagree on disorder (`0 < d < 1`)",
     "n_nmr_only_disorder" => "residues ordered in DisProt but disordered for NMR",
     "n_1_source" => "disordered residues with DisProt as only binding source",
     "n_2_sources" => "disordered residues covered by 2 binding sources",
     "n_3_sources" => "disordered residues covered by 3 binding sources",
-    "n_4_sources" => "disordered residues covered by all 4 binding sources"
+    "n_4_sources" => "disordered residues covered by 4 binding sources",
+    "n_5_sources" => "disordered residues covered by all 5 binding sources"
 ]

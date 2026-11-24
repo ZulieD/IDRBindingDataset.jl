@@ -1,0 +1,1604 @@
+julia version 1.12.7
+Protein/PDB pairs to process: 20789 (750 proteins)
+Items: 20789 total, 20789 to process with 16 thread(s).
+Batch 1-50/20789 done.
+A0A1D5PXA5/6f55: low PDB/UniProt identity (0.93)
+Batch 51-100/20789 done.
+B7UM99/2cia: low PDB/UniProt identity (0.89)
+B7UM99/2ci9: low PDB/UniProt identity (0.9)
+Batch 101-150/20789 done.
+O00268/2p6v: low PDB/UniProt identity (0.92)
+Batch 151-200/20789 done.
+O14558/5lu2: low PDB/UniProt identity (0.88)
+O14558/5okf: low PDB/UniProt identity (0.86)
+O14558/5ok9: low PDB/UniProt identity (0.87)
+O14558/5lu1: low PDB/UniProt identity (0.88)
+Batch 201-250/20789 done.
+O14776/2mwe: low PDB/UniProt identity (0.93)
+O14776/3hfh: low PDB/UniProt identity (0.84)
+Batch 251-300/20789 done.
+O14776/3q1i: low PDB/UniProt identity (0.86)
+O15169/8ru3: low PDB/UniProt identity (0.83)
+Batch 301-350/20789 done.
+O43070/3i0n: low PDB/UniProt identity (0.92)
+O15169/8ru4: low PDB/UniProt identity (0.55)
+Batch 351-400/20789 done.
+O43521/2yq7: low PDB/UniProt identity (0.89)
+O43521/5vwv: low PDB/UniProt identity (0.92)
+O43521/3d7v: low PDB/UniProt identity (0.91)
+O43521/5agw: low PDB/UniProt identity (0.75)
+O43521/4yj4: low PDB/UniProt identity (0.89)
+O43521/2yq6: low PDB/UniProt identity (0.89)
+O43521/4a1u: low PDB/UniProt identity (0.72)
+O43521/5vww: low PDB/UniProt identity (0.93)
+O43521/5agx: low PDB/UniProt identity (0.76)
+O43521/4a1w: low PDB/UniProt identity (0.71)
+O43521/5vwx: low PDB/UniProt identity (0.7)
+O43521/5c3g: low PDB/UniProt identity (0.88)
+Batch 401-450/20789 done.
+O43521/6vbx: low PDB/UniProt identity (0.75)
+O43521/5vwy: low PDB/UniProt identity (0.88)
+O43521/6ua3: low PDB/UniProt identity (0.71)
+O43521/6uab: low PDB/UniProt identity (0.71)
+O43521/5vx3: low PDB/UniProt identity (0.86)
+O43521/5vx0: low PDB/UniProt identity (0.88)
+O43521/5vx2: low PDB/UniProt identity (0.88)
+O43521/6rjp: low PDB/UniProt identity (0.65)
+O60566/5jja: low PDB/UniProt identity (0.88)
+O60566/5k6s: low PDB/UniProt identity (0.82)
+O60566/5swf: low PDB/UniProt identity (0.88)
+Batch 451-500/20789 done.
+Batch 501-550/20789 done.
+Batch 551-600/20789 done.
+Batch 601-650/20789 done.
+Batch 651-700/20789 done.
+Batch 701-750/20789 done.
+Batch 751-800/20789 done.
+P00004/8zxr: low PDB/UniProt identity (0.91)
+Batch 801-850/20789 done.
+Batch 851-900/20789 done.
+P00533/3vrp: low PDB/UniProt identity (0.88)
+P00533/3vrr: low PDB/UniProt identity (0.88)
+P00533/3op0: low PDB/UniProt identity (0.9)
+P00533/3pfv: low PDB/UniProt identity (0.9)
+P00533/3ob2: low PDB/UniProt identity (0.82)
+P00533/3buo: low PDB/UniProt identity (0.91)
+Batch 901-950/20789 done.
+Batch 951-1000/20789 done.
+Batch 1001-1050/20789 done.
+Batch 1051-1100/20789 done.
+Batch 1101-1150/20789 done.
+Batch 1151-1200/20789 done.
+Batch 1201-1250/20789 done.
+P00740/1mgx: low PDB/UniProt identity (0.74)
+P00740/1nl0: low PDB/UniProt identity (0.73)
+P00740/1cfi: low PDB/UniProt identity (0.74)
+Batch 1251-1300/20789 done.
+P00742/1fxy: low PDB/UniProt identity (0.69)
+Batch 1301-1350/20789 done.
+Batch 1351-1400/20789 done.
+P00742/5jqy: low PDB/UniProt identity (0.94)
+P00742/5jtc: low PDB/UniProt identity (0.94)
+Batch 1401-1450/20789 done.
+P00742/7ybc: low PDB/UniProt identity (0.94)
+P00742/8re9: low PDB/UniProt identity (0.94)
+P00742/8re6: low PDB/UniProt identity (0.94)
+P00742/6rk9: low PDB/UniProt identity (0.31)
+P00742/9p0x: low PDB/UniProt identity (0.92)
+P00742/7yb8: low PDB/UniProt identity (0.94)
+P00742/6z6q: low PDB/UniProt identity (0.94)
+P00742/7bmj: low PDB/UniProt identity (0.94)
+P00742/6yyw: low PDB/UniProt identity (0.94)
+P00742/6z6r: low PDB/UniProt identity (0.94)
+P00742/8re7: low PDB/UniProt identity (0.94)
+P00742/7e6j: low PDB/UniProt identity (0.94)
+P00742/6yyx: low PDB/UniProt identity (0.94)
+P00742/7yb9: low PDB/UniProt identity (0.94)
+P00742/8re8: low PDB/UniProt identity (0.94)
+P00742/6yyy: low PDB/UniProt identity (0.94)
+P00742/7ybb: low PDB/UniProt identity (0.94)
+P00742/7bmi: low PDB/UniProt identity (0.94)
+P00742/8re5: low PDB/UniProt identity (0.94)
+Batch 1451-1500/20789 done.
+Batch 1501-1550/20789 done.
+Batch 1551-1600/20789 done.
+Batch 1601-1650/20789 done.
+Batch 1651-1700/20789 done.
+Batch 1701-1750/20789 done.
+Batch 1751-1800/20789 done.
+Batch 1801-1850/20789 done.
+Batch 1851-1900/20789 done.
+Batch 1901-1950/20789 done.
+Batch 1951-2000/20789 done.
+Batch 2001-2050/20789 done.
+Batch 2051-2100/20789 done.
+P00974/1g6x: low PDB/UniProt identity (0.93)
+P00974/1brb: low PDB/UniProt identity (0.94)
+P00974/1ld5: low PDB/UniProt identity (0.95)
+P00974/1k09: low PDB/UniProt identity (0.84)
+P00974/1ld6: low PDB/UniProt identity (0.83)
+P00974/1k6u: low PDB/UniProt identity (0.93)
+P00974/1fak: low PDB/UniProt identity (0.85)
+P00974/1ejm: low PDB/UniProt identity (0.95)
+P00974/1qlq: low PDB/UniProt identity (0.93)
+Batch 2101-2150/20789 done.
+P00974/2zjx: low PDB/UniProt identity (0.91)
+P00974/1ylc: low PDB/UniProt identity (0.93)
+P00974/2zvx: low PDB/UniProt identity (0.91)
+P00974/1t8l: low PDB/UniProt identity (0.95)
+P00974/1yld: low PDB/UniProt identity (0.89)
+P00974/1uub: low PDB/UniProt identity (0.95)
+Batch 2151-2200/20789 done.
+P00974/5xx8: low PDB/UniProt identity (0.91)
+P00974/5xx2: low PDB/UniProt identity (0.91)
+P00974/5xx5: low PDB/UniProt identity (0.91)
+P00974/5jb6: low PDB/UniProt identity (0.65)
+P00974/5xx3: low PDB/UniProt identity (0.91)
+P00974/5xx6: low PDB/UniProt identity (0.91)
+P00974/5jb7: low PDB/UniProt identity (0.64)
+P00974/5xx7: low PDB/UniProt identity (0.91)
+P00974/5xx4: low PDB/UniProt identity (0.91)
+P00974/5jb4: low PDB/UniProt identity (0.69)
+P00974/3wny: low PDB/UniProt identity (0.74)
+P00974/5jb5: low PDB/UniProt identity (0.67)
+P00974/5yw1: low PDB/UniProt identity (0.95)
+Batch 2201-2250/20789 done.
+P01050/1xm1: low PDB/UniProt identity (0.9)
+P01050/1aht: low PDB/UniProt identity (0.9)
+P01050/1qj6: low PDB/UniProt identity (0.9)
+P01050/1d4p: low PDB/UniProt identity (0.92)
+P01050/1ypm: low PDB/UniProt identity (0.9)
+P01050/1d3p: low PDB/UniProt identity (0.92)
+P01050/1bcu: low PDB/UniProt identity (0.9)
+P01050/1ypj: low PDB/UniProt identity (0.9)
+P01050/1uma: low PDB/UniProt identity (0.9)
+P01050/1no9: low PDB/UniProt identity (0.91)
+P01050/1ype: low PDB/UniProt identity (0.9)
+P01050/1h8d: low PDB/UniProt identity (0.9)
+P01050/1ay6: low PDB/UniProt identity (0.9)
+P01050/1c5l: low PDB/UniProt identity (0.9)
+P01050/1qj7: low PDB/UniProt identity (0.9)
+P01050/1ypg: low PDB/UniProt identity (0.9)
+P01050/1zgi: low PDB/UniProt identity (0.9)
+P01050/1d6w: low PDB/UniProt identity (0.9)
+P01050/1ypk: low PDB/UniProt identity (0.9)
+P01050/1ai8: low PDB/UniProt identity (0.9)
+P01050/1d3q: low PDB/UniProt identity (0.92)
+P01050/1h8i: low PDB/UniProt identity (0.9)
+P01050/1vr1: low PDB/UniProt identity (0.9)
+P01050/1qhr: low PDB/UniProt identity (0.9)
+P01050/1ba8: low PDB/UniProt identity (0.88)
+P01050/1hxe: low PDB/UniProt identity (0.9)
+P01050/1tmt: low PDB/UniProt identity (0.5)
+P01050/1ca8: low PDB/UniProt identity (0.88)
+P01050/1ad8: low PDB/UniProt identity (0.9)
+P01050/1zgv: low PDB/UniProt identity (0.9)
+P01050/1d9i: low PDB/UniProt identity (0.9)
+P01050/1ypl: low PDB/UniProt identity (0.9)
+P01050/1d3t: low PDB/UniProt identity (0.92)
+P01050/1hxf: low PDB/UniProt identity (0.9)
+P01050/1awf: low PDB/UniProt identity (0.9)
+P01050/1qj1: low PDB/UniProt identity (0.9)
+P01050/1way: low PDB/UniProt identity (0.9)
+P01050/1bb0: low PDB/UniProt identity (0.88)
+P01050/1d3d: low PDB/UniProt identity (0.92)
+P01050/1ae8: low PDB/UniProt identity (0.9)
+P01050/1afe: low PDB/UniProt identity (0.9)
+Batch 2251-2300/20789 done.
+P01050/2bdy: low PDB/UniProt identity (0.9)
+P01050/3egk: low PDB/UniProt identity (0.89)
+P01050/2zfp: low PDB/UniProt identity (0.9)
+P01050/2zdv: low PDB/UniProt identity (0.91)
+P01050/4ban: low PDB/UniProt identity (0.9)
+P01050/3tu7: low PDB/UniProt identity (0.91)
+P01050/3dhk: low PDB/UniProt identity (0.89)
+P01050/4lxb: low PDB/UniProt identity (0.9)
+P01050/4bah: low PDB/UniProt identity (0.8)
+P01050/2znk: low PDB/UniProt identity (0.9)
+P01050/2zhq: low PDB/UniProt identity (0.91)
+P01050/2zc9: low PDB/UniProt identity (0.9)
+P01050/2gde: low PDB/UniProt identity (0.8)
+P01050/2zgb: low PDB/UniProt identity (0.89)
+P01050/2zda: low PDB/UniProt identity (0.91)
+P01050/2uuf: low PDB/UniProt identity (0.9)
+P01050/2zo3: low PDB/UniProt identity (0.9)
+P01050/3dt0: low PDB/UniProt identity (0.89)
+P01050/3eq0: low PDB/UniProt identity (0.9)
+P01050/2zi2: low PDB/UniProt identity (0.9)
+P01050/3utu: low PDB/UniProt identity (0.89)
+P01050/2zf0: low PDB/UniProt identity (0.91)
+P01050/4baq: low PDB/UniProt identity (0.9)
+P01050/4bak: low PDB/UniProt identity (0.8)
+P01050/2zgx: low PDB/UniProt identity (0.9)
+P01050/2uuj: low PDB/UniProt identity (0.9)
+P01050/3d49: low PDB/UniProt identity (0.89)
+P01050/2ziq: low PDB/UniProt identity (0.9)
+P01050/3dux: low PDB/UniProt identity (0.89)
+P01050/2zff: low PDB/UniProt identity (0.9)
+P01050/4yes: low PDB/UniProt identity (0.91)
+P01050/4bam: low PDB/UniProt identity (0.9)
+P01094/1dp5: low PDB/UniProt identity (0.94)
+P01050/2uuk: low PDB/UniProt identity (0.9)
+P01050/2joo: low PDB/UniProt identity (0.92)
+Batch 2301-2350/20789 done.
+P01501/6o4m: low PDB/UniProt identity (0.56)
+Batch 2351-2400/20789 done.
+P01730/2jkt: low PDB/UniProt identity (0.78)
+P01730/2klu: low PDB/UniProt identity (0.92)
+P01730/2jkr: low PDB/UniProt identity (0.89)
+Batch 2401-2450/20789 done.
+P01730/6qh7: low PDB/UniProt identity (0.89)
+P02666/7ttr: low PDB/UniProt identity (0.0)
+P02666/7tts: low PDB/UniProt identity (0.0)
+P01730/6qh6: low PDB/UniProt identity (0.89)
+Batch 2451-2500/20789 done.
+P02760/6eja: low PDB/UniProt identity (0.86)
+P02760/6ejd: low PDB/UniProt identity (0.89)
+P02760/6ej7: low PDB/UniProt identity (0.8)
+P02686/1k2d: low PDB/UniProt identity (0.78)
+P02760/6ejb: low PDB/UniProt identity (0.8)
+P02760/6ej9: low PDB/UniProt identity (0.82)
+P03045/5ms0: low PDB/UniProt identity (0.94)
+P02760/6ejc: low PDB/UniProt identity (0.89)
+P03045/7a4f: low PDB/UniProt identity (0.25)
+Batch 2501-2550/20789 done.
+P03069/1uo1: low PDB/UniProt identity (0.75)
+P03069/1unv: low PDB/UniProt identity (0.72)
+P03069/1uny: low PDB/UniProt identity (0.74)
+P03069/1ij0: low PDB/UniProt identity (0.94)
+P03069/1uo2: low PDB/UniProt identity (0.76)
+P03069/1llm: low PDB/UniProt identity (0.85)
+P03069/1unt: low PDB/UniProt identity (0.75)
+P03069/1unw: low PDB/UniProt identity (0.75)
+P03069/1unz: low PDB/UniProt identity (0.71)
+P03069/1ij1: low PDB/UniProt identity (0.94)
+P03069/1uo3: low PDB/UniProt identity (0.73)
+P03069/1unu: low PDB/UniProt identity (0.74)
+P03069/1unx: low PDB/UniProt identity (0.75)
+P03069/1uo0: low PDB/UniProt identity (0.75)
+P03069/1env: low PDB/UniProt identity (0.72)
+P03069/1gzl: low PDB/UniProt identity (0.66)
+P03050/1myl: low PDB/UniProt identity (0.93)
+P03069/1ce9: low PDB/UniProt identity (0.94)
+P03069/1piq: low PDB/UniProt identity (0.74)
+P03069/1fav: low PDB/UniProt identity (0.71)
+P03069/1fmh: low PDB/UniProt identity (0.34)
+P03069/1gcl: low PDB/UniProt identity (0.74)
+P03069/1gcm: low PDB/UniProt identity (0.75)
+P03069/1ihq: low PDB/UniProt identity (0.62)
+P03050/1b28: low PDB/UniProt identity (0.94)
+P03045/7a4g: low PDB/UniProt identity (0.23)
+P03045/7a4h: low PDB/UniProt identity (0.19)
+P03045/7a4i: low PDB/UniProt identity (0.18)
+P03045/7a4j: low PDB/UniProt identity (0.18)
+Batch 2551-2600/20789 done.
+P03069/2b22: low PDB/UniProt identity (0.89)
+P03069/2wq3: low PDB/UniProt identity (0.72)
+P03069/2wq0: low PDB/UniProt identity (0.71)
+P03069/1uo4: low PDB/UniProt identity (0.74)
+P03069/1w5i: low PDB/UniProt identity (0.75)
+P03069/2wq1: low PDB/UniProt identity (0.72)
+P03069/2nrn: low PDB/UniProt identity (0.84)
+P03069/2ccf: low PDB/UniProt identity (0.71)
+P03069/2wq2: low PDB/UniProt identity (0.7)
+P03069/2vky: low PDB/UniProt identity (0.72)
+P03069/1uo5: low PDB/UniProt identity (0.74)
+P03069/1w5j: low PDB/UniProt identity (0.61)
+P03069/2bni: low PDB/UniProt identity (0.69)
+P03069/2ccn: low PDB/UniProt identity (0.73)
+P03069/1w5g: low PDB/UniProt identity (0.72)
+P03069/2cce: low PDB/UniProt identity (0.71)
+P03069/1w5h: low PDB/UniProt identity (0.68)
+P03069/2o7h: low PDB/UniProt identity (0.94)
+P03069/2vnl: low PDB/UniProt identity (0.71)
+P03069/2yo0: low PDB/UniProt identity (0.72)
+P03069/1w5k: low PDB/UniProt identity (0.58)
+P03069/2yny: low PDB/UniProt identity (0.72)
+P03069/1w5l: low PDB/UniProt identity (0.72)
+P03069/2k8x: low PDB/UniProt identity (0.62)
+P03069/2b1f: low PDB/UniProt identity (0.9)
+P03069/2wpy: low PDB/UniProt identity (0.94)
+P03069/2ynz: low PDB/UniProt identity (0.7)
+P03069/2wpz: low PDB/UniProt identity (0.91)
+P03069/2yo1: low PDB/UniProt identity (0.72)
+P03069/2yo2: low PDB/UniProt identity (0.72)
+P03069/2hy6: low PDB/UniProt identity (0.73)
+P03069/2ipz: low PDB/UniProt identity (0.9)
+Batch 2601-2650/20789 done.
+P03069/3m48: low PDB/UniProt identity (0.87)
+P03069/3i1g: low PDB/UniProt identity (0.87)
+P03069/3azd: low PDB/UniProt identity (0.6)
+P03069/4owi: low PDB/UniProt identity (0.81)
+P03069/4hu5: low PDB/UniProt identity (0.91)
+P03069/4nj1: low PDB/UniProt identity (0.94)
+P03069/3crp: low PDB/UniProt identity (0.9)
+P03069/6psa: low PDB/UniProt identity (0.66)
+P03069/4hu6: low PDB/UniProt identity (0.91)
+P03069/4nj2: low PDB/UniProt identity (0.91)
+P03069/3p8m: low PDB/UniProt identity (0.81)
+P03069/4c46: low PDB/UniProt identity (0.67)
+P03069/5app: low PDB/UniProt identity (0.51)
+P03069/6h9m: low PDB/UniProt identity (0.93)
+P03069/3zmf: low PDB/UniProt identity (0.72)
+P03069/3g9r: low PDB/UniProt identity (0.58)
+P03069/3gjp: low PDB/UniProt identity (0.94)
+P03069/4g2k: low PDB/UniProt identity (0.73)
+P03069/2yo3: low PDB/UniProt identity (0.73)
+P03069/3ck4: low PDB/UniProt identity (0.9)
+Batch 2651-2700/20789 done.
+P03070/1q1s: low PDB/UniProt identity (0.85)
+P03069/7o9v: low PDB/UniProt identity (0.79)
+P03070/1q1t: low PDB/UniProt identity (0.84)
+Batch 2701-2750/20789 done.
+P03126/2ljz: low PDB/UniProt identity (0.94)
+P03126/6twu: low PDB/UniProt identity (0.67)
+P03126/2fk4: low PDB/UniProt identity (0.94)
+P03126/6twx: low PDB/UniProt identity (0.71)
+Batch 2751-2800/20789 done.
+P03129/9uul: low PDB/UniProt identity (0.78)
+Batch 2801-2850/20789 done.
+Batch 2851-2900/20789 done.
+P03372/4jdd: low PDB/UniProt identity (0.8)
+P03372/3cbm: low PDB/UniProt identity (0.86)
+P03372/3cbo: low PDB/UniProt identity (0.8)
+P03372/4jc3: low PDB/UniProt identity (0.8)
+Batch 2901-2950/20789 done.
+Batch 2951-3000/20789 done.
+P03372/5n10: low PDB/UniProt identity (0.88)
+Batch 3001-3050/20789 done.
+Batch 3051-3100/20789 done.
+P03372/7ba6: low PDB/UniProt identity (0.83)
+P03372/7b9t: low PDB/UniProt identity (0.8)
+P03372/7ba9: low PDB/UniProt identity (0.8)
+P03372/6hkf: low PDB/UniProt identity (0.8)
+P03372/6tl3: low PDB/UniProt identity (0.8)
+P03372/7ba7: low PDB/UniProt identity (0.8)
+P03372/7ba3: low PDB/UniProt identity (0.83)
+P03372/6hmu: low PDB/UniProt identity (0.8)
+P03372/7baa: low PDB/UniProt identity (0.8)
+P03372/7ba5: low PDB/UniProt identity (0.83)
+P03372/7ba8: low PDB/UniProt identity (0.8)
+P03372/7bab: low PDB/UniProt identity (0.8)
+P03372/7b9m: low PDB/UniProt identity (0.8)
+P03372/6tjm: low PDB/UniProt identity (0.8)
+P03372/7ndo: low PDB/UniProt identity (0.88)
+P03372/7b9r: low PDB/UniProt identity (0.8)
+P03372/6hhp: low PDB/UniProt identity (0.8)
+P03372/6hkb: low PDB/UniProt identity (0.8)
+P03372/7nel: low PDB/UniProt identity (0.89)
+Batch 3101-3150/20789 done.
+P03372/8aoy: low PDB/UniProt identity (0.8)
+P03372/8alw: low PDB/UniProt identity (0.8)
+P03372/8alr: low PDB/UniProt identity (0.8)
+P03372/7oq7: low PDB/UniProt identity (0.8)
+P03372/8aps: low PDB/UniProt identity (0.8)
+P03372/8alt: low PDB/UniProt identity (0.8)
+P03372/8am7: low PDB/UniProt identity (0.8)
+P03372/8aq1: low PDB/UniProt identity (0.8)
+P03372/7nfb: low PDB/UniProt identity (0.88)
+P03372/7oq8: low PDB/UniProt identity (0.8)
+P03372/8afn: low PDB/UniProt identity (0.8)
+P03372/8anf: low PDB/UniProt identity (0.8)
+P03372/8alv: low PDB/UniProt identity (0.8)
+P03372/7nfw: low PDB/UniProt identity (0.8)
+P03372/7pwt: low PDB/UniProt identity (0.8)
+P03372/8ai0: low PDB/UniProt identity (0.8)
+P03372/7pwz: low PDB/UniProt identity (0.8)
+P03372/7niz: low PDB/UniProt identity (0.8)
+P03372/7opw: low PDB/UniProt identity (0.8)
+Batch 3151-3200/20789 done.
+P03372/8ary: low PDB/UniProt identity (0.8)
+P03372/8byo: low PDB/UniProt identity (0.8)
+P03372/8arr: low PDB/UniProt identity (0.8)
+P03372/8aus: low PDB/UniProt identity (0.8)
+P03372/8av4: low PDB/UniProt identity (0.8)
+P03372/8aze: low PDB/UniProt identity (0.8)
+P03372/8awg: low PDB/UniProt identity (0.8)
+P03372/8at9: low PDB/UniProt identity (0.8)
+P03372/8aqc: low PDB/UniProt identity (0.8)
+P03372/8bye: low PDB/UniProt identity (0.8)
+P03372/8bx3: low PDB/UniProt identity (0.8)
+P03372/8ar5: low PDB/UniProt identity (0.8)
+P03372/8bxm: low PDB/UniProt identity (0.8)
+P03372/8byb: low PDB/UniProt identity (0.8)
+P03372/8bwx: low PDB/UniProt identity (0.8)
+P03372/8bxq: low PDB/UniProt identity (0.8)
+P03372/8byy: low PDB/UniProt identity (0.8)
+P03372/8arz: low PDB/UniProt identity (0.8)
+P03372/8auy: low PDB/UniProt identity (0.8)
+P03372/8axe: low PDB/UniProt identity (0.8)
+P03372/8arw: low PDB/UniProt identity (0.8)
+P03372/8aqe: low PDB/UniProt identity (0.8)
+P03372/8av7: low PDB/UniProt identity (0.8)
+P03372/8b39: low PDB/UniProt identity (0.8)
+P03372/8atp: low PDB/UniProt identity (0.8)
+P03372/8byz: low PDB/UniProt identity (0.8)
+P03372/8byf: low PDB/UniProt identity (0.8)
+P03372/8arg: low PDB/UniProt identity (0.8)
+P03372/8bx4: low PDB/UniProt identity (0.8)
+P03372/8byc: low PDB/UniProt identity (0.8)
+P03372/8bxn: low PDB/UniProt identity (0.8)
+P03372/8bwz: low PDB/UniProt identity (0.8)
+P03372/8bxs: low PDB/UniProt identity (0.8)
+P03372/8av3: low PDB/UniProt identity (0.8)
+P03372/8as1: low PDB/UniProt identity (0.8)
+P03372/8axu: low PDB/UniProt identity (0.8)
+P03372/8av8: low PDB/UniProt identity (0.8)
+P03372/8byg: low PDB/UniProt identity (0.8)
+P03372/8arx: low PDB/UniProt identity (0.8)
+P03372/8au2: low PDB/UniProt identity (0.8)
+P03372/8aqz: low PDB/UniProt identity (0.8)
+P03372/8aro: low PDB/UniProt identity (0.8)
+P03372/8bxo: low PDB/UniProt identity (0.8)
+P03372/8bwj: low PDB/UniProt identity (0.8)
+P03372/8bx0: low PDB/UniProt identity (0.8)
+P03372/8byd: low PDB/UniProt identity (0.8)
+P03372/8bxi: low PDB/UniProt identity (0.8)
+P03372/8by9: low PDB/UniProt identity (0.8)
+P03372/8ar4: low PDB/UniProt identity (0.8)
+P03372/8arq: low PDB/UniProt identity (0.8)
+Batch 3201-3250/20789 done.
+P03372/8c0l: low PDB/UniProt identity (0.8)
+P03372/8bzg: low PDB/UniProt identity (0.8)
+P03372/8c4g: low PDB/UniProt identity (0.8)
+P03372/8bzw: low PDB/UniProt identity (0.83)
+P03372/8bz0: low PDB/UniProt identity (0.8)
+P03372/8bzc: low PDB/UniProt identity (0.8)
+P03372/8c42: low PDB/UniProt identity (0.4)
+P03372/8c04: low PDB/UniProt identity (0.8)
+P03372/8bzh: low PDB/UniProt identity (0.8)
+P03372/8bz9: low PDB/UniProt identity (0.8)
+P03372/8bzd: low PDB/UniProt identity (0.8)
+P03372/8c0k: low PDB/UniProt identity (0.8)
+P03372/8c4f: low PDB/UniProt identity (0.8)
+P03372/8bzt: low PDB/UniProt identity (0.8)
+P03372/8bza: low PDB/UniProt identity (0.8)
+P03372/8bze: low PDB/UniProt identity (0.8)
+P03372/8bzb: low PDB/UniProt identity (0.8)
+P03372/8bzf: low PDB/UniProt identity (0.8)
+Batch 3251-3300/20789 done.
+P03372/9i70: low PDB/UniProt identity (0.8)
+P03372/9i6w: low PDB/UniProt identity (0.8)
+P03372/9i6s: low PDB/UniProt identity (0.8)
+P03372/9i73: low PDB/UniProt identity (0.8)
+P03372/9i71: low PDB/UniProt identity (0.8)
+P03372/9i72: low PDB/UniProt identity (0.8)
+P03372/9i6x: low PDB/UniProt identity (0.8)
+P03372/9i6t: low PDB/UniProt identity (0.8)
+P03372/9i74: low PDB/UniProt identity (0.8)
+P03372/9i6y: low PDB/UniProt identity (0.8)
+P03372/9i6u: low PDB/UniProt identity (0.8)
+P03372/9i75: low PDB/UniProt identity (0.8)
+P03372/9i6z: low PDB/UniProt identity (0.8)
+P03372/9i6v: low PDB/UniProt identity (0.8)
+Batch 3301-3350/20789 done.
+P04150/5cbz: low PDB/UniProt identity (0.93)
+P04083/1qls: low PDB/UniProt identity (0.91)
+Batch 3351-3400/20789 done.
+P04325/1rpv: low PDB/UniProt identity (0.88)
+P04150/8a9g: low PDB/UniProt identity (0.92)
+P04150/6ymo: low PDB/UniProt identity (0.82)
+P04150/6yo8: low PDB/UniProt identity (0.91)
+P04150/6yos: low PDB/UniProt identity (0.89)
+Batch 3401-3450/20789 done.
+P04578/1k33: low PDB/UniProt identity (0.92)
+P04578/1df5: low PDB/UniProt identity (0.94)
+P04578/1dlb: low PDB/UniProt identity (0.94)
+P04578/5cil: low PDB/UniProt identity (0.92)
+P04578/4jpk: low PDB/UniProt identity (0.87)
+P04578/5cin: low PDB/UniProt identity (0.92)
+P04578/4jpj: low PDB/UniProt identity (0.86)
+P04578/5hfl: low PDB/UniProt identity (0.81)
+P04578/1gzl: low PDB/UniProt identity (0.93)
+P04578/2me1: low PDB/UniProt identity (0.93)
+P04578/4zto: low PDB/UniProt identity (0.9)
+P04578/3mnz: low PDB/UniProt identity (0.94)
+Batch 3451-3500/20789 done.
+P04578/5yb4: low PDB/UniProt identity (0.94)
+P04578/6jqk: low PDB/UniProt identity (0.93)
+P04578/5x08: low PDB/UniProt identity (0.92)
+P04578/5hfm: low PDB/UniProt identity (0.82)
+P04578/6mqr: low PDB/UniProt identity (0.88)
+P04578/6pec: low PDB/UniProt identity (0.88)
+P04578/6pdr: low PDB/UniProt identity (0.88)
+P04578/6bxp: low PDB/UniProt identity (0.83)
+P04578/6o3j: low PDB/UniProt identity (0.92)
+P04578/6mqc: low PDB/UniProt identity (0.88)
+P04578/6ncp: low PDB/UniProt identity (0.89)
+P04578/6mqs: low PDB/UniProt identity (0.86)
+P04578/6pef: low PDB/UniProt identity (0.88)
+P04578/6pds: low PDB/UniProt identity (0.87)
+P04578/6psa: low PDB/UniProt identity (0.94)
+P04578/6o3l: low PDB/UniProt identity (0.92)
+P04578/6snc: low PDB/UniProt identity (0.95)
+P04578/6p60: low PDB/UniProt identity (0.88)
+P04578/6mqe: low PDB/UniProt identity (0.88)
+P04578/6pdu: low PDB/UniProt identity (0.88)
+P04578/6p7h: low PDB/UniProt identity (0.88)
+P04578/6o42: low PDB/UniProt identity (0.92)
+P04578/5tkj: low PDB/UniProt identity (0.88)
+P04578/6snd: low PDB/UniProt identity (0.95)
+P04578/6de7: low PDB/UniProt identity (0.8)
+P04578/5tkk: low PDB/UniProt identity (0.88)
+P04578/6n16: low PDB/UniProt identity (0.88)
+P04578/6p8d: low PDB/UniProt identity (0.88)
+P04578/6o3g: low PDB/UniProt identity (0.92)
+P04578/5wdf: low PDB/UniProt identity (0.87)
+P04578/6mqm: low PDB/UniProt identity (0.86)
+Batch 3501-3550/20789 done.
+P04578/7ekb: low PDB/UniProt identity (0.92)
+P04578/8f3a: low PDB/UniProt identity (0.5)
+P04578/8f3b: low PDB/UniProt identity (0.55)
+P04578/7ekk: low PDB/UniProt identity (0.92)
+P04578/7n08: low PDB/UniProt identity (0.91)
+P04578/8fz2: low PDB/UniProt identity (0.85)
+P04578/6ubi: low PDB/UniProt identity (0.88)
+P04578/8g8d: low PDB/UniProt identity (0.93)
+P04578/6uce: low PDB/UniProt identity (0.88)
+P04610/1jm4: low PDB/UniProt identity (0.9)
+P04578/6ucf: low PDB/UniProt identity (0.88)
+P04578/6uju: low PDB/UniProt identity (0.92)
+P04578/7loh: low PDB/UniProt identity (0.94)
+P04578/6ujv: low PDB/UniProt identity (0.93)
+P04578/6wwc: low PDB/UniProt identity (0.88)
+P04578/7loi: low PDB/UniProt identity (0.94)
+P04578/7n05: low PDB/UniProt identity (0.87)
+Batch 3551-3600/20789 done.
+P04637/1a1u: low PDB/UniProt identity (0.9)
+P04637/2foj: low PDB/UniProt identity (0.86)
+P04637/2h4f: low PDB/UniProt identity (0.88)
+P04637/1yc5: low PDB/UniProt identity (0.92)
+P04637/2h4h: low PDB/UniProt identity (0.88)
+P04637/1hs5: low PDB/UniProt identity (0.94)
+P04616/8x3o: low PDB/UniProt identity (0.9)
+P04637/1xqh: low PDB/UniProt identity (0.83)
+P04616/8x3p: low PDB/UniProt identity (0.9)
+P04637/1ma3: low PDB/UniProt identity (0.89)
+P04637/2h2d: low PDB/UniProt identity (0.92)
+Batch 3601-3650/20789 done.
+P04637/3lw1: low PDB/UniProt identity (0.86)
+P04637/3q01: low PDB/UniProt identity (0.93)
+P04637/3pdh: low PDB/UniProt identity (0.92)
+P04637/2ruk: low PDB/UniProt identity (0.91)
+P04637/3q05: low PDB/UniProt identity (0.92)
+P04637/2mwo: low PDB/UniProt identity (0.93)
+P04637/2v5w: low PDB/UniProt identity (0.5)
+P04637/3q06: low PDB/UniProt identity (0.93)
+P04637/2mwp: low PDB/UniProt identity (0.92)
+P04637/2j10: low PDB/UniProt identity (0.94)
+P04637/2j11: low PDB/UniProt identity (0.9)
+Batch 3651-3700/20789 done.
+P04637/4x34: low PDB/UniProt identity (0.78)
+P04637/4zzj: low PDB/UniProt identity (0.71)
+P04637/4fz3: low PDB/UniProt identity (0.75)
+P04637/4mzi: low PDB/UniProt identity (0.92)
+P04637/4mzr: low PDB/UniProt identity (0.91)
+P04637/4buz: low PDB/UniProt identity (0.86)
+P04637/3ts8: low PDB/UniProt identity (0.92)
+Batch 3701-3750/20789 done.
+P04637/6rwh: low PDB/UniProt identity (0.92)
+P04637/6rkm: low PDB/UniProt identity (0.92)
+P04637/6rwu: low PDB/UniProt identity (0.92)
+P04637/6rwi: low PDB/UniProt identity (0.92)
+P04637/6rk8: low PDB/UniProt identity (0.88)
+P04637/6rl6: low PDB/UniProt identity (0.92)
+P04637/5moc: low PDB/UniProt identity (0.92)
+P04637/6rws: low PDB/UniProt identity (0.92)
+P04637/6rx2: low PDB/UniProt identity (0.86)
+P04637/6rki: low PDB/UniProt identity (0.92)
+P04637/6rm5: low PDB/UniProt identity (0.88)
+P04637/6rl3: low PDB/UniProt identity (0.92)
+P04637/6rkk: low PDB/UniProt identity (0.9)
+P04637/6rm7: low PDB/UniProt identity (0.92)
+P04637/6rl4: low PDB/UniProt identity (0.92)
+P04637/5ol0: low PDB/UniProt identity (0.88)
+P04637/6r5l: low PDB/UniProt identity (0.9)
+P04637/6rjz: low PDB/UniProt identity (0.92)
+P04637/5mhc: low PDB/UniProt identity (0.92)
+Batch 3751-3800/20789 done.
+P04637/6v4f: low PDB/UniProt identity (0.79)
+P04637/6s39: low PDB/UniProt identity (0.92)
+P04637/6s3c: low PDB/UniProt identity (0.9)
+P04637/6sio: low PDB/UniProt identity (0.92)
+P04637/6v4h: low PDB/UniProt identity (0.85)
+P04637/6s40: low PDB/UniProt identity (0.92)
+P04637/6sip: low PDB/UniProt identity (0.92)
+P04637/6s9q: low PDB/UniProt identity (0.92)
+P04637/6slv: low PDB/UniProt identity (0.92)
+P04637/6vrn: low PDB/UniProt identity (0.89)
+P04637/6siq: low PDB/UniProt identity (0.9)
+P04637/6sin: low PDB/UniProt identity (0.92)
+P04637/6vr5: low PDB/UniProt identity (0.89)
+P04637/6vrm: low PDB/UniProt identity (0.89)
+P04637/6vqo: low PDB/UniProt identity (0.89)
+P04637/6w51: low PDB/UniProt identity (0.89)
+P04637/7bwn: low PDB/UniProt identity (0.91)
+P04637/7rm4: low PDB/UniProt identity (0.89)
+Batch 3801-3850/20789 done.
+P04637/9c5s: low PDB/UniProt identity (0.5)
+Batch 3851-3900/20789 done.
+P04972/2ju4: low PDB/UniProt identity (0.9)
+Batch 3901-3950/20789 done.
+P05106/2n9y: low PDB/UniProt identity (0.93)
+P05106/2l1c: low PDB/UniProt identity (0.93)
+P05106/2q6w: low PDB/UniProt identity (0.91)
+P05106/2l91: low PDB/UniProt identity (0.93)
+Batch 3951-4000/20789 done.
+Batch 4001-4050/20789 done.
+P05107/2v7d: low PDB/UniProt identity (0.88)
+Batch 4051-4100/20789 done.
+P05452/3l9j: low PDB/UniProt identity (0.86)
+P05221/2vtx: low PDB/UniProt identity (0.95)
+Batch 4101-4150/20789 done.
+P06400/1pjm: low PDB/UniProt identity (0.85)
+P05556/3g9w: low PDB/UniProt identity (0.88)
+Batch 4151-4200/20789 done.
+P06401/5cc0: low PDB/UniProt identity (0.92)
+P06400/4cri: low PDB/UniProt identity (0.85)
+Batch 4201-4250/20789 done.
+P07248/1paa: low PDB/UniProt identity (0.9)
+P06748/7obg: low PDB/UniProt identity (0.86)
+P06748/7obh: low PDB/UniProt identity (0.83)
+P07293/3jbr: low PDB/UniProt identity (0.9)
+P06748/8ah2: low PDB/UniProt identity (0.89)
+P06935/8zhc: low PDB/UniProt identity (0.93)
+Batch 4251-4300/20789 done.
+P07355/4ftg: low PDB/UniProt identity (0.92)
+P07355/4hrh: low PDB/UniProt identity (0.92)
+P07355/4drw: low PDB/UniProt identity (0.92)
+Batch 4301-4350/20789 done.
+P08047/6pv2: low PDB/UniProt identity (0.93)
+P08047/6pv3: low PDB/UniProt identity (0.73)
+P08047/6uco: low PDB/UniProt identity (0.9)
+P08047/6pv0: low PDB/UniProt identity (0.9)
+P08047/6pv1: low PDB/UniProt identity (0.9)
+P08050/2n8t: low PDB/UniProt identity (0.86)
+Batch 4351-4400/20789 done.
+Batch 4401-4450/20789 done.
+P08631/3rbb: low PDB/UniProt identity (0.9)
+P08631/3rea: low PDB/UniProt identity (0.9)
+P08631/4orz: low PDB/UniProt identity (0.89)
+P08631/3reb: low PDB/UniProt identity (0.9)
+Batch 4451-4500/20789 done.
+P09012/2a3j: low PDB/UniProt identity (0.34)
+Batch 4501-4550/20789 done.
+P09012/6xh1: low PDB/UniProt identity (0.89)
+P09012/6xh2: low PDB/UniProt identity (0.88)
+P09012/6xh3: low PDB/UniProt identity (0.88)
+P09012/6xh0: low PDB/UniProt identity (0.89)
+Batch 4551-4600/20789 done.
+P09651/8ikp: low PDB/UniProt identity (0.89)
+P09651/8iks: low PDB/UniProt identity (0.78)
+P09651/8ikb: low PDB/UniProt identity (0.89)
+Batch 4601-4650/20789 done.
+P09803/1i7w: low PDB/UniProt identity (0.95)
+Batch 4651-4700/20789 done.
+P09883/4jml: low PDB/UniProt identity (0.94)
+P09803/7ar4: low PDB/UniProt identity (0.5)
+Batch 4701-4750/20789 done.
+Batch 4751-4800/20789 done.
+Batch 4801-4850/20789 done.
+Batch 4851-4900/20789 done.
+Batch 4901-4950/20789 done.
+P0ABQ4/6rul: low PDB/UniProt identity (0.93)
+Batch 4951-5000/20789 done.
+Batch 5001-5050/20789 done.
+P0AG67/2bh8: low PDB/UniProt identity (0.9)
+Batch 5051-5100/20789 done.
+Batch 5101-5150/20789 done.
+Batch 5151-5200/20789 done.
+Batch 5201-5250/20789 done.
+Batch 5251-5300/20789 done.
+Batch 5301-5350/20789 done.
+P0DTC2/6lxt: low PDB/UniProt identity (0.73)
+P0DTC2/6m1v: low PDB/UniProt identity (0.67)
+P0DTC2/6x45: low PDB/UniProt identity (0.77)
+Batch 5351-5400/20789 done.
+Batch 5401-5450/20789 done.
+P0DTC2/7bh9: low PDB/UniProt identity (0.94)
+Batch 5451-5500/20789 done.
+P0DTC2/7cot: low PDB/UniProt identity (0.74)
+Batch 5501-5550/20789 done.
+Batch 5551-5600/20789 done.
+Batch 5601-5650/20789 done.
+Batch 5651-5700/20789 done.
+Batch 5701-5750/20789 done.
+P0DTC2/7lc8: low PDB/UniProt identity (0.76)
+Batch 5751-5800/20789 done.
+Batch 5801-5850/20789 done.
+Batch 5851-5900/20789 done.
+Batch 5901-5950/20789 done.
+P0DTC2/7p5s: low PDB/UniProt identity (0.92)
+P0DTC2/7p3e: low PDB/UniProt identity (0.89)
+Batch 5951-6000/20789 done.
+P0DTC2/7qnw: low PDB/UniProt identity (0.91)
+Batch 6001-6050/20789 done.
+Batch 6051-6100/20789 done.
+Batch 6101-6150/20789 done.
+P0DTC2/7tc9: low PDB/UniProt identity (0.92)
+P0DTC2/7tly: low PDB/UniProt identity (0.93)
+P0DTC2/7t9l: low PDB/UniProt identity (0.93)
+P0DTC2/7tn0: low PDB/UniProt identity (0.93)
+Batch 6151-6200/20789 done.
+P0DTC2/7u0d: low PDB/UniProt identity (0.92)
+P0DTC2/7ufl: low PDB/UniProt identity (0.85)
+P0DTC2/7u1r: low PDB/UniProt identity (0.89)
+P0DTC2/7ufk: low PDB/UniProt identity (0.85)
+Batch 6201-6250/20789 done.
+Batch 6251-6300/20789 done.
+Batch 6301-6350/20789 done.
+P0DTC2/7wee: low PDB/UniProt identity (0.93)
+P0DTC2/7wi0: low PDB/UniProt identity (0.92)
+P0DTC2/7wef: low PDB/UniProt identity (0.94)
+P0DTC2/7whh: low PDB/UniProt identity (0.92)
+P0DTC2/7wbl: low PDB/UniProt identity (0.92)
+P0DTC2/7wbp: low PDB/UniProt identity (0.92)
+P0DTC2/7wed: low PDB/UniProt identity (0.94)
+P0DTC2/7wgc: low PDB/UniProt identity (0.93)
+Batch 6351-6400/20789 done.
+P0DTC2/7wk0: low PDB/UniProt identity (0.92)
+P0DTC2/7wop: low PDB/UniProt identity (0.92)
+P0DTC2/7wp5: low PDB/UniProt identity (0.92)
+P0DTC2/7wm0: low PDB/UniProt identity (0.92)
+P0DTC2/7wlc: low PDB/UniProt identity (0.93)
+P0DTC2/7wog: low PDB/UniProt identity (0.92)
+P0DTC2/7wri: low PDB/UniProt identity (0.92)
+P0DTC2/7wk6: low PDB/UniProt identity (0.92)
+P0DTC2/7wpb: low PDB/UniProt identity (0.92)
+P0DTC2/7wrj: low PDB/UniProt identity (0.92)
+P0DTC2/7wr8: low PDB/UniProt identity (0.92)
+P0DTC2/7wpc: low PDB/UniProt identity (0.92)
+Batch 6401-6450/20789 done.
+P0DTC2/7wrz: low PDB/UniProt identity (0.92)
+P0DTC2/7wrl: low PDB/UniProt identity (0.92)
+P0DTC2/7ws6: low PDB/UniProt identity (0.93)
+P0DTC2/7wwk: low PDB/UniProt identity (0.92)
+P0DTC2/7wxz: low PDB/UniProt identity (0.84)
+P0DTC2/7wrv: low PDB/UniProt identity (0.92)
+P0DTC2/7wsk: low PDB/UniProt identity (0.92)
+P0DTC2/7wtj: low PDB/UniProt identity (0.92)
+P0DTC2/7wtg: low PDB/UniProt identity (0.93)
+P0DTC2/7wth: low PDB/UniProt identity (0.92)
+P0DTC2/7wsa: low PDB/UniProt identity (0.93)
+P0DTC2/7wsc: low PDB/UniProt identity (0.92)
+P0DTC2/7wt9: low PDB/UniProt identity (0.93)
+P0DTC2/7x1m: low PDB/UniProt identity (0.92)
+Batch 6451-6500/20789 done.
+P0DTC2/7xik: low PDB/UniProt identity (0.92)
+P0DTC2/7xh8: low PDB/UniProt identity (0.92)
+P0DTC2/7x66: low PDB/UniProt identity (0.92)
+P0DTC2/7xci: low PDB/UniProt identity (0.92)
+P0DTC2/7xb1: low PDB/UniProt identity (0.92)
+P0DTC2/7xcp: low PDB/UniProt identity (0.92)
+P0DTC2/7xck: low PDB/UniProt identity (0.94)
+P0DTC2/7xby: low PDB/UniProt identity (0.92)
+P0DTC2/7xj9: low PDB/UniProt identity (0.92)
+P0DTC2/7xiz: low PDB/UniProt identity (0.94)
+P0DTC2/7xaz: low PDB/UniProt identity (0.92)
+P0DTC2/7xb0: low PDB/UniProt identity (0.92)
+Batch 6501-6550/20789 done.
+P0DTC2/7y0v: low PDB/UniProt identity (0.91)
+P0DTC2/7y0w: low PDB/UniProt identity (0.92)
+P0DTC2/7xwa: low PDB/UniProt identity (0.91)
+P0DTC2/7y0c: low PDB/UniProt identity (0.92)
+  Activating project at `/stockage/EQUIPES/AMIG/MEMBERS/julie.daniel/IDRBindingDataset.jl/scripts`
+P0DTC2/7xoc: low PDB/UniProt identity (0.92)
+P0DTC2/7xo9: low PDB/UniProt identity (0.92)
+P0DTC2/7xo6: low PDB/UniProt identity (0.92)
+Batch 6551-6600/20789 done.
+P0DTC2/7y9n: low PDB/UniProt identity (0.71)
+P0DTC2/7yd1: low PDB/UniProt identity (0.92)
+P0DTC2/7yj3: low PDB/UniProt identity (0.92)
+P0DTC2/7ykj: low PDB/UniProt identity (0.92)
+P0DTC2/7y76: low PDB/UniProt identity (0.91)
+P0DTC2/7yow: low PDB/UniProt identity (0.92)
+P0DTC2/7yr0: low PDB/UniProt identity (0.91)
+P0DTC2/7yhw: low PDB/UniProt identity (0.91)
+P0DTC2/7ya1: low PDB/UniProt identity (0.94)
+P0DTC2/7yad: low PDB/UniProt identity (0.92)
+P0DTC2/7y75: low PDB/UniProt identity (0.92)
+Batch 6601-6650/20789 done.
+P0DTC2/7yvj: low PDB/UniProt identity (0.91)
+P0DTC2/7yvm: low PDB/UniProt identity (0.91)
+P0DTC2/7zfd: low PDB/UniProt identity (0.93)
+P0DTC2/7yv8: low PDB/UniProt identity (0.92)
+P0DTC2/7zf3: low PDB/UniProt identity (0.92)
+P0DTC2/7zf7: low PDB/UniProt identity (0.92)
+P0DTC2/7zf8: low PDB/UniProt identity (0.92)
+P0DTC2/7zf4: low PDB/UniProt identity (0.93)
+P0DTC2/7zfe: low PDB/UniProt identity (0.92)
+P0DTC2/7yvh: low PDB/UniProt identity (0.91)
+P0DTC2/7zf9: low PDB/UniProt identity (0.92)
+P0DTC2/7yvu: low PDB/UniProt identity (0.92)
+P0DTC2/7zfa: low PDB/UniProt identity (0.92)
+P0DTC2/7yvl: low PDB/UniProt identity (0.91)
+P0DTC2/7zf5: low PDB/UniProt identity (0.93)
+P0DTC2/7yvf: low PDB/UniProt identity (0.91)
+P0DTC2/7zfb: low PDB/UniProt identity (0.92)
+P0DTC2/7yr4: low PDB/UniProt identity (0.91)
+Batch 6651-6700/20789 done.
+P0DTC2/8c0y: low PDB/UniProt identity (0.93)
+P0DTC2/7zr2: low PDB/UniProt identity (0.63)
+P0DTC2/7zxu: low PDB/UniProt identity (0.91)
+P0DTC2/8aqu: low PDB/UniProt identity (0.92)
+P0DTC2/8asy: low PDB/UniProt identity (0.91)
+P0DTC2/8aqv: low PDB/UniProt identity (0.91)
+P0DTC2/8bh5: low PDB/UniProt identity (0.91)
+P0DTC2/8aqw: low PDB/UniProt identity (0.91)
+P0DTC2/8aja: low PDB/UniProt identity (0.79)
+P0DTC2/8c89: low PDB/UniProt identity (0.93)
+P0DTC2/7zsd: low PDB/UniProt identity (0.92)
+P0DTC2/8ajl: low PDB/UniProt identity (0.79)
+Batch 6701-6750/20789 done.
+P0DTC2/8cmh: low PDB/UniProt identity (0.79)
+P0DTC2/8cmi: low PDB/UniProt identity (0.93)
+Batch 6751-6800/20789 done.
+P0DTC2/8dm8: low PDB/UniProt identity (0.92)
+P0DTC2/8ekd: low PDB/UniProt identity (0.91)
+P0DTC2/8dm6: low PDB/UniProt identity (0.92)
+P0DTC2/8dma: low PDB/UniProt identity (0.93)
+Batch 6801-6850/20789 done.
+P0DTC2/8gb8: low PDB/UniProt identity (0.92)
+P0DTC2/8fxb: low PDB/UniProt identity (0.88)
+P0DTC2/8fxc: low PDB/UniProt identity (0.9)
+P0DTC2/8erq: low PDB/UniProt identity (0.92)
+Batch 6851-6900/20789 done.
+P0DTC2/8gs9: low PDB/UniProt identity (0.91)
+P0DTC2/8hc8: low PDB/UniProt identity (0.92)
+P0DTC2/8gsb: low PDB/UniProt identity (0.92)
+P0DTC2/8hfy: low PDB/UniProt identity (0.92)
+P0DTC2/8gzz: low PDB/UniProt identity (0.92)
+P0DTC2/8gpy: low PDB/UniProt identity (0.91)
+P0DTC2/8gry: low PDB/UniProt identity (0.92)
+P0DTC2/8h7z: low PDB/UniProt identity (0.92)
+P0DTC2/8h06: low PDB/UniProt identity (0.91)
+P0DTC2/8gon: low PDB/UniProt identity (0.89)
+P0DTC2/8h5c: low PDB/UniProt identity (0.91)
+Batch 6901-6950/20789 done.
+P0DTC2/8hpf: low PDB/UniProt identity (0.92)
+P0DTC2/8i9g: low PDB/UniProt identity (0.9)
+P0DTC2/8hwt: low PDB/UniProt identity (0.92)
+P0DTC2/8if2: low PDB/UniProt identity (0.9)
+P0DTC2/8hws: low PDB/UniProt identity (0.91)
+P0DTC2/8i9h: low PDB/UniProt identity (0.88)
+P0DTC2/8i9e: low PDB/UniProt identity (0.91)
+P0DTC2/8ifz: low PDB/UniProt identity (0.91)
+P0DTC2/8i9f: low PDB/UniProt identity (0.9)
+P0DTC2/8hpu: low PDB/UniProt identity (0.91)
+Batch 6951-7000/20789 done.
+P0DTC2/8khd: low PDB/UniProt identity (0.93)
+P0DTC2/8k18: low PDB/UniProt identity (0.81)
+P0DTC2/8j1t: low PDB/UniProt identity (0.91)
+P0DTC2/8k5g: low PDB/UniProt identity (0.93)
+P0DTC2/8ix3: low PDB/UniProt identity (0.91)
+P0DTC2/8kc2: low PDB/UniProt identity (0.92)
+P0DTC2/8k19: low PDB/UniProt identity (0.81)
+P0DTC2/8k3k: low PDB/UniProt identity (0.92)
+P0DTC2/8jin: low PDB/UniProt identity (0.89)
+P0DTC2/8kdr: low PDB/UniProt identity (0.92)
+P0DTC2/8kep: low PDB/UniProt identity (0.92)
+P0DTC2/8jyp: low PDB/UniProt identity (0.89)
+P0DTC2/8jys: low PDB/UniProt identity (0.92)
+P0DTC2/8iov: low PDB/UniProt identity (0.89)
+Batch 7001-7050/20789 done.
+P0DTC2/8q94: low PDB/UniProt identity (0.91)
+P0DTC2/8rbu: low PDB/UniProt identity (0.9)
+P0DTC2/8rcv: low PDB/UniProt identity (0.9)
+P0DTC2/8q95: low PDB/UniProt identity (0.91)
+P0DTC2/8ref: low PDB/UniProt identity (0.9)
+P0DTC2/8rbv: low PDB/UniProt identity (0.89)
+P0DTC2/8s6m: low PDB/UniProt identity (0.9)
+P0DTC2/8rhq: low PDB/UniProt identity (0.9)
+P0DTC2/8qsq: low PDB/UniProt identity (0.87)
+P0DTC2/8qtd: low PDB/UniProt identity (0.87)
+P0DTC2/8s9g: low PDB/UniProt identity (0.9)
+P0DTC2/8rjh: low PDB/UniProt identity (0.89)
+P0DTC2/8r8k: low PDB/UniProt identity (0.94)
+P0DTC2/8pq2: low PDB/UniProt identity (0.88)
+P0DTC2/8rji: low PDB/UniProt identity (0.89)
+Batch 7051-7100/20789 done.
+P0DTC2/8vif: low PDB/UniProt identity (0.92)
+P0DTC2/8vke: low PDB/UniProt identity (0.92)
+P0DTC2/8v4f: low PDB/UniProt identity (0.93)
+P0DTC2/8suo: low PDB/UniProt identity (0.92)
+P0DTC2/8vkn: low PDB/UniProt identity (0.89)
+Batch 7101-7150/20789 done.
+P0DTC2/8woy: low PDB/UniProt identity (0.91)
+P0DTC2/8whz: low PDB/UniProt identity (0.88)
+P0DTC2/8wp8: low PDB/UniProt identity (0.87)
+P0DTC2/8wdz: low PDB/UniProt identity (0.9)
+P0DTC2/8wrh: low PDB/UniProt identity (0.88)
+P0DTC2/8we4: low PDB/UniProt identity (0.89)
+P0DTC2/8wpw: low PDB/UniProt identity (0.89)
+P0DTC2/8wrl: low PDB/UniProt identity (0.89)
+P0DTC2/8wfh: low PDB/UniProt identity (0.92)
+P0DTC2/8wdr: low PDB/UniProt identity (0.9)
+P0DTC2/8we0: low PDB/UniProt identity (0.89)
+P0DTC2/8wyj: low PDB/UniProt identity (0.95)
+P0DTC2/8wfm: low PDB/UniProt identity (0.92)
+P0DTC2/8vqr: low PDB/UniProt identity (0.88)
+P0DTC2/8we1: low PDB/UniProt identity (0.91)
+P0DTC2/8x4h: low PDB/UniProt identity (0.95)
+P0DTC2/8wds: low PDB/UniProt identity (0.91)
+P0DTC2/8vkp: low PDB/UniProt identity (0.89)
+P0DTC2/8wgw: low PDB/UniProt identity (0.92)
+P0DTC2/8wdy: low PDB/UniProt identity (0.9)
+P0DTC2/8wtd: low PDB/UniProt identity (0.88)
+P0DTC2/8x4z: low PDB/UniProt identity (0.95)
+P0DTC2/8wyh: low PDB/UniProt identity (0.95)
+Batch 7151-7200/20789 done.
+P0DTC2/8xke: low PDB/UniProt identity (0.92)
+P0DTC2/8xln: low PDB/UniProt identity (0.88)
+P0DTC2/8xsj: low PDB/UniProt identity (0.91)
+P0DTC2/8xn3: low PDB/UniProt identity (0.88)
+P0DTC2/8xv0: low PDB/UniProt identity (0.87)
+P0DTC2/8xyg: low PDB/UniProt identity (0.9)
+P0DTC2/8xv1: low PDB/UniProt identity (0.87)
+P0DTC2/8x50: low PDB/UniProt identity (0.95)
+P0DTC2/8xef: low PDB/UniProt identity (0.89)
+P0DTC2/8xy9: low PDB/UniProt identity (0.91)
+P0DTC2/8xrq: low PDB/UniProt identity (0.92)
+P0DTC2/8xye: low PDB/UniProt identity (0.92)
+P0DTC2/8x55: low PDB/UniProt identity (0.95)
+P0DTC2/8xn2: low PDB/UniProt identity (0.88)
+P0DTC2/8xuu: low PDB/UniProt identity (0.92)
+P0DTC2/8x56: low PDB/UniProt identity (0.95)
+P0DTC2/8xe9: low PDB/UniProt identity (0.89)
+Batch 7201-7250/20789 done.
+P0DTC2/8ydv: low PDB/UniProt identity (0.92)
+P0DTC2/8ydw: low PDB/UniProt identity (0.89)
+P0DTC2/8ydq: low PDB/UniProt identity (0.92)
+P0DTC2/8yub: low PDB/UniProt identity (0.88)
+P0DTC2/8ydu: low PDB/UniProt identity (0.93)
+P0DTC2/8xzd: low PDB/UniProt identity (0.91)
+P0DTC2/8y18: low PDB/UniProt identity (0.86)
+P0DTC2/8yzd: low PDB/UniProt identity (0.87)
+P0DTC2/8yuc: low PDB/UniProt identity (0.88)
+P0DTC2/8y32: low PDB/UniProt identity (0.88)
+P0DTC2/8ywe: low PDB/UniProt identity (0.87)
+P0DTC2/8yzb: low PDB/UniProt identity (0.88)
+P0DTC2/8ywx: low PDB/UniProt identity (0.91)
+P0DTC2/8yze: low PDB/UniProt identity (0.95)
+P0DTC2/8y16: low PDB/UniProt identity (0.95)
+P0DTC2/8xza: low PDB/UniProt identity (0.88)
+P0DTC2/8y5j: low PDB/UniProt identity (0.95)
+P0DTC2/8y6a: low PDB/UniProt identity (0.87)
+Batch 7251-7300/20789 done.
+P0DTC2/8z86: low PDB/UniProt identity (0.91)
+P0DTC2/8z06: low PDB/UniProt identity (0.67)
+P0DTC2/8yzr: low PDB/UniProt identity (0.89)
+P0DTC2/8zc1: low PDB/UniProt identity (0.91)
+P0DTC2/8z07: low PDB/UniProt identity (0.89)
+P0DTC2/8yzw: low PDB/UniProt identity (0.78)
+P0DTC2/8z08: low PDB/UniProt identity (0.89)
+P0DTC2/8z05: low PDB/UniProt identity (0.44)
+P0DTC2/8z6x: low PDB/UniProt identity (0.88)
+P0DTC2/8zc5: low PDB/UniProt identity (0.91)
+P0DTC2/8z6t: low PDB/UniProt identity (0.89)
+P0DTC2/8zbq: low PDB/UniProt identity (0.86)
+Batch 7301-7350/20789 done.
+P0DTC2/9cfg: low PDB/UniProt identity (0.88)
+P0DTC2/9asd: low PDB/UniProt identity (0.88)
+P0DTC2/9bll: low PDB/UniProt identity (0.89)
+P0DTC2/8zpp: low PDB/UniProt identity (0.91)
+P0DTC2/9co7: low PDB/UniProt identity (0.92)
+P0DTC2/9cfh: low PDB/UniProt identity (0.87)
+P0DTC2/8zpq: low PDB/UniProt identity (0.91)
+P0DTC2/9c6y: low PDB/UniProt identity (0.86)
+P0DTC2/9cff: low PDB/UniProt identity (0.88)
+P0DTC2/9c7s: low PDB/UniProt identity (0.93)
+P0DTC2/9cci: low PDB/UniProt identity (0.87)
+P0DTC2/8zv9: low PDB/UniProt identity (0.89)
+P0DTC2/9co9: low PDB/UniProt identity (0.87)
+P0DTC2/8zy3: low PDB/UniProt identity (0.92)
+P0DTC2/9atp: low PDB/UniProt identity (0.95)
+P0DTC2/8zyf: low PDB/UniProt identity (0.92)
+Batch 7351-7400/20789 done.
+P0DTC2/9fgu: low PDB/UniProt identity (0.92)
+P0DTC2/9ele: low PDB/UniProt identity (0.85)
+P0DTC2/9fgt: low PDB/UniProt identity (0.9)
+P0DTC2/9elh: low PDB/UniProt identity (0.95)
+P0DTC2/9elo: low PDB/UniProt identity (0.95)
+P0DTC2/9elf: low PDB/UniProt identity (0.95)
+P0DTC2/9elg: low PDB/UniProt identity (0.92)
+P0DTC2/9eli: low PDB/UniProt identity (0.95)
+P0DTC2/9elq: low PDB/UniProt identity (0.94)
+P0DTC2/9eln: low PDB/UniProt identity (0.95)
+Batch 7401-7450/20789 done.
+P0DTC2/9iuq: low PDB/UniProt identity (0.86)
+P0DTC2/9kud: low PDB/UniProt identity (0.87)
+P0DTC2/9lbs: low PDB/UniProt identity (0.91)
+P0DTC2/9iuu: low PDB/UniProt identity (0.87)
+P0DTC2/9kvf: low PDB/UniProt identity (0.92)
+P0DTC2/9js4: low PDB/UniProt identity (0.92)
+P0DTC2/9iu1: low PDB/UniProt identity (0.87)
+P0DTC2/9iup: low PDB/UniProt identity (0.86)
+P0DTC2/9k75: low PDB/UniProt identity (0.92)
+Batch 7451-7500/20789 done.
+P0DTC2/9m3f: low PDB/UniProt identity (0.78)
+P0DTC2/9vg7: low PDB/UniProt identity (0.79)
+Batch 7501-7550/20789 done.
+P0DTC9/7qik: low PDB/UniProt identity (0.86)
+P0DTC9/7qip: low PDB/UniProt identity (0.89)
+Batch 7551-7600/20789 done.
+P0DTC9/8utc: low PDB/UniProt identity (0.89)
+P0DTC9/7zit: low PDB/UniProt identity (0.86)
+P0DTC9/8th5: low PDB/UniProt identity (0.88)
+Batch 7601-7650/20789 done.
+P0DTC9/9uj2: low PDB/UniProt identity (0.86)
+Batch 7651-7700/20789 done.
+Batch 7701-7750/20789 done.
+Batch 7751-7800/20789 done.
+Batch 7801-7850/20789 done.
+Batch 7851-7900/20789 done.
+Batch 7901-7950/20789 done.
+Batch 7951-8000/20789 done.
+Batch 8001-8050/20789 done.
+Batch 8051-8100/20789 done.
+Batch 8101-8150/20789 done.
+Batch 8151-8200/20789 done.
+Batch 8201-8250/20789 done.
+Batch 8251-8300/20789 done.
+Batch 8301-8350/20789 done.
+Batch 8351-8400/20789 done.
+Batch 8401-8450/20789 done.
+Batch 8451-8500/20789 done.
+Batch 8501-8550/20789 done.
+Batch 8551-8600/20789 done.
+Batch 8601-8650/20789 done.
+Batch 8651-8700/20789 done.
+Batch 8701-8750/20789 done.
+Batch 8751-8800/20789 done.
+Batch 8801-8850/20789 done.
+Batch 8851-8900/20789 done.
+Batch 8901-8950/20789 done.
+Batch 8951-9000/20789 done.
+Batch 9001-9050/20789 done.
+Batch 9051-9100/20789 done.
+Batch 9101-9150/20789 done.
+Batch 9151-9200/20789 done.
+Batch 9201-9250/20789 done.
+Batch 9251-9300/20789 done.
+Batch 9301-9350/20789 done.
+Batch 9351-9400/20789 done.
+Batch 9401-9450/20789 done.
+Batch 9451-9500/20789 done.
+Batch 9501-9550/20789 done.
+Batch 9551-9600/20789 done.
+Batch 9601-9650/20789 done.
+Batch 9651-9700/20789 done.
+Batch 9701-9750/20789 done.
+Batch 9751-9800/20789 done.
+Batch 9801-9850/20789 done.
+Batch 9851-9900/20789 done.
+Batch 9901-9950/20789 done.
+Batch 9951-10000/20789 done.
+Batch 10001-10050/20789 done.
+Batch 10051-10100/20789 done.
+Batch 10101-10150/20789 done.
+Batch 10151-10200/20789 done.
+Batch 10201-10250/20789 done.
+Batch 10251-10300/20789 done.
+Batch 10301-10350/20789 done.
+Batch 10351-10400/20789 done.
+Batch 10401-10450/20789 done.
+Batch 10451-10500/20789 done.
+Batch 10501-10550/20789 done.
+Batch 10551-10600/20789 done.
+Batch 10601-10650/20789 done.
+Batch 10651-10700/20789 done.
+P0DTD1/8rnf: low PDB/UniProt identity (0.89)
+Batch 10701-10750/20789 done.
+Batch 10751-10800/20789 done.
+Batch 10801-10850/20789 done.
+Batch 10851-10900/20789 done.
+Batch 10901-10950/20789 done.
+Batch 10951-11000/20789 done.
+P0DTD1/9ez6: low PDB/UniProt identity (0.9)
+Batch 11001-11050/20789 done.
+Batch 11051-11100/20789 done.
+Batch 11101-11150/20789 done.
+Batch 11151-11200/20789 done.
+Batch 11201-11250/20789 done.
+Batch 11251-11300/20789 done.
+Batch 11301-11350/20789 done.
+P10415/1g5m: low PDB/UniProt identity (0.9)
+P10415/2o22: low PDB/UniProt identity (0.91)
+P10415/1gjh: low PDB/UniProt identity (0.91)
+P10415/8hln: low PDB/UniProt identity (0.91)
+P10415/8hll: low PDB/UniProt identity (0.91)
+P10415/2o21: low PDB/UniProt identity (0.91)
+P10415/8hlm: low PDB/UniProt identity (0.91)
+P10415/8hts: low PDB/UniProt identity (0.95)
+P10415/5fcg: low PDB/UniProt identity (0.92)
+Batch 11351-11400/20789 done.
+P10997/6zrq: low PDB/UniProt identity (0.91)
+P10997/5knz: low PDB/UniProt identity (0.91)
+P10997/6zrr: low PDB/UniProt identity (0.91)
+P10997/7bg0: low PDB/UniProt identity (0.85)
+Batch 11401-11450/20789 done.
+P10997/9blb: low PDB/UniProt identity (0.86)
+P10997/8r1s: low PDB/UniProt identity (0.95)
+P10997/9bud: low PDB/UniProt identity (0.84)
+P10997/8f0j: low PDB/UniProt identity (0.89)
+P10997/9blw: low PDB/UniProt identity (0.86)
+P10997/8f2b: low PDB/UniProt identity (0.89)
+P10997/9btw: low PDB/UniProt identity (0.86)
+P10997/9blc: low PDB/UniProt identity (0.9)
+P10997/8f0k: low PDB/UniProt identity (0.89)
+P10997/9bue: low PDB/UniProt identity (0.87)
+P10997/9bp3: low PDB/UniProt identity (0.84)
+P10997/9bub: low PDB/UniProt identity (0.84)
+P10997/8f2a: low PDB/UniProt identity (0.89)
+P10997/9bq3: low PDB/UniProt identity (0.84)
+P10997/9buc: low PDB/UniProt identity (0.84)
+Batch 11451-11500/20789 done.
+Batch 11501-11550/20789 done.
+P11940/5dx1: low PDB/UniProt identity (0.92)
+P11940/5dx8: low PDB/UniProt identity (0.78)
+P11940/5dxa: low PDB/UniProt identity (0.85)
+Batch 11551-11600/20789 done.
+Batch 11601-11650/20789 done.
+Batch 11651-11700/20789 done.
+Batch 11701-11750/20789 done.
+P12497/4dga: low PDB/UniProt identity (0.94)
+P12497/4dge: low PDB/UniProt identity (0.94)
+Batch 11751-11800/20789 done.
+P12497/5vj3: low PDB/UniProt identity (0.95)
+P12497/6opw: low PDB/UniProt identity (0.9)
+P12497/6opy: low PDB/UniProt identity (0.89)
+P12497/6opz: low PDB/UniProt identity (0.88)
+Batch 11801-11850/20789 done.
+Batch 11851-11900/20789 done.
+Batch 11901-11950/20789 done.
+Batch 11951-12000/20789 done.
+P12506/8ccw: low PDB/UniProt identity (0.89)
+P12506/1tac: low PDB/UniProt identity (0.91)
+P12506/2bgn: low PDB/UniProt identity (0.83)
+Batch 12001-12050/20789 done.
+P13569/3isw: low PDB/UniProt identity (0.94)
+P13569/5d2d: low PDB/UniProt identity (0.89)
+P13569/5d3e: low PDB/UniProt identity (0.78)
+P13569/5d3f: low PDB/UniProt identity (0.89)
+P13569/6hep: low PDB/UniProt identity (0.87)
+Batch 12051-12100/20789 done.
+P13569/7qi1: low PDB/UniProt identity (0.89)
+Batch 12101-12150/20789 done.
+P14738/3cal: low PDB/UniProt identity (0.95)
+Batch 12151-12200/20789 done.
+Batch 12201-12250/20789 done.
+Batch 12251-12300/20789 done.
+Batch 12301-12350/20789 done.
+Batch 12351-12400/20789 done.
+Batch 12401-12450/20789 done.
+Batch 12451-12500/20789 done.
+Batch 12501-12550/20789 done.
+Batch 12551-12600/20789 done.
+P24928/3d9p: low PDB/UniProt identity (0.73)
+P24928/3d9m: low PDB/UniProt identity (0.92)
+P24928/4jxt: low PDB/UniProt identity (0.82)
+P24928/3d9n: low PDB/UniProt identity (0.75)
+P24928/2ghq: low PDB/UniProt identity (0.71)
+P24928/2lto: low PDB/UniProt identity (0.92)
+P24928/3d9k: low PDB/UniProt identity (0.73)
+P24928/2ght: low PDB/UniProt identity (0.85)
+P24928/3d9l: low PDB/UniProt identity (0.83)
+Batch 12601-12650/20789 done.
+P24928/9b9l: low PDB/UniProt identity (0.92)
+P24928/8pnq: low PDB/UniProt identity (0.92)
+P24928/8r60: low PDB/UniProt identity (0.88)
+P24928/7z42: low PDB/UniProt identity (0.85)
+P24928/8r3k: low PDB/UniProt identity (0.9)
+P24928/6f5p: low PDB/UniProt identity (0.83)
+P24928/8pm0: low PDB/UniProt identity (0.88)
+P24928/8r65: low PDB/UniProt identity (0.88)
+P24928/6g0r: low PDB/UniProt identity (0.75)
+P24928/6ic8: low PDB/UniProt identity (0.81)
+P24928/6ic9: low PDB/UniProt identity (0.74)
+P24928/5m3h: low PDB/UniProt identity (0.88)
+P24928/8r3l: low PDB/UniProt identity (0.92)
+P24928/8pnp: low PDB/UniProt identity (0.91)
+P25024/1ilp: low PDB/UniProt identity (0.94)
+P25024/1ilq: low PDB/UniProt identity (0.94)
+P24928/5m3j: low PDB/UniProt identity (0.89)
+P24928/6q5y: low PDB/UniProt identity (0.7)
+P24928/6xkb: low PDB/UniProt identity (0.76)
+P24928/7z1k: low PDB/UniProt identity (0.83)
+Batch 12651-12700/20789 done.
+P25299/2x1f: low PDB/UniProt identity (0.94)
+P25054/1th1: low PDB/UniProt identity (0.91)
+P25054/1v18: low PDB/UniProt identity (0.9)
+Batch 12701-12750/20789 done.
+P26554/2m3m: low PDB/UniProt identity (0.91)
+Batch 12751-12800/20789 done.
+Batch 12801-12850/20789 done.
+Batch 12851-12900/20789 done.
+P27958/1jr6: low PDB/UniProt identity (0.95)
+P27958/1onb: low PDB/UniProt identity (0.95)
+Batch 12901-12950/20789 done.
+P27958/2p59: low PDB/UniProt identity (0.94)
+P27958/6bqk: low PDB/UniProt identity (0.92)
+P27958/4n0y: low PDB/UniProt identity (0.91)
+P27958/2qv1: low PDB/UniProt identity (0.94)
+P27958/6bqj: low PDB/UniProt identity (0.92)
+Batch 12951-13000/20789 done.
+Batch 13001-13050/20789 done.
+Batch 13051-13100/20789 done.
+Batch 13101-13150/20789 done.
+Batch 13151-13200/20789 done.
+Batch 13201-13250/20789 done.
+P30307/5m37: low PDB/UniProt identity (0.94)
+P30307/5m35: low PDB/UniProt identity (0.88)
+P30307/5m36: low PDB/UniProt identity (0.93)
+P30307/3bzi: low PDB/UniProt identity (0.86)
+P30273/7q5t: low PDB/UniProt identity (0.89)
+Batch 13251-13300/20789 done.
+Batch 13301-13350/20789 done.
+P31327/5ojo: low PDB/UniProt identity (0.75)
+Batch 13351-13400/20789 done.
+Batch 13401-13450/20789 done.
+Batch 13451-13500/20789 done.
+Batch 13501-13550/20789 done.
+P35222/6o9c: low PDB/UniProt identity (0.89)
+P35222/8vmf: low PDB/UniProt identity (0.8)
+P35222/6m93: low PDB/UniProt identity (0.91)
+P35222/6m90: low PDB/UniProt identity (0.9)
+P35222/3fqr: low PDB/UniProt identity (0.9)
+P35222/6m94: low PDB/UniProt identity (0.89)
+P35222/6m91: low PDB/UniProt identity (0.8)
+P35222/2g57: low PDB/UniProt identity (0.92)
+P35222/6m92: low PDB/UniProt identity (0.9)
+P35222/1p22: low PDB/UniProt identity (0.82)
+P35222/6wnx: low PDB/UniProt identity (0.78)
+P35222/8vme: low PDB/UniProt identity (0.83)
+Batch 13551-13600/20789 done.
+P35236/8yp8: low PDB/UniProt identity (0.94)
+P35236/2gph: low PDB/UniProt identity (0.94)
+Batch 13601-13650/20789 done.
+Batch 13651-13700/20789 done.
+P36894/2qj9: low PDB/UniProt identity (0.92)
+P36894/2qja: low PDB/UniProt identity (0.88)
+P36894/2qjb: low PDB/UniProt identity (0.83)
+Batch 13701-13750/20789 done.
+Batch 13751-13800/20789 done.
+Batch 13801-13850/20789 done.
+Batch 13851-13900/20789 done.
+Batch 13901-13950/20789 done.
+Batch 13951-14000/20789 done.
+Batch 14001-14050/20789 done.
+Batch 14051-14100/20789 done.
+P37840/4znn: low PDB/UniProt identity (0.9)
+Batch 14101-14150/20789 done.
+Batch 14151-14200/20789 done.
+P37840/8ol8: low PDB/UniProt identity (0.82)
+Batch 14201-14250/20789 done.
+Batch 14251-14300/20789 done.
+Batch 14301-14350/20789 done.
+P38936/6cix: low PDB/UniProt identity (0.86)
+P38936/6cbi: low PDB/UniProt identity (0.8)
+P38634/3v7d: low PDB/UniProt identity (0.8)
+P38936/7kq0: low PDB/UniProt identity (0.92)
+P38936/6civ: low PDB/UniProt identity (0.86)
+P38936/4rjf: low PDB/UniProt identity (0.95)
+P38634/8k0g: low PDB/UniProt identity (0.92)
+Batch 14351-14400/20789 done.
+Batch 14401-14450/20789 done.
+Batch 14451-14500/20789 done.
+Batch 14501-14550/20789 done.
+Batch 14551-14600/20789 done.
+Batch 14601-14650/20789 done.
+Batch 14651-14700/20789 done.
+P46527/7ort: low PDB/UniProt identity (0.8)
+P46527/7org: low PDB/UniProt identity (0.8)
+P46527/7orh: low PDB/UniProt identity (0.8)
+P46527/7ors: low PDB/UniProt identity (0.8)
+P46527/7b5m: low PDB/UniProt identity (0.64)
+P46527/8byl: low PDB/UniProt identity (0.93)
+P46527/2ast: low PDB/UniProt identity (0.9)
+P46527/7or8: low PDB/UniProt identity (0.8)
+Batch 14701-14750/20789 done.
+Batch 14751-14800/20789 done.
+Batch 14801-14850/20789 done.
+P49736/6ya7: low PDB/UniProt identity (0.78)
+Batch 14851-14900/20789 done.
+Batch 14901-14950/20789 done.
+Batch 14951-15000/20789 done.
+P49841/6npz: low PDB/UniProt identity (0.9)
+P49841/6buu: low PDB/UniProt identity (0.9)
+Batch 15001-15050/20789 done.
+Batch 15051-15100/20789 done.
+P53355/2y4v: low PDB/UniProt identity (0.94)
+Batch 15101-15150/20789 done.
+Batch 15151-15200/20789 done.
+P53551/1yqa: low PDB/UniProt identity (0.92)
+P53874/6rr0: low PDB/UniProt identity (0.9)
+Batch 15201-15250/20789 done.
+Batch 15251-15300/20789 done.
+Batch 15301-15350/20789 done.
+Batch 15351-15400/20789 done.
+Batch 15401-15450/20789 done.
+Batch 15451-15500/20789 done.
+P55957/5c3f: low PDB/UniProt identity (0.86)
+P55980/5x7b: low PDB/UniProt identity (0.86)
+P55980/5x94: low PDB/UniProt identity (0.86)
+P55957/2m5b: low PDB/UniProt identity (0.86)
+Batch 15501-15550/20789 done.
+P57104/9bvu: low PDB/UniProt identity (0.85)
+P57104/9bvv: low PDB/UniProt identity (0.91)
+P57104/7os8: low PDB/UniProt identity (0.85)
+P57104/7osd: low PDB/UniProt identity (0.69)
+P57104/9bvs: low PDB/UniProt identity (0.92)
+Batch 15551-15600/20789 done.
+P60484/7pc7: low PDB/UniProt identity (0.86)
+Batch 15601-15650/20789 done.
+Batch 15651-15700/20789 done.
+Batch 15701-15750/20789 done.
+Batch 15751-15800/20789 done.
+Batch 15801-15850/20789 done.
+Batch 15851-15900/20789 done.
+Batch 15901-15950/20789 done.
+Batch 15951-16000/20789 done.
+Batch 16001-16050/20789 done.
+Batch 16051-16100/20789 done.
+Batch 16101-16150/20789 done.
+Batch 16151-16200/20789 done.
+P60880/1kil: low PDB/UniProt identity (0.94)
+P60880/3ddb: low PDB/UniProt identity (0.83)
+P60881/1urq: low PDB/UniProt identity (0.95)
+P60881/6wvw: low PDB/UniProt identity (0.95)
+Batch 16201-16250/20789 done.
+Batch 16251-16300/20789 done.
+Batch 16301-16350/20789 done.
+P61926/1ctp: low PDB/UniProt identity (0.94)
+P61587/7obd: low PDB/UniProt identity (0.83)
+P61587/8b2k: low PDB/UniProt identity (0.86)
+P61012/4kyt: low PDB/UniProt identity (0.84)
+P61587/8bfc: low PDB/UniProt identity (0.83)
+P61926/1jbp: low PDB/UniProt identity (0.9)
+P61587/4bg6: low PDB/UniProt identity (0.86)
+P61587/7obc: low PDB/UniProt identity (0.86)
+Batch 16351-16400/20789 done.
+P61926/4xw6: low PDB/UniProt identity (0.9)
+P61926/4xw4: low PDB/UniProt identity (0.9)
+P61926/4xw5: low PDB/UniProt identity (0.9)
+Batch 16401-16450/20789 done.
+Batch 16451-16500/20789 done.
+Batch 16501-16550/20789 done.
+Batch 16551-16600/20789 done.
+P68363/6j4v: low PDB/UniProt identity (0.8)
+Batch 16601-16650/20789 done.
+Batch 16651-16700/20789 done.
+P69718/8urj: low PDB/UniProt identity (0.91)
+Batch 16701-16750/20789 done.
+Batch 16751-16800/20789 done.
+P84092/6rh6: low PDB/UniProt identity (0.93)
+Batch 16801-16850/20789 done.
+P87666/5t42: low PDB/UniProt identity (0.93)
+Batch 16851-16900/20789 done.
+Batch 16901-16950/20789 done.
+Q01094/6uls: low PDB/UniProt identity (0.8)
+Q01094/5m9n: low PDB/UniProt identity (0.5)
+Q01094/5m9o: low PDB/UniProt identity (0.5)
+Q01094/6g0p: low PDB/UniProt identity (0.78)
+Batch 16951-17000/20789 done.
+Q03164/2lxs: low PDB/UniProt identity (0.95)
+Q03164/2agh: low PDB/UniProt identity (0.94)
+Q03164/2lxt: low PDB/UniProt identity (0.95)
+Batch 17001-17050/20789 done.
+Q03164/7s8e: low PDB/UniProt identity (0.89)
+Q03164/7s79: low PDB/UniProt identity (0.89)
+Q03164/3p4f: low PDB/UniProt identity (0.89)
+Q03164/9c4s: low PDB/UniProt identity (0.92)
+Q03164/7s7d: low PDB/UniProt identity (0.89)
+Q03164/7u5v: low PDB/UniProt identity (0.94)
+Q03164/7s8a: low PDB/UniProt identity (0.89)
+Q03164/7rzj: low PDB/UniProt identity (0.89)
+Batch 17051-17100/20789 done.
+Q04637/5zk5: low PDB/UniProt identity (0.64)
+Q04637/4aza: low PDB/UniProt identity (0.92)
+Q04660/6c0f: low PDB/UniProt identity (0.54)
+Q04660/6cb1: low PDB/UniProt identity (0.86)
+Batch 17101-17150/20789 done.
+Q05127/8ust: low PDB/UniProt identity (0.89)
+Q05127/8usn: low PDB/UniProt identity (0.89)
+Batch 17151-17200/20789 done.
+Batch 17201-17250/20789 done.
+Batch 17251-17300/20789 done.
+Q07812/4bdu: low PDB/UniProt identity (0.06)
+Batch 17301-17350/20789 done.
+Batch 17351-17400/20789 done.
+Q12778/6qzs: low PDB/UniProt identity (0.87)
+Q12778/8a62: low PDB/UniProt identity (0.7)
+Q12778/8a65: low PDB/UniProt identity (0.62)
+Q12778/6qzr: low PDB/UniProt identity (0.88)
+Batch 17401-17450/20789 done.
+Q13043/5twh: low PDB/UniProt identity (0.8)
+Q12888/6rmm: low PDB/UniProt identity (0.89)
+Q13043/7ceb: low PDB/UniProt identity (0.81)
+Q13043/5twg: low PDB/UniProt identity (0.75)
+Q13043/7cea: low PDB/UniProt identity (0.85)
+Q13043/8jg5: low PDB/UniProt identity (0.56)
+Q13043/7cec: low PDB/UniProt identity (0.8)
+Q12888/6rml: low PDB/UniProt identity (0.89)
+Batch 17451-17500/20789 done.
+Q13148/5wkb: low PDB/UniProt identity (0.83)
+Q13148/5whp: low PDB/UniProt identity (0.83)
+Q13148/8a6i: low PDB/UniProt identity (0.85)
+Q13148/6cf4: low PDB/UniProt identity (0.83)
+Batch 17501-17550/20789 done.
+Q13188/6ar2: low PDB/UniProt identity (0.83)
+Batch 17551-17600/20789 done.
+Q13426/5wlz: low PDB/UniProt identity (0.93)
+Q13426/5cj4: low PDB/UniProt identity (0.92)
+Q13426/5e50: low PDB/UniProt identity (0.67)
+Q13426/5chx: low PDB/UniProt identity (0.92)
+Batch 17601-17650/20789 done.
+Q13480/4qsy: low PDB/UniProt identity (0.91)
+Q13541/1ejh: low PDB/UniProt identity (0.46)
+Q13485/6yic: low PDB/UniProt identity (0.8)
+Batch 17651-17700/20789 done.
+Q13546/7cjb: low PDB/UniProt identity (0.88)
+Batch 17701-17750/20789 done.
+Batch 17751-17800/20789 done.
+Q14457/4mi8: low PDB/UniProt identity (0.9)
+Q14457/6hok: low PDB/UniProt identity (0.92)
+Batch 17801-17850/20789 done.
+Q15109/6vxg: low PDB/UniProt identity (0.94)
+Q15109/2lmb: low PDB/UniProt identity (0.93)
+Batch 17851-17900/20789 done.
+Q15418/7pc8: low PDB/UniProt identity (0.86)
+Q15418/5n7f: low PDB/UniProt identity (0.83)
+Q15418/6twy: low PDB/UniProt identity (0.8)
+Q15418/4h3p: low PDB/UniProt identity (0.88)
+Q15418/7p74: low PDB/UniProt identity (0.8)
+Q15418/5n7g: low PDB/UniProt identity (0.83)
+Q15418/7qql: low PDB/UniProt identity (0.8)
+Batch 17901-17950/20789 done.
+Q15596/2ldc: low PDB/UniProt identity (0.82)
+Q15596/3fug: low PDB/UniProt identity (0.9)
+Q15596/2yjd: low PDB/UniProt identity (0.82)
+Batch 17951-18000/20789 done.
+Q15596/4p6w: low PDB/UniProt identity (0.92)
+Batch 18001-18050/20789 done.
+Q15596/5dxb: low PDB/UniProt identity (0.82)
+Q15596/5dx3: low PDB/UniProt identity (0.82)
+Q15596/4wg0: low PDB/UniProt identity (0.85)
+Q15596/5dxe: low PDB/UniProt identity (0.82)
+Q15596/5dxg: low PDB/UniProt identity (0.81)
+Batch 18051-18100/20789 done.
+Q15596/5hyr: low PDB/UniProt identity (0.82)
+Batch 18101-18150/20789 done.
+Batch 18151-18200/20789 done.
+Q15596/5yxd: low PDB/UniProt identity (0.82)
+Q15596/5wgq: low PDB/UniProt identity (0.71)
+Q15596/5y49: low PDB/UniProt identity (0.9)
+Batch 18201-18250/20789 done.
+Q15596/7raf: low PDB/UniProt identity (0.92)
+Batch 18251-18300/20789 done.
+Batch 18301-18350/20789 done.
+Q15691/4xa6: low PDB/UniProt identity (0.95)
+Q15796/2lb3: low PDB/UniProt identity (0.88)
+Q15796/6yia: low PDB/UniProt identity (0.86)
+Batch 18351-18400/20789 done.
+Batch 18401-18450/20789 done.
+Q16236/6t7v: low PDB/UniProt identity (0.89)
+Q16236/3zgc: low PDB/UniProt identity (0.86)
+Q16236/7k29: low PDB/UniProt identity (0.89)
+Batch 18451-18500/20789 done.
+Q16236/8ejr: low PDB/UniProt identity (0.71)
+Q16236/8ejs: low PDB/UniProt identity (0.71)
+Q16611/2lp8: low PDB/UniProt identity (0.69)
+Batch 18501-18550/20789 done.
+Q16665/4ajy: low PDB/UniProt identity (0.87)
+Q16665/5las: low PDB/UniProt identity (0.89)
+Q16665/8he3: low PDB/UniProt identity (0.75)
+Q16665/5jwp: low PDB/UniProt identity (0.92)
+Q27934/4i7b: low PDB/UniProt identity (0.91)
+Q16665/5l9v: low PDB/UniProt identity (0.89)
+Q16665/6gfx: low PDB/UniProt identity (0.88)
+Q27934/4i7c: low PDB/UniProt identity (0.85)
+Q16665/5la9: low PDB/UniProt identity (0.89)
+Q16665/6gmr: low PDB/UniProt identity (0.88)
+Q16665/1lm8: low PDB/UniProt identity (0.93)
+Q16665/1lqb: low PDB/UniProt identity (0.94)
+Batch 18551-18600/20789 done.
+Q27934/4i7d: low PDB/UniProt identity (0.86)
+Batch 18601-18650/20789 done.
+Batch 18651-18700/20789 done.
+Batch 18701-18750/20789 done.
+Batch 18751-18800/20789 done.
+Batch 18801-18850/20789 done.
+Batch 18851-18900/20789 done.
+Q51912/1kh0: low PDB/UniProt identity (0.81)
+Q51912/1jml: low PDB/UniProt identity (0.94)
+Q51912/2kac: low PDB/UniProt identity (0.89)
+Q51912/2jzp: low PDB/UniProt identity (0.9)
+Batch 18901-18950/20789 done.
+Q67953/8rlu: low PDB/UniProt identity (0.89)
+Q67953/8rlv: low PDB/UniProt identity (0.89)
+Batch 18951-19000/20789 done.
+Batch 19001-19050/20789 done.
+Q86WV6/5jej: low PDB/UniProt identity (0.89)
+Q86FP9/5l6n: low PDB/UniProt identity (0.92)
+Q86WV6/6o8b: low PDB/UniProt identity (0.74)
+Batch 19051-19100/20789 done.
+Q86WV6/7r4h: low PDB/UniProt identity (0.89)
+Batch 19101-19150/20789 done.
+Batch 19151-19200/20789 done.
+Batch 19201-19250/20789 done.
+Batch 19251-19300/20789 done.
+Batch 19301-19350/20789 done.
+Q8K4J6/2v51: low PDB/UniProt identity (0.93)
+Batch 19351-19400/20789 done.
+Batch 19401-19450/20789 done.
+Q8NBP7/6e4z: low PDB/UniProt identity (0.87)
+Q8NBP7/6mv5: low PDB/UniProt identity (0.95)
+Batch 19451-19500/20789 done.
+Q8NEB9/6hoh: low PDB/UniProt identity (0.93)
+Q8NC51/9b0p: low PDB/UniProt identity (0.89)
+Q8NC51/8ukb: low PDB/UniProt identity (0.89)
+Batch 19501-19550/20789 done.
+Batch 19551-19600/20789 done.
+Q8TEK3/7s7f: low PDB/UniProt identity (0.89)
+Q8WV28/6ylu: low PDB/UniProt identity (0.89)
+Batch 19601-19650/20789 done.
+Q8WZ42/6fwx: low PDB/UniProt identity (0.92)
+Q8WZ42/3b43: low PDB/UniProt identity (0.95)
+Q8WZ42/4uow: low PDB/UniProt identity (0.28)
+Batch 19651-19700/20789 done.
+Q92793/1wo3: low PDB/UniProt identity (0.52)
+Q92574/9c9i: low PDB/UniProt identity (0.87)
+Batch 19701-19750/20789 done.
+Q92793/1wo4: low PDB/UniProt identity (0.48)
+Q92793/1wo5: low PDB/UniProt identity (0.48)
+Q92793/1wo6: low PDB/UniProt identity (0.44)
+Q92793/1wo7: low PDB/UniProt identity (0.44)
+Batch 19751-19800/20789 done.
+Q92793/6es5: low PDB/UniProt identity (0.84)
+Q92793/6es6: low PDB/UniProt identity (0.92)
+Batch 19801-19850/20789 done.
+Batch 19851-19900/20789 done.
+Batch 19901-19950/20789 done.
+Batch 19951-20000/20789 done.
+Batch 20001-20050/20789 done.
+Batch 20051-20100/20789 done.
+Q9BYG3/2aff: low PDB/UniProt identity (0.92)
+Batch 20101-20150/20789 done.
+Batch 20151-20200/20789 done.
+Batch 20201-20250/20789 done.
+Batch 20251-20300/20789 done.
+Q9IK92/7pno: low PDB/UniProt identity (0.87)
+Batch 20301-20350/20789 done.
+Q9NQS7/5ieh: low PDB/UniProt identity (0.89)
+Batch 20351-20400/20789 done.
+Q9QR71/4uzb: low PDB/UniProt identity (0.93)
+Q9QR71/8q3m: low PDB/UniProt identity (0.93)
+Q9QR71/8q3x: low PDB/UniProt identity (0.93)
+Batch 20401-20450/20789 done.
+Q9UBK2/6ln4: low PDB/UniProt identity (0.9)
+Q9UBK2/7e2e: low PDB/UniProt identity (0.92)
+Batch 20451-20500/20789 done.
+Batch 20501-20550/20789 done.
+Batch 20551-20600/20789 done.
+Q9UQC2/6zvc: low PDB/UniProt identity (0.9)
+Q9UQC2/6zvd: low PDB/UniProt identity (0.9)
+Q9UQC2/6y3r: low PDB/UniProt identity (0.9)
+Q9UQC2/6zve: low PDB/UniProt identity (0.9)
+Q9UQC2/6y3s: low PDB/UniProt identity (0.8)
+Q9UQC2/5ewz: low PDB/UniProt identity (0.87)
+Q9UQC2/6zvb: low PDB/UniProt identity (0.9)
+Q9UGL1/6ek6: low PDB/UniProt identity (0.95)
+Q9UQC2/5exa: low PDB/UniProt identity (0.85)
+Q9UKT4/4ui9: low PDB/UniProt identity (0.91)
+Q9UMD9/8izs: low PDB/UniProt identity (0.66)
+Batch 20601-20650/20789 done.
+Q9WMX2/2jy0: low PDB/UniProt identity (0.93)
+Q9WMX2/3kn2: low PDB/UniProt identity (0.87)
+Batch 20651-20700/20789 done.
+Q9Y6K1/3svm: low PDB/UniProt identity (0.91)
+Q9Y4P1/5lxi: low PDB/UniProt identity (0.89)
+Q9Y5B0/2k7l: low PDB/UniProt identity (0.95)
+Q9Y6I3/1kyd: low PDB/UniProt identity (0.8)
+Batch 20701-20750/20789 done.
+Batch 20751-20789/20789 done.
+PDB contacts written to /stockage/EQUIPES/AMIG/MEMBERS/julie.daniel/IDRBindingDataset.jl/data/derived/pdb_contacts/pdb_contacts.csv.gz (rows=20789, failed=0).

@@ -1,0 +1,48 @@
+julia version 1.12.7
+  Activating project at `/stockage/EQUIPES/AMIG/MEMBERS/julie.daniel/IDRBindingDataset.jl/scripts`
+Precompiling packages...
+   7088.6 ms  ✓ IDRBindingDataset
+  1 dependency successfully precompiled in 32 seconds. 239 already precompiled.
+  24 dependencies precompiled but different versions are currently loaded (ArgTools, Base64, Dates, Downloads, JuliaSyntaxHighlighting, LibCURL, LibCURL_jll, LibGit2, LibGit2_jll, LibSSH2_jll, Logging, Markdown, MozillaCACerts_jll, NetworkOptions, OpenSSL_jll, Pkg, Printf, StyledStrings, TOML, Tar, UUIDs, Zlib_jll, nghttp2_jll and p7zip_jll). Restart julia to access the new versions. Otherwise, 153 dependents of these packages may trigger further precompilation to work with the unexpected versions.
+ERROR: LoadError: ArgumentError: invalid column name provided in `types` keyword argument: mismatch_positions. Valid column names detected in the data are: [:protein_disprot_id, :protein_id, :PDB, :method, :resolution, :quality_category, :status, :chains, :partner_chains, :homo_chains_excluded, :identity, :resolved_positions, :n_contacts, :contact_positions]. To ignore invalid columns names in `types`, pass `validate=false`
+Stacktrace:
+  [1] checkinvalidcolumns(dict::Dict{Symbol, Type}, argname::String, ncols::Int64, names::Vector{Symbol})
+    @ CSV ~/.julia/packages/CSV/LiiJM/src/context.jl:88
+  [2] initialize_columns(::Int64, ::Dict{Symbol, Type}, ::Vector{Symbol}, ::Type, ::Vararg{Any}; validate::Bool)
+    @ CSV ~/.julia/packages/CSV/LiiJM/src/context.jl:112
+  [3] macro expansion
+    @ ~/.julia/packages/CSV/LiiJM/src/context.jl:482 [inlined]
+  [4] Context
+    @ ./none:0 [inlined]
+  [5] CSV.Context(source::CSV.Arg, header::CSV.Arg, normalizenames::CSV.Arg, datarow::CSV.Arg, skipto::CSV.Arg, footerskip::CSV.Arg, transpose::CSV.Arg, comment::CSV.Arg, ignoreemptyrows::CSV.Arg, ignoreemptylines::CSV.Arg, select::CSV.Arg, drop::CSV.Arg, limit::CSV.Arg, buffer_in_memory::CSV.Arg, threaded::CSV.Arg, ntasks::CSV.Arg, tasks::CSV.Arg, rows_to_check::CSV.Arg, lines_to_check::CSV.Arg, missingstrings::CSV.Arg, missingstring::CSV.Arg, delim::CSV.Arg, ignorerepeated::CSV.Arg, quoted::CSV.Arg, quotechar::CSV.Arg, openquotechar::CSV.Arg, closequotechar::CSV.Arg, escapechar::CSV.Arg, dateformat::CSV.Arg, dateformats::CSV.Arg, decimal::CSV.Arg, groupmark::CSV.Arg, truestrings::CSV.Arg, falsestrings::CSV.Arg, stripwhitespace::CSV.Arg, type::CSV.Arg, types::CSV.Arg, typemap::CSV.Arg, pool::CSV.Arg, downcast::CSV.Arg, lazystrings::CSV.Arg, stringtype::CSV.Arg, strict::CSV.Arg, silencewarnings::CSV.Arg, maxwarnings::CSV.Arg, debug::CSV.Arg, parsingdebug::CSV.Arg, validate::CSV.Arg, streaming::CSV.Arg)
+    @ CSV ~/.julia/packages/CSV/LiiJM/src/context.jl:0
+  [6] CSV.File(source::String; header::Int64, normalizenames::Bool, datarow::Int64, skipto::Int64, footerskip::Int64, transpose::Bool, comment::Nothing, ignoreemptyrows::Bool, ignoreemptylines::Nothing, select::Nothing, drop::Nothing, limit::Nothing, buffer_in_memory::Bool, threaded::Nothing, ntasks::Nothing, tasks::Nothing, rows_to_check::Int64, lines_to_check::Nothing, missingstrings::Vector{String}, missingstring::String, delim::Nothing, ignorerepeated::Bool, quoted::Bool, quotechar::Char, openquotechar::Nothing, closequotechar::Nothing, escapechar::Char, dateformat::Nothing, dateformats::Nothing, decimal::UInt8, groupmark::Nothing, truestrings::Vector{String}, falsestrings::Vector{String}, stripwhitespace::Bool, type::Nothing, types::Dict{Symbol, Type}, typemap::IdDict{Type, Type}, pool::Tuple{Float64, Int64}, downcast::Bool, lazystrings::Bool, stringtype::Type{String}, strict::Bool, silencewarnings::Bool, maxwarnings::Int64, debug::Bool, parsingdebug::Bool, validate::Bool)
+    @ CSV ~/.julia/packages/CSV/LiiJM/src/file.jl:222
+  [7] read(source::String, sink::Type; copycols::Bool, kwargs::@Kwargs{types::Dict{Symbol, Type}, stringtype::DataType})
+    @ CSV ~/.julia/packages/CSV/LiiJM/src/CSV.jl:117
+  [8] _read_checkpoint_table(checkpoint_dir::String, table_name::Symbol, template::DataFrame)
+    @ IDRBindingDataset /stockage/EQUIPES/AMIG/MEMBERS/julie.daniel/IDRBindingDataset.jl/src/checkpointed_batches.jl:116
+  [9] #267
+    @ /stockage/EQUIPES/AMIG/MEMBERS/julie.daniel/IDRBindingDataset.jl/src/checkpointed_batches.jl:237 [inlined]
+ [10] map
+    @ ./tuple.jl:358 [inlined]
+ [11] run_checkpointed_batches(process::Function, items::Vector{String}, templates::@NamedTuple{contacts::DataFrame}; checkpoint_dir::String, batch_size::Int64, logger::typeof(println))
+    @ IDRBindingDataset /stockage/EQUIPES/AMIG/MEMBERS/julie.daniel/IDRBindingDataset.jl/src/checkpointed_batches.jl:232
+ [12] run_checkpointed_batches
+    @ /stockage/EQUIPES/AMIG/MEMBERS/julie.daniel/IDRBindingDataset.jl/src/checkpointed_batches.jl:167 [inlined]
+ [13] build_pdb_contacts_table(dataset::DataFrame, disprot_pdb_mapping::DataFrame; mmcif_dirs::Vector{String}, mmcif_download_dir::Nothing, sifts_xml_dirs::Vector{String}, sifts_download_dir::Nothing, pdb_quality_table::Dict{String, @NamedTuple{method::String, resolution::Union{Missing, Float64}}}, only_binding_proteins::Bool, checkpoint_dir::String, batch_size::Int64, contact_cutoff::Float64, min_mapping_identity::Float64, logger::typeof(println))
+    @ IDRBindingDataset /stockage/EQUIPES/AMIG/MEMBERS/julie.daniel/IDRBindingDataset.jl/src/pdb_contacts.jl:548
+ [14] main()
+    @ Main /stockage/EQUIPES/AMIG/MEMBERS/julie.daniel/IDRBindingDataset.jl/scripts/19_pdb_contacts.jl:160
+ [15] top-level scope
+    @ /stockage/EQUIPES/AMIG/MEMBERS/julie.daniel/IDRBindingDataset.jl/scripts/19_pdb_contacts.jl:206
+ [16] include(mod::Module, _path::String)
+    @ Base ./Base.jl:306
+ [17] exec_options(opts::Base.JLOptions)
+    @ Base ./client.jl:317
+ [18] _start()
+    @ Base ./client.jl:550
+in expression starting at /stockage/EQUIPES/AMIG/MEMBERS/julie.daniel/IDRBindingDataset.jl/scripts/19_pdb_contacts.jl:206
+Protein/PDB pairs to process: 20789 (750 proteins)
+Resuming from data/scratch/checkpoints/19_pdb_contacts: 20789 item(s) already done.
+Items: 20789 total, 0 to process with 16 thread(s).

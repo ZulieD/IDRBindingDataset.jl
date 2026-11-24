@@ -59,7 +59,7 @@ Run from repository root:
   julia scripts/22_chemical_shift_labels.jl
 
 Complete example:
-  julia scripts/22_chemical_shift_labels.jl --mapping_path data/derived/disprot_bmrb_mapping/disprot_bmrb_mapping.csv.gz --cache_dir data/scratch/bmrb_cache --require pH,temperature,ionic,buffer,solvent,window --max_delta_pH 0.5 --max_delta_temperature 5 --csp_k_sd 1.5 --output_dir data/derived/chemical_shift_labels
+  julia scripts/22_chemical_shift_labels.jl --mapping_path data/derived/disprot_bmrb_mapping/disprot_bmrb_mapping.csv.gz --cache_dir data/scratch/bmrb_cache --require pH,temperature,ionic,buffer,solvent --max_delta_pH 0.5 --max_delta_temperature 10 --csp_k_sd 1.5 --output_dir data/derived/chemical_shift_labels
 
 The script activates and instantiates `scripts/Project.toml` internally.
 """,
@@ -79,9 +79,13 @@ The script activates and instantiates `scripts/Project.toml` internally.
         arg_type = String
         default = DEFAULT_CACHE_DIR
         "--min_identity"
-        help = "Minimum BMRB entity / UniProt identity (1.0: identical, mutants rejected)."
+        help = "Minimum BMRB entity / UniProt identity; mutated residues are not used."
         arg_type = Float64
         default = defaults.min_identity
+        "--binding_flank"
+        help = "No mutation accepted on DisProt binding residues extended by this many residues on each side."
+        arg_type = Int
+        default = defaults.binding_flank
         "--max_indels"
         help = "Maximum insertions/deletions in the entity alignment."
         arg_type = Int
@@ -140,10 +144,6 @@ The script activates and instantiates `scripts/Project.toml` internally.
         help = "Maximum ionic strength difference (mM)."
         arg_type = Float64
         default = defaults.max_delta_ionic
-        "--buffer_tolerance"
-        help = "Relative tolerance on buffer concentrations (0: identical)."
-        arg_type = Float64
-        default = defaults.buffer_tolerance
         "--n15_window_min"
         help = "15N windows narrower than this (ppm) must be identical in both states."
         arg_type = Float64
@@ -166,6 +166,10 @@ The script activates and instantiates `scripts/Project.toml` internally.
         help = "Minimum run of consecutive binding residues."
         arg_type = Int
         default = defaults.min_run_binding
+        "--min_common_residues"
+        help = "Residues with H/N in both free and bound states needed to compare them."
+        arg_type = Int
+        default = defaults.min_common_residues
         "--binding_run_mode"
         help = "separate (perturbed and lost runs counted separately) or combined."
         arg_type = String
@@ -183,7 +187,8 @@ The script activates and instantiates `scripts/Project.toml` internally.
     parsed = parse_args(args, settings)
     required = Tuple(Symbol.(strip.(split(parsed["require"], ","; keepempty = false))))
     run_settings = merge(defaults,
-        (min_identity = parsed["min_identity"], max_indels = parsed["max_indels"],
+        (min_identity = parsed["min_identity"], binding_flank = parsed["binding_flank"],
+            max_indels = parsed["max_indels"],
             min_aligned = parsed["min_aligned"],
             strict_numbering = !parsed["lenient_numbering"],
             trim_ends = parsed["trim_ends"], random_coil = Symbol(parsed["random_coil"]),
@@ -194,11 +199,11 @@ The script activates and instantiates `scripts/Project.toml` internally.
             max_delta_pH = parsed["max_delta_pH"],
             max_delta_temperature = parsed["max_delta_temperature"],
             max_delta_ionic = parsed["max_delta_ionic"],
-            buffer_tolerance = parsed["buffer_tolerance"],
             n15_window_min = parsed["n15_window_min"], csp_k_sd = parsed["csp_k_sd"],
             csp_min = parsed["csp_min"], exclude_glycine_csp = parsed["exclude_glycine_csp"],
             use_lost_peaks = !parsed["no_lost_peaks"],
             min_run_binding = parsed["min_run_binding"],
+            min_common_residues = parsed["min_common_residues"],
             binding_run_mode = Symbol(parsed["binding_run_mode"]),
             p_disorder_threshold = parsed["p_disorder_threshold"]))
     (
@@ -251,7 +256,13 @@ free list, from chemical-shift perturbations (CSP) and lost peaks in runs of
 consecutive residues. `$(OUTPUT_FILENAMES.lists)` gives, for every shift list,
 whether it was used and why; `$(OUTPUT_FILENAMES.comparisons)` gives every
 bound × free comparison with each criterion (`same`, `different`, `unknown`),
-`accepted` (no required criterion differs) and `selected` (pair used).
+`accepted` (no required criterion differs) and `selected` (pair used), and
+the buffering species of both samples (buffers are compared on their species
+only: additives and salts are ignored, concentrations may differ). Shift lists
+need an entity identical to UniProt on the DisProt binding region ±
+$(options.settings.binding_flank) residues and at least
+$(options.settings.min_identity) identical overall; mutated residues elsewhere
+are not used.
 """,
         script_relpath = _relpath_from_repo(joinpath(@__DIR__, "22_chemical_shift_labels.jl")),
         inputs = ["Dataset" => _relpath_from_repo(options.dataset_path),

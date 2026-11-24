@@ -20,7 +20,10 @@ Pkg.activate("/stockage/EQUIPES/AMIG/MEMBERS/julie.daniel/IDP/scripts/env/env1_0
 # The rows shown are the first rows WITHOUT missing value, so that every column
 # is filled; when a table has fewer complete rows, the rows with the fewest
 # missing values are shown after them.
-
+#
+# Run from the repository root:
+#   julia +1.12 --project=scripts show_csv_heads.jl          # 5 rows
+#   julia +1.12 --project=scripts show_csv_heads.jl 10       # 10 rows
 
 using CSV
 using DataFrames
@@ -41,6 +44,7 @@ const CSV_FILES = [
     "Chemical shift labels" => "data/derived/chemical_shift_labels/chemical_shift_labels.csv.gz",
     "Chemical shift lists" => "data/derived/chemical_shift_labels/chemical_shift_lists.csv.gz",
     "Chemical shift free/bound comparisons" => "data/derived/chemical_shift_labels/chemical_shift_comparisons.csv.gz",
+    "SLiM labels (ELM)" => "data/scratch/elm/slim_labels/slim_labels.csv.gz",
     "Final labels" => "data/derived/final_labels/final_labels.csv.gz",
     "Final label sources" => "data/derived/final_labels/final_labels_sources.csv.gz"
 ]

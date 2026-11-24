@@ -34,7 +34,9 @@ using Statistics
 
 Default settings of `build_chemical_shift_labels`:
 - `min_identity`, `max_indels`, `min_aligned`: BMRB entity / UniProt alignment
-  required (1.0 = identical; with 1.0 a mutated or modified residue rejects the list)
+  required; mismatched (mutated) residues are not used
+- `binding_flank`: no mismatch accepted on DisProt binding residues extended by
+  this many residues on each side (the list is rejected otherwise)
 - `strict_numbering`: reject a list whose residue numbering does not match the
   entity sequence on 100 % of atoms
 - `trim_ends`: first and last residues of the construct not analysed (flexible ends)
@@ -43,8 +45,9 @@ Default settings of `build_chemical_shift_labels`:
 - `hn_min`, `hn_max`: amide 1H window of disordered residues (ppm)
 - `min_run`, `min_run_hn`: minimum disordered run (Cα/Cβ available / 1H only)
 - `max_delta_pH`, `max_delta_temperature` (K), `max_delta_ionic` (mM),
-  `max_delta_field` (MHz), `buffer_tolerance` (relative), `window_tolerance`
-  (relative), `n15_window_min` (ppm; wider 15N windows may differ): comparability
+  `max_delta_field` (MHz), `window_tolerance` (relative), `n15_window_min`
+  (ppm; wider 15N windows may differ): comparability. Buffers are compared on
+  their buffering species only (`_buffer_species`); concentrations may differ
 - `required_criteria`: criteria that must not differ (`:pH`, `:temperature`,
   `:ionic`, `:buffer`, `:solvent`, `:window`, `:field`, `:spectrometer`)
 - `strict_metadata`: also reject pairs with unknown (not deposited) criteria
@@ -57,16 +60,16 @@ Default settings of `build_chemical_shift_labels`:
 - `p_disorder_threshold`: residue disordered when p_disorder ≥ this value
 """
 const CHEMICAL_SHIFT_DEFAULT_SETTINGS = (
-    min_identity = 1.0, max_indels = 0, min_aligned = 15, strict_numbering = true,
+    min_identity = MIN_IDENTITY_OUTSIDE_BINDING, binding_flank = BINDING_REGION_FLANK,
+    max_indels = 0, min_aligned = 15, strict_numbering = true,
     trim_ends = 5, random_coil = :ncidp, secondary_shift_threshold = 1.0,
     hn_min = 7.8, hn_max = 8.6, min_run = 3, min_run_hn = 5,
-    max_delta_pH = 0.5, max_delta_temperature = 5.0, max_delta_ionic = 10.0,
-    max_delta_field = 1.0, buffer_tolerance = 0.0, window_tolerance = 0.01,
-    n15_window_min = 30.0,
-    required_criteria = (:pH, :temperature, :ionic, :buffer, :solvent, :window),
+    max_delta_pH = 0.5, max_delta_temperature = 10.0, max_delta_ionic = 10.0,
+    max_delta_field = 1.0, window_tolerance = 0.01, n15_window_min = 30.0,
+    required_criteria = (:pH, :temperature, :ionic, :buffer, :solvent),
     strict_metadata = false, csp_k_sd = 1.5, csp_min = 0.05, min_class_n = 5,
     exclude_glycine_csp = false, use_lost_peaks = true, min_run_binding = 5,
-    binding_run_mode = :separate, min_common_residues = 5, p_disorder_threshold = 0.5)
+    binding_run_mode = :separate, min_common_residues = 15, p_disorder_threshold = 0.5)
 
 const CHEMICAL_SHIFT_CRITERIA = (:pH, :temperature, :ionic, :field, :spectrometer,
     :buffer, :solvent, :window)
@@ -136,17 +139,20 @@ end
 
 """
     _residue_shift_table(table, target_entity_id, single_polymer, alignment,
-        entity_sequence, protein_sequence, settings)
+        entity_sequence, protein_sequence, settings; protected = falses(length(protein_sequence)))
 
 Turn `Atom_chem_shift` rows (one per atom) of the protein entity into one row per
-UniProt position with `H`, `N`, `CA`, `CB` and `C` shifts. Returns
-`(table, reason)`: `table` is `nothing` when the list is rejected, with
-`reason` in `no_atom_columns`, `no_numbering_column`, `numbering_mismatch`,
-`mutated_residues` or `no_backbone_shift`.
+UniProt position with `H`, `N`, `CA`, `CB` and `C` shifts. Residues that differ
+from the UniProt sequence (alignment mismatch or assigned residue type) are not
+used. Returns `(table, reason)`: `table` is `nothing` when the list is
+rejected, with `reason` in `no_atom_columns`, `no_numbering_column`,
+`numbering_mismatch`, `mutation_in_binding_region` (a mutated residue on a
+`protected` position) or `no_backbone_shift`.
 """
 function _residue_shift_table(table::AbstractDataFrame, target_entity_id::AbstractString,
         single_polymer::Bool, alignment, entity_sequence::AbstractString,
-        protein_sequence::AbstractString, settings)
+        protein_sequence::AbstractString, settings;
+        protected::AbstractVector{Bool} = falses(length(protein_sequence)))
     columns = names(table)
     ("Atom_ID" in columns && "Val" in columns) || return (nothing, "no_atom_columns")
     has_entity = "Entity_ID" in columns
@@ -188,6 +194,8 @@ function _residue_shift_table(table::AbstractDataFrame, target_entity_id::Abstra
             continue
         uniprot_position = get(alignment.mapping, position, 0)
         uniprot_position == 0 && continue   # tag, linker, outside the alignment
+        # Mutated residue (alignment mismatch): not the UniProt residue.
+        entity[position] == protein[uniprot_position] || continue
         atom = uppercase(strip(row.Atom_ID))
         atom = atom == "HN" ? "H" : atom
         atom in BMRB_BACKBONE_ATOMS || continue
@@ -208,10 +216,11 @@ function _residue_shift_table(table::AbstractDataFrame, target_entity_id::Abstra
                                                   for p in positions]
     end
     if has_residue_type
-        n_mutated = count(i -> _one_letter_code(result.comp[i]) != result.aa[i],
-            1:nrow(result))
-        n_mutated > 0 && settings.min_identity >= 1.0 &&
-            return (nothing, "mutated_residues")
+        mutated = [_one_letter_code(result.comp[i]) != result.aa[i] for i in 1:nrow(result)]
+        any(i -> mutated[i] && protected[result.pos[i]], 1:nrow(result)) &&
+            return (nothing, "mutation_in_binding_region")
+        result = result[.!mutated, :]
+        nrow(result) == 0 && return (nothing, "no_backbone_shift")
     end
     (result, "ok")
 end
@@ -311,6 +320,88 @@ end
 # ---------------------------------------------------------------------------
 # Comparability of free and bound experiments
 # ---------------------------------------------------------------------------
+# Buffering species recognised in BMRB sample components (lowercase names,
+# deuterated forms included). Checked in order: the first match wins.
+# Additives (DTT, TCEP, EDTA, PMSF, protease inhibitors), salts (NaCl, KCl,
+# MgCl2) and unrecognised components are not buffering species.
+const BUFFER_SPECIES_PATTERNS = [
+    "tcep" => r"tcep|carboxyethyl|phosphine",            # reducing agent, not Tris
+    "bis-tris propane" => r"bis[- ]?tris[- ]?propane|btp\b",
+    "bis-tris" => r"bis[- ]?tris",
+    "tris" =>
+        r"\btris\b|tris[- ]?(hcl|base|-d11|d11)|trizma|tris\(hydroxymethyl\)aminomethane",
+    "phosphate" => r"phosph(ate)?\b|phosphate|\bpi\b|napi|kpi|\bpbs\b|h2po4|hpo4|po4",
+    "hepes" => r"hepes",
+    "mes" => r"\bmes\b|mes[- ]?d|morpholino\)?ethanesulfonic|morpholinoethanesulfonic",
+    "mops" => r"\bmops\b|morpholino\)?propanesulfonic|morpholinopropanesulfonic",
+    "pipes" => r"pipes",
+    "acetate" => r"acetate|acetic acid",
+    "citrate" => r"citrate|citric",
+    "succinate" => r"succinate|succinic",
+    "bicine" => r"bicine",
+    "tricine" => r"tricine",
+    "borate" => r"borate|boric",
+    "carbonate" => r"carbonate",
+    "cacodylate" => r"cacodylate",
+    "imidazole" => r"imidazole",
+    "glycine" => r"glycine|\bgly\b",
+    "ches" => r"\bches\b",
+    "caps" => r"\bcaps\b",
+    "taps" => r"\btaps\b",
+    "bes" => r"\bbes\b",
+    "tes" => r"\btes\b",
+    "aces" => r"\baces\b",
+    "maleate" => r"maleate|maleic",
+    "formate" => r"formate|formic"
+]
+# Buffering-species names that are never buffers here (reducing agent, matched first).
+const NON_BUFFER_SPECIES = ("tcep",)
+
+"""
+    _buffer_species(component)::Union{Nothing, String}
+
+Buffering species of a sample component name (e.g. `"sodium phosphate"`,
+`"NaPi"` and `"K2HPO4"` -> `"phosphate"`; `"Tris-d11"` -> `"tris"`), or
+`nothing` for additives, salts and unrecognised components.
+"""
+function _buffer_species(component::AbstractString)::Union{Nothing, String}
+    name = lowercase(strip(component))
+    for (species, pattern) in BUFFER_SPECIES_PATTERNS
+        occursin(pattern, name) || continue
+        return species in NON_BUFFER_SPECIES ? nothing : species
+    end
+    nothing
+end
+
+"""
+    _buffer_species_mM(buffer_mM)::Dict{String, Union{Missing, Float64}}
+
+Buffering species of a sample (`component => mM`) with their total concentration
+(`missing` if one component of the species has no concentration).
+"""
+function _buffer_species_mM(buffer_mM::AbstractDict)
+    species = Dict{String, Union{Missing, Float64}}()
+    for (component, concentration) in buffer_mM
+        name = _buffer_species(component)
+        name === nothing && continue
+        species[name] = get(species, name, 0.0) + concentration
+    end
+    species
+end
+
+"""
+    _format_buffer_species(species)::Union{Missing, String}
+
+`"phosphate 20 mM; tris ? mM"` (sorted by species), `missing` when empty.
+"""
+function _format_buffer_species(species::AbstractDict)::Union{Missing, String}
+    isempty(species) && return missing
+    join(
+        ["$(name) $(ismissing(species[name]) ? "?" : round(species[name]; digits = 3)) mM"
+         for name in sort!(collect(keys(species)))],
+        "; ")
+end
+
 """
     _numeric_criterion(a, b, tolerance)::Symbol
 
@@ -347,19 +438,12 @@ function _compare_experiments(free, bound, settings)
                               :unknown :
                               isempty(intersect(lowercase.(free.spectrometers),
         lowercase.(bound.spectrometers))) ? :different : :same
-    # Buffer: same components, concentrations within the relative tolerance.
-    criteria[:buffer] = if isempty(free.buffer_mM) || isempty(bound.buffer_mM)
-        :unknown
-    elseif Set(keys(free.buffer_mM)) != Set(keys(bound.buffer_mM))
-        :different
-    else
-        any(
-            k -> !ismissing(free.buffer_mM[k]) && !ismissing(bound.buffer_mM[k]) &&
-                 abs(free.buffer_mM[k] - bound.buffer_mM[k]) >
-                 settings.buffer_tolerance *
-                 max(free.buffer_mM[k], bound.buffer_mM[k]),
-            collect(keys(free.buffer_mM))) ? :different : :same
-    end
+    # Buffer: same buffering species (concentrations may differ; reported in
+    # the comparisons table). Additives and salts are ignored.
+    free_species = keys(_buffer_species_mM(free.buffer_mM))
+    bound_species = keys(_buffer_species_mM(bound.buffer_mM))
+    criteria[:buffer] = (isempty(free_species) || isempty(bound_species)) ? :unknown :
+                        Set(free_species) == Set(bound_species) ? :same : :different
     # Solvent: both samples in H2O (e.g. 90 % H2O / 10 % D2O).
     criteria[:solvent] = (isempty(free.solvents) || isempty(bound.solvents)) ? :unknown :
                          all(s -> occursin("h2o", lowercase(s)),
@@ -535,6 +619,9 @@ function _empty_chemical_shift_tables()
         :free_bmrb_id => String[], :free_shift_list_id => String[]]
     append!(columns, [c => String[] for c in CHEMICAL_SHIFT_CRITERIA])
     append!(columns,
+        Pair{Symbol, Any}[:free_buffer => Union{Missing, String}[],
+            :bound_buffer => Union{Missing, String}[]])
+    append!(columns,
         Pair{Symbol, Any}[:accepted => Bool[], :selected => Bool[],
             :n_common => Union{Missing, Int}[], :n_binding => Union{Missing, Int}[],
             :csp_threshold_disorder => Union{Missing, Float64}[],
@@ -544,19 +631,27 @@ function _empty_chemical_shift_tables()
 end
 
 """
-    _shift_list_experiment(row, json, protein_sequence, settings)
+    _shift_list_experiment(row, json, protein_sequence, settings;
+        protected = falses(length(protein_sequence)))
 
 Rebuild one usable shift list (`row` of the BMRB mapping table) from its parsed
-entry `json`: residue table and comparability metadata. Returns
-`(experiment, reason)` with `experiment === nothing` when rejected.
+entry `json`: residue table and comparability metadata. A construct with a
+mismatch on a `protected` position (DisProt binding region and its flanks) is
+rejected (`mutation_in_binding_region`). Returns `(experiment, reason)` with
+`experiment === nothing` when rejected.
 """
-function _shift_list_experiment(row, json, protein_sequence::AbstractString, settings)
+function _shift_list_experiment(row, json, protein_sequence::AbstractString, settings;
+        protected::AbstractVector{Bool} = falses(length(protein_sequence)))
     saveframes = parse_bmrb_entry(json)
     entities = _bmrb_entities(saveframes)
     target = _bmrb_target_entity(entities, protein_sequence)
     target === nothing && return (nothing, "no_polypeptide")
     target_index, alignment = target
     entity = entities[target_index, :]
+    entity_residues = collect(entity.sequence)
+    protein_residues = collect(protein_sequence)
+    any(((e, u),) -> protected[u] && entity_residues[e] != protein_residues[u],
+        collect(alignment.mapping)) && return (nothing, "mutation_in_binding_region")
     shift_list = findfirst(
         s -> s.category == "assigned_chemical_shifts" &&
              _bmrb_tag(s, "ID") == string(row.shift_list_id),
@@ -569,7 +664,7 @@ function _shift_list_experiment(row, json, protein_sequence::AbstractString, set
     single_polymer = count(==("polymer"), entities.type) == 1
     residues, reason = _residue_shift_table(vcat(atom_tables...; cols = :union),
         entity.entity_id, single_polymer, alignment, entity.sequence, protein_sequence,
-        settings)
+        settings; protected = protected)
     residues === nothing && return (nothing, reason)
 
     condition_id = _bmrb_tag(shift_list, "Sample_condition_list_ID")
@@ -626,6 +721,7 @@ function _protein_chemical_shift_tables(protein_disprot_id::AbstractString,
             String(coalesce(row.state, "missing")), used, reason, n_residues, method,
             n_disordered, n_binding))
 
+    protected = _binding_region_mask(residue_labels; flank = settings.binding_flank)
     free, bound = NamedTuple[], NamedTuple[]
     for row in eachrow(mapping_rows)
         reason = _mapping_rejection_reason(row, settings)
@@ -634,7 +730,7 @@ function _protein_chemical_shift_tables(protein_disprot_id::AbstractString,
             continue
         end
         experiment, reason = _shift_list_experiment(row, entry_json(string(row.bmrb_id)),
-            sequence, settings)
+            sequence, settings; protected = protected)
         if experiment === nothing
             log_list(row, false, reason)
             continue
@@ -674,6 +770,8 @@ function _protein_chemical_shift_tables(protein_disprot_id::AbstractString,
             push!(tables.comparisons,
                 (ids..., b.bmrb_id, b.shift_list_id, f.bmrb_id, f.shift_list_id,
                     [string(comparison.criteria[c]) for c in CHEMICAL_SHIFT_CRITERIA]...,
+                    _format_buffer_species(_buffer_species_mM(f.buffer_mM)),
+                    _format_buffer_species(_buffer_species_mM(b.buffer_mM)),
                     comparison.accepted, false, missing, missing, missing, missing))
             comparison.accepted || continue
             push!(candidates, (free = free_item, comparison = comparison))

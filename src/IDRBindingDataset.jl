@@ -102,6 +102,10 @@ export CHEMICAL_SHIFT_DEFAULT_SETTINGS
 export CHEMICAL_SHIFT_CRITERIA
 export build_chemical_shift_labels
 export FINAL_LABEL_SOURCES
+export SLIM_DEFAULT_ELM_TYPES
+export build_slim_labels_table
+export BINDING_REGION_FLANK
+export MIN_IDENTITY_OUTSIDE_BINDING
 export build_final_labels_table
 
 include("raw_data_download.jl")
@@ -131,6 +135,7 @@ include("pdb_contacts.jl")
 include("aggregated_labels.jl")
 include("bmrb_mapping.jl")
 include("chemical_shift_labels.jl")
+include("slim_motifs.jl")
 include("final_labels.jl")
 
 end

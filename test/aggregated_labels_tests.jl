@@ -49,6 +49,8 @@ end
         quality_category = ["resolved", "no_resolution", "resolved", "resolved", "absent"],
         resolution = [2.0, missing, 2.0, 8.0, missing],
         identity = [1.0, 0.95, 1.0, 1.0, NaN],
+        mismatch_positions = Union{Missing, String}[
+            missing, missing, missing, missing, missing],
         # 1aaa: contacts on 1 (ordered, ignored) and 4; 2bbb: no contact.
         resolved_positions = ["1-4", "3-6", "1-6", "1-6", missing],
         contact_positions = ["1;4", missing, missing, "5", missing])
@@ -78,7 +80,7 @@ end
           [
         "used", "used", "status:no_heteromeric_partner", "low_quality", "status:no_mmcif"]
 
-    # A doubtful PDB/UniProt mapping (identity < 0.9) is not used.
+    # A doubtful PDB/UniProt mapping (identity < 0.95) is not used.
     low_identity = copy(contacts)
     low_identity.identity[2] = 0.85
     filtered = build_aggregated_labels_table(dataset, uniprot, low_identity)
@@ -87,6 +89,22 @@ end
     relaxed = build_aggregated_labels_table(dataset, uniprot, low_identity;
         min_identity = 0.8)
     @test only(relaxed.table.n_pdb) == 2
+
+    # Mutations: DisProt binding residue 5, protected region 2-6 (± 3 residues).
+    # 1aaa mutated on 1 (outside): used, residue 1 not counted.
+    mutated = copy(contacts)
+    mutated.mismatch_positions[1] = "1"
+    outside = build_aggregated_labels_table(dataset, uniprot, mutated)
+    @test outside.pdb_log.reason[1] == "used"
+    @test _parse_label_vector(only(outside.table.pdb_N)) == [0, 1, 2, 2, 1, 1]
+    # 1aaa mutated on 6 (binding region flank): not used.
+    mutated.mismatch_positions[1] = "6"
+    inside = build_aggregated_labels_table(dataset, uniprot, mutated)
+    @test inside.pdb_log.reason[1] == "mutation_in_binding_region"
+    @test only(inside.table.pdb_ids) == "2BBB"
+    # Without flank, 6 is outside the protected region.
+    no_flank = build_aggregated_labels_table(dataset, uniprot, mutated; binding_flank = 0)
+    @test no_flank.pdb_log.reason[1] == "used"
 
     with_homomers = build_aggregated_labels_table(dataset, uniprot, contacts;
         keep_pdb_without_partner = true, max_resolution = 10.0).table

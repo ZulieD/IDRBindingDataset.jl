@@ -128,7 +128,10 @@ function _protein_aggregated_labels_row(
     pdb_n, pdb_x = zeros(Int, n_positions), zeros(Int, n_positions)
     used_pdbs = String[]
     for row in pdb_rows
-        resolved = filter(p -> 1 <= p <= n_positions, _parse_residue_ranges(row.resolved_positions))
+        # Mismatched (mutated) residues are not counted.
+        mismatches = Set(_parse_residue_ranges(row.mismatch_positions))
+        resolved = filter(p -> 1 <= p <= n_positions && !(p in mismatches),
+            _parse_residue_ranges(row.resolved_positions))
         isempty(resolved) && continue
         contacts = Set(p
         for p in _parse_residue_ranges(row.contact_positions)
@@ -170,7 +173,8 @@ end
     build_aggregated_labels_table(dataset, uniprot_binding_sites, pdb_contacts;
         max_resolution = PDB_LABEL_MAX_RESOLUTION, keep_no_resolution = true,
         keep_no_info = true, keep_pdb_without_partner = false,
-        min_identity = PDB_CONTACT_MIN_MAPPING_IDENTITY)
+        min_identity = PDB_CONTACT_MIN_MAPPING_IDENTITY,
+        binding_flank = BINDING_REGION_FLANK)
 
 Aggregate DisProt labels, UniProt binding sites (`build_uniprot_binding_sites_table`)
 and PDB contacts (`build_pdb_contacts_table`) into one row per DisProt protein.
@@ -180,13 +184,15 @@ with `keep_pdb_without_partner = true`, counting observed residues without
 contact) and they pass the quality filter (`resolution < max_resolution`;
 entries without resolution or absent from the quality table are kept unless
 `keep_no_resolution` / `keep_no_info` are `false`). Entries whose PDB/UniProt
-sequence `identity` is below `min_identity` are not used (doubtful mapping).
+sequence `identity` is below `min_identity`, or with a mismatched residue on the
+DisProt binding region extended by `binding_flank` residues on each side, are
+not used; other mismatched residues are not counted.
 PDB contacts are only counted on DisProt disordered residues (labels `1`/`2`).
 
 Only proteins with at least one used PDB entry are returned. Returns
 `(table, pdb_log)` where `pdb_log` gives, for every contacts row, whether the
 entry was used and why (`used`, `status:<status>`, `low_quality`,
-`low_identity`, `no_resolved_position`).
+`low_identity`, `mutation_in_binding_region`, `no_resolved_position`).
 """
 function build_aggregated_labels_table(
         dataset::AbstractDataFrame,
@@ -196,14 +202,16 @@ function build_aggregated_labels_table(
         keep_no_resolution::Bool = true,
         keep_no_info::Bool = true,
         keep_pdb_without_partner::Bool = false,
-        min_identity::Real = PDB_CONTACT_MIN_MAPPING_IDENTITY
+        min_identity::Real = PDB_CONTACT_MIN_MAPPING_IDENTITY,
+        binding_flank::Integer = BINDING_REGION_FLANK
 )
     _require_columns(dataset, [:protein_id, :protein_disprot_id, :residue_labels], "dataset")
     _require_columns(uniprot_binding_sites, [:protein_id, :residues_binding_in_uniprot],
         "uniprot_binding_sites")
     _require_columns(pdb_contacts,
         [:protein_disprot_id, :protein_id, :PDB, :status, :quality_category, :resolution,
-            :identity, :resolved_positions, :contact_positions], "pdb_contacts")
+            :identity, :mismatch_positions, :resolved_positions, :contact_positions],
+        "pdb_contacts (rerun 19_pdb_contacts.jl if `mismatch_positions` is missing)")
 
     labels_by_protein = _dataset_residue_labels_by_protein(dataset)
     uniprot_by_protein = Dict(String(row.protein_id) =>
@@ -221,8 +229,11 @@ function build_aggregated_labels_table(
         labels = get(labels_by_protein, protein_id, nothing)
         labels === nothing && continue
 
+        protected = _binding_region_mask(labels; flank = binding_flank)
         kept = DataFrameRow[]
         for row in eachrow(protein_rows)
+            mismatches = filter(p -> 1 <= p <= length(labels),
+                _parse_residue_ranges(row.mismatch_positions))
             reason = if !(row.status in usable_statuses)
                 "status:$(row.status)"
             elseif !_passes_pdb_quality(row.quality_category, row.resolution;
@@ -232,6 +243,8 @@ function build_aggregated_labels_table(
             elseif ismissing(row.identity) || isnan(row.identity) ||
                    row.identity < min_identity
                 "low_identity"
+            elseif any(p -> protected[p], mismatches)
+                "mutation_in_binding_region"
             elseif ismissing(row.resolved_positions)
                 "no_resolved_position"
             else

@@ -1,0 +1,4 @@
+julia version 1.12.7
+GKS: cannot open display - headless operation mode active
+  Activating project at `/stockage/EQUIPES/AMIG/MEMBERS/julie.daniel/IDRBindingDataset.jl/scripts`
+Aggregated labels written to /stockage/EQUIPES/AMIG/MEMBERS/julie.daniel/IDRBindingDataset.jl/data/derived/aggregated_labels/aggregated_labels.csv.gz (proteins=578, PDB pairs used=7659/20789).

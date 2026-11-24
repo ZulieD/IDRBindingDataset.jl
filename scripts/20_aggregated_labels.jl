@@ -9,6 +9,7 @@ using CSV
 using DataFrames
 using Plots
 using IDRBindingDataset:
+                         BINDING_REGION_FLANK,
                          PDB_CONTACT_MIN_MAPPING_IDENTITY,
                          PDB_LABEL_MAX_RESOLUTION,
                          _AGGREGATED_LABELS_COLUMN_DEFINITIONS,
@@ -50,14 +51,15 @@ labels. One row per DisProt protein with at least one used PDB entry, keyed by
 PDB entries are filtered here: status (`ok`, plus homo-oligomers with
 `--keep_pdb_without_partner`) and quality (`--max_resolution`,
 `--drop_no_resolution`, `--drop_no_info`) and PDB/UniProt sequence identity
-(`--min_identity`). PDB contacts are only counted on DisProt disordered
+(`--min_identity` overall, and no mutation on the DisProt binding region ±
+`--binding_flank` residues; other mutated residues are not counted). PDB contacts are only counted on DisProt disordered
 residues (labels `1`/`2`).
 
 Run from repository root:
   julia scripts/20_aggregated_labels.jl
 
 Complete example:
-  julia scripts/20_aggregated_labels.jl --dataset_path data/dataset/cluster_dataset_labels.csv.gz --uniprot_binding_sites_path data/derived/uniprot_binding_sites/uniprot_binding_sites.csv.gz --pdb_contacts_path data/derived/pdb_contacts/pdb_contacts.csv.gz --max_resolution 5.0 --min_identity 0.9 --plot_dir data/scratch/plots/aggregated_labels --output_dir data/derived/aggregated_labels
+  julia scripts/20_aggregated_labels.jl --dataset_path data/dataset/cluster_dataset_labels.csv.gz --uniprot_binding_sites_path data/derived/uniprot_binding_sites/uniprot_binding_sites.csv.gz --pdb_contacts_path data/derived/pdb_contacts/pdb_contacts.csv.gz --max_resolution 5.0 --min_identity 0.95 --binding_flank 3 --plot_dir data/scratch/plots/aggregated_labels --output_dir data/derived/aggregated_labels
 
 The script activates and instantiates `scripts/Project.toml` internally.
 """,
@@ -90,6 +92,10 @@ The script activates and instantiates `scripts/Project.toml` internally.
         help = "Do not use PDB entries whose PDB/UniProt sequence identity is below this value."
         arg_type = Float64
         default = PDB_CONTACT_MIN_MAPPING_IDENTITY
+        "--binding_flank"
+        help = "Do not use PDB entries with a mutated residue on DisProt binding residues extended by this many residues on each side."
+        arg_type = Int
+        default = BINDING_REGION_FLANK
         "--keep_pdb_without_partner"
         help = "Also use PDB entries without heteromeric partner (observed residues, no contact)."
         action = :store_true
@@ -113,6 +119,7 @@ The script activates and instantiates `scripts/Project.toml` internally.
         keep_no_info = !parsed["drop_no_info"],
         keep_pdb_without_partner = parsed["keep_pdb_without_partner"],
         min_identity = Float64(parsed["min_identity"]),
+        binding_flank = parsed["binding_flank"],
         plot_dir = isempty(parsed["plot_dir"]) ? nothing : normpath(parsed["plot_dir"]),
         output_dir = normpath(parsed["output_dir"])
     )
@@ -161,7 +168,8 @@ function main()
     contacts = DataFrame(CSV.File(options.pdb_contacts_path;
         types = Dict(:protein_disprot_id => String, :protein_id => String,
             :PDB => String, :status => String, :quality_category => String,
-            :resolution => Float64, :identity => Float64, :resolved_positions => String,
+            :resolution => Float64, :identity => Float64, :mismatch_positions => String,
+            :resolved_positions => String,
             :contact_positions => String)))
 
     result = build_aggregated_labels_table(dataset, uniprot, contacts;
@@ -169,7 +177,7 @@ function main()
         keep_no_resolution = options.keep_no_resolution,
         keep_no_info = options.keep_no_info,
         keep_pdb_without_partner = options.keep_pdb_without_partner,
-        min_identity = options.min_identity)
+        min_identity = options.min_identity, binding_flank = options.binding_flank)
     table, pdb_log = result.table, result.pdb_log
 
     _write_csv_gz(table, output_path)
@@ -213,7 +221,8 @@ contacts table, whether it was used and why.
             "Use PDB without resolution" => options.keep_no_resolution,
             "Use PDB absent from quality table" => options.keep_no_info,
             "Use PDB without heteromeric partner" => options.keep_pdb_without_partner,
-            "Minimum PDB/UniProt identity" => options.min_identity],
+            "Minimum PDB/UniProt identity" => options.min_identity,
+            "No mutation on DisProt binding residues ± (residues)" => options.binding_flank],
         columns = _AGGREGATED_LABELS_COLUMN_DEFINITIONS)
 
     println("Aggregated labels written to $(output_path) (proteins=$(nrow(table)), PDB pairs used=$(count(pdb_log.used))/$(nrow(pdb_log))).")
