@@ -41,8 +41,10 @@ function parse_command_line(args)
         description = """
 Short linear motif (SLiM) evidence from ELM for each dataset protein, keyed by
 `protein_disprot_id` and `protein_id`. A residue gets `Label_SLiM = 1` when it
-lies in an annotated ELM instance of the protein, or in a match of an ELM class
-regex lying entirely in a DisProt binding region (labels 2); `NaN` elsewhere.
+lies in an annotated ELM instance of the protein lying entirely in DisProt
+disordered residues (labels 1/2), or in a match of an ELM class regex lying
+entirely in a DisProt binding region (labels 2); `NaN` elsewhere (ordered
+residues are never marked).
 No disorder information. Used as the fifth source of 24_final_labels.jl.
 
 Input: ELM `instances.tsv` and `elms_index.tsv` downloaded by
@@ -133,7 +135,8 @@ function main()
         description = """
 One row per dataset protein. `Label_SLiM` has one value per residue of the
 UniProt sequence: `1` on residues of an annotated ELM instance of the protein
-(`InstanceLogic` not excluded) or of a match of an ELM class regex lying
+(`InstanceLogic` not excluded) lying entirely in DisProt disordered residues
+(labels `1`/`2`), or of a match of an ELM class regex lying
 entirely in a DisProt binding region (labels `2`); `NaN` elsewhere. Only ELM
 classes of types $(join(options.elm_types, ", ")) are used. There is no disorder
 information in this source. ELM-derived data: kept in scratch, not versioned.
@@ -143,7 +146,8 @@ information in this source. ELM-derived data: kept in scratch, not versioned.
             "ELM instances" => _relpath_from_repo(options.instances_path),
             "ELM classes index" => _relpath_from_repo(options.elms_index_path)],
         outputs = [DEFAULT_OUTPUT_FILENAME => "$(nrow(table)) proteins",
-            "Proteins with an annotated ELM instance" => with_instances,
+            "Proteins with an annotated ELM instance in disordered residues" =>
+                with_instances,
             "Proteins with a regex match in a DisProt binding region" => with_matches,
             "Proteins with at least one SLiM residue" => with_slim,
             "Annotated instances" => sum(table.n_instances),

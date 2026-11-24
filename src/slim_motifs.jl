@@ -5,7 +5,9 @@ using DataFrames
 # Acids Res 52:D442; http://elm.eu.org), downloaded by 11_download_elm.jl.
 #
 # Per residue, Label_SLiM is 1 when the residue lies in
-#   - an annotated ELM instance of the protein (true positives; anywhere), or
+#   - an annotated ELM instance of the protein lying entirely in DisProt
+#     disordered residues (labels 1/2); instances on ordered residues are
+#     not binding sites of interest here, or
 #   - a match of an ELM class regex lying entirely in a DisProt binding region
 #     (residues labelled 2),
 # and NaN elsewhere (no evidence; never a 0 vote). Only the ELM classes of the
@@ -92,7 +94,8 @@ end
         logger = println)
 
 SLiM evidence per dataset protein from ELM: annotated instances of the protein
-(`InstanceLogic` not excluded) and matches of the ELM class regexes entirely
+(`InstanceLogic` not excluded) lying entirely in DisProt disordered residues
+(labels `1`/`2`) and matches of the ELM class regexes entirely
 inside DisProt binding regions (labels `2`), restricted to the ELM class types
 `elm_types`.
 
@@ -137,9 +140,13 @@ function build_slim_labels_table(dataset::AbstractDataFrame,
         length(residue_labels) == n_positions || throw(DimensionMismatch(
             "$(protein_id): $(length(residue_labels)) residue labels for $(n_positions) residues."))
 
+        # Instances count only when entirely in DisProt disordered residues.
+        in_disorder = [label in (_RESIDUE_LABEL_DISORDERED, _RESIDUE_LABEL_BINDING)
+                       for label in residue_labels]
         protein_instances = sort!([hit
                                    for hit in get(instances_by_protein, protein_id, [])
-                                   if 1 <= hit[2] <= hit[3] <= n_positions])
+                                   if 1 <= hit[2] <= hit[3] <= n_positions &&
+            all(view(in_disorder, hit[2]:hit[3]))])
         in_binding = [label == _RESIDUE_LABEL_BINDING for label in residue_labels]
         regex_hits = sort!(_regex_matches_in_region(sequence, classes, in_binding);
             by = hit -> (hit[2], hit[3], hit[1]))
@@ -165,10 +172,10 @@ Data dictionary of the table returned by `build_slim_labels_table`.
 const _SLIM_LABELS_COLUMN_DEFINITIONS = [
     "protein_disprot_id" => "DisProt identifier of the dataset protein (key shared with the other derived CSVs)",
     "protein_id" => "UniProt accession of the dataset protein",
-    "n_instances" => "annotated ELM instances of the protein (selected ELM types, excluded `InstanceLogic` removed)",
+    "n_instances" => "annotated ELM instances of the protein lying entirely in DisProt disordered residues (labels `1`/`2`; selected ELM types, excluded `InstanceLogic` removed)",
     "instances" => "annotated instances (`ELMIdentifier:start-end`, `;`-separated)",
     "n_regex_matches" => "matches of ELM class regexes lying entirely in a DisProt binding region (labels `2`)",
     "regex_matches" => "regex matches (`ELMIdentifier:start-end`, `;`-separated)",
     "slim_positions" => "residues in an instance or a regex match (ranges)",
-    "Label_SLiM" => "`1` on residues of an annotated ELM instance or of an ELM regex match in a DisProt binding region, `NaN` elsewhere (no evidence; no disorder information)"
+    "Label_SLiM" => "`1` on residues of an annotated ELM instance in DisProt disordered residues or of an ELM regex match in a DisProt binding region, `NaN` elsewhere (no evidence; no disorder information)"
 ]

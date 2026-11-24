@@ -31,7 +31,7 @@ end
     elm_instances = DataFrame(
         ELMIdentifier = ["DOC_rare", "LIG_test", "MOD_test", "LIG_test"],
         Primary_Acc = ["P1", "P1", "P1", "P2"], Accessions = ["P1", "P1", "P1", "P2 Q9"],
-        Start = ["2", "16", "15", "1"], End = ["4", "17", "18", "9"],
+        Start = ["6", "16", "5", "1"], End = ["8", "17", "8", "9"],
         InstanceLogic = ["true positive", "false positive", "true positive",
             "true positive"])
 
@@ -40,14 +40,24 @@ end
     @test names(table) == ["protein_disprot_id", "protein_id", "n_instances", "instances",
         "n_regex_matches", "regex_matches", "slim_positions", "Label_SLiM"]
     p1 = table[1, :]
-    # Instances: DOC_rare 2-4 kept; LIG_test false positive and MOD_test (type
+    # Instances: DOC_rare 6-8 kept (disordered residues 5-14); LIG_test false positive and MOD_test (type
     # not selected) removed. Regex: LIG_test at 9-14; MOD "AA" not used.
-    @test p1.instances == "DOC_rare:2-4"
+    @test p1.instances == "DOC_rare:6-8"
     @test p1.regex_matches == "LIG_test:9-14"
-    @test p1.slim_positions == "2-4;9-14"
+    @test p1.slim_positions == "6-14"
     label = _parse_label_vector(p1.Label_SLiM)
-    @test all(==(1.0), label[[2:4; 9:14]])
-    @test all(isnan, label[[1; 5:8; 15:18]])
+    @test all(==(1.0), label[6:14])
+    @test all(isnan, label[[1:5; 15:18]])
+
+    # An instance on ordered residues (2-4), or straddling the border (3-6), is not used.
+    for (start, stop) in (("2", "4"), ("3", "6"))
+        ordered = copy(elm_instances)
+        ordered.Start[1], ordered.End[1] = start, stop
+        result = build_slim_labels_table(dataset, ordered, elm_index;
+            logger = _ -> nothing)
+        @test result.n_instances[1] == 0
+        @test result.slim_positions[1] == "9-14"
+    end
 
     # P2: instance outside the sequence (1-9 on 4 residues) is ignored.
     p2 = table[2, :]
@@ -60,6 +70,6 @@ end
     @test strict.n_regex_matches[1] == 0
     with_mod = build_slim_labels_table(dataset, elm_instances, elm_index;
         elm_types = ("MOD",), logger = _ -> nothing)
-    @test with_mod.instances[1] == "MOD_test:15-18"
+    @test with_mod.instances[1] == "MOD_test:5-8"
     @test with_mod.n_regex_matches[1] == 0          # no "AA" in the binding region
 end
