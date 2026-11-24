@@ -1,8 +1,0 @@
-julia version 1.12.7
-ELM files: 4283 lines in data/scratch/elm/instances.tsv, 359 lines in data/scratch/elm/elms_index.tsv
-  Activating project at `/stockage/EQUIPES/AMIG/MEMBERS/julie.daniel/IDRBindingDataset.jl/scripts`
-SLiM labels written to /stockage/EQUIPES/AMIG/MEMBERS/julie.daniel/IDRBindingDataset.jl/data/scratch/elm/slim_labels/slim_labels.csv.gz (proteins=3199).
-  proteins with an annotated ELM instance:          330
-  proteins with a regex match in a binding region:  881
-  proteins with at least one SLiM residue:          1056
-  annotated instances: 593, regex matches: 19099
